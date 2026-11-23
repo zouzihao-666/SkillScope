@@ -360,6 +360,11 @@ def test_saved_policy_applies_to_a_new_task_without_rerunning_diagnosis(
     def apply(task, settings, output, **kwargs):
         captured.append(kwargs)
         output.mkdir(parents=True)
+        from skillscope.repository.workspace import Workspace
+
+        files = Workspace(task).execution_snapshot()
+        files["shop/money.py"] = "def amount(text): return 0\n"
+        write_json(output / "workspace-final.json", files)
         return {
             "status": "passed",
             "grading": {"status": "passed", "tests": 9},
@@ -378,6 +383,8 @@ def test_saved_policy_applies_to_a_new_task_without_rerunning_diagnosis(
     assert result["status"] == "passed" and len(calls) == previous and len(captured) == 1
     bad = next(skill for skill in captured[0]["skills"] if skill.id == "bad")
     assert bad.stages == (Stage.VERIFY,)
+    assert (tmp_path / "new-task/candidate/shop/money.py").exists()
+    assert "+def amount(text): return 0" in (tmp_path / "new-task/changes.patch").read_text()
     (root / "policy.json").write_text("{}")
     with pytest.raises(ValueError, match="frozen bytes"):
         module.load_saved_policy(root)

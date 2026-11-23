@@ -1,5 +1,6 @@
 """Apply a frozen, selected policy to a new task without repeating diagnosis."""
 
+import difflib
 import hashlib
 import json
 from pathlib import Path
@@ -9,6 +10,7 @@ from skillscope.models import Condition, Skill, Stage
 from skillscope.presentation import write_report
 from skillscope.repository.agent import run_agent
 from skillscope.repository.workspace import Workspace
+from skillscope.sandbox import materialize_project
 from skillscope.settings import Settings
 
 
@@ -57,6 +59,21 @@ def apply_saved_policy(study: Path, task: Path, settings: Settings, output: Path
         max_requests=limits["per_run_calls"],
         per_phase_requests=limits["per_phase_calls"],
     )
+    snapshot = json.loads((output / "workspace-final.json").read_text(encoding="utf-8"))
+    candidate_root = output / "candidate"
+    candidate_root.mkdir()
+    materialize_project(candidate_root, snapshot)
+    patch = []
+    for path in sorted(workspace.editable):
+        patch.extend(
+            difflib.unified_diff(
+                workspace.read_file(path).splitlines(keepends=True),
+                snapshot[path].splitlines(keepends=True),
+                fromfile="a/" + path,
+                tofile="b/" + path,
+            )
+        )
+    (output / "changes.patch").write_bytes("".join(patch).encode())
     applied = {
         "source_policy_sha256": checksum,
         "phases": policy["phases"],
@@ -64,6 +81,8 @@ def apply_saved_policy(study: Path, task: Path, settings: Settings, output: Path
         "current_task": workspace.task_id,
         "task_fingerprint": workspace.initial_fingerprint,
         "note": "A new task evaluation using a fixed policy; no diagnosis or policy retuning performed.",
+        "candidate_directory": "candidate",
+        "patch_file": "changes.patch",
     }
     write_json(output / "applied-policy.json", applied)
     valid = isinstance(result.get("grading"), dict) and result["grading"].get("status") in (

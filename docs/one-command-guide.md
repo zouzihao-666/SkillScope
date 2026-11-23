@@ -52,6 +52,6 @@
 .\.venv\Scripts\python.exe -m skillscope run-policy --study artifacts/v06-complete-diagnosis --task-manifest benchmarks/upstream/dotenv-comment/task.json --output results/my-policy-run
 ```
 
-作用：校验保存的方案与指南，从原计划读取准确的指南正文，直接修复并评分指定新任务。不重新诊断、缩减或选择策略，最多使用保存计划规定的一次运行额度。输出 run.json、applied-policy.json 和 report.html。
+作用：校验保存的方案与指南，从原计划读取准确的指南正文，直接修复并评分指定新任务。不重新诊断、缩减或选择策略，最多使用保存计划规定的一次运行额度。输出 run.json、applied-policy.json、report.html、可直接查看的 candidate 文件夹与 changes.patch；原任务源码保持不变，便于审核补丁。
 
 本轮首次完整验收已使用 dotenv-bom，因此它已不再是未使用保留题。后续要验证真正的新任务效果，应另建未参与开发的新任务集。
