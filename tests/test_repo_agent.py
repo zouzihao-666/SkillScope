@@ -175,8 +175,36 @@ def test_controller_reserves_finish_calls_and_verification_within_global_budget(
             "type": "function",
             "function": {"name": "finish_phase"},
         }
+        assert [tool["function"]["name"] for tool in requests[index]["tools"]] == ["finish_phase"]
     for request in (requests[0], requests[-1]):
         assert "write_file" not in {tool["function"]["name"] for tool in request["tools"]}
+
+
+def test_reduced_eight_request_budget_keeps_all_three_phases(tmp_path, fake_agent):
+    requests, grades, sequence = fake_agent
+    sequence.extend(
+        [
+            [("list_files", {})],
+            [("read_file", {"path": "shop/money.py"})],
+            finish(),
+            [("write_file", {"path": "shop/money.py", "content": "def amount(text): return 0\n"})],
+            [("run_public_tests", {})],
+            finish(),
+            [("run_public_tests", {})],
+            finish(),
+        ]
+    )
+    result = repo_agent.run_agent(
+        TASK,
+        Settings(api_key="test-secret"),
+        tmp_path / "run",
+        max_requests=8,
+        per_phase_requests=3,
+    )
+    assert result["status"] == "passed" and result["calls_attempted"] == 8
+    assert result["budget"]["max_requests"] == 8
+    assert result["budget"]["per_phase_requests"] == 3
+    assert len(requests) == 8 and grades[-1] is True
 
 
 def test_invalid_phase_finish_is_recorded_as_model_output_failure(tmp_path, fake_agent):

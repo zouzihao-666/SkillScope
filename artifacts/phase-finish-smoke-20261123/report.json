@@ -1,0 +1,18 @@
+{
+  "purpose": "one engineering check of reserved phase completion; not a replacement calibration sample",
+  "runs": 1,
+  "calls": 8,
+  "reported_tokens": 28235,
+  "usage_complete": true,
+  "estimated_usd_upper": 0.0090897,
+  "tasks": {
+    "dotenv-comment": {
+      "recorded": 1,
+      "passed": 0,
+      "statuses": [
+        "invalid_output"
+      ]
+    }
+  },
+  "limitations": "Selected to check the phase controller after four budget failures; different protocol, no pooled success rate. No holdout calls or grades. Not difficulty calibration or a skill experiment."
+}

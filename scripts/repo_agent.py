@@ -85,13 +85,22 @@ def tool_definitions(workspace: Workspace) -> list[dict]:
     ]
 
 
-def run_agent(task: Path, settings: Settings, output: Path) -> dict:
+def run_agent(
+    task: Path,
+    settings: Settings,
+    output: Path,
+    *,
+    max_requests: int = MAX_REQUESTS,
+    per_phase_requests: int = PER_PHASE_REQUESTS,
+) -> dict:
+    if not 3 <= max_requests <= MAX_REQUESTS or not 1 <= per_phase_requests <= PER_PHASE_REQUESTS:
+        raise ValueError("Request limits exceed supported bounds")
     workspace = Workspace(task)
     image = preflight(settings.docker)
     ceiling = estimate_cost(
         {
-            "prompt_tokens": MAX_REQUESTS * (65536 + 1024),
-            "completion_tokens": MAX_REQUESTS * MAX_OUTPUT,
+            "prompt_tokens": max_requests * (65536 + 1024),
+            "completion_tokens": max_requests * MAX_OUTPUT,
         }
     )
     if ceiling > 0.25:
@@ -108,15 +117,15 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
         "condition": "baseline",
         "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
         "execution_mode": workspace.execution_mode,
-        "controller": "reserved_phase_finish_v2",
+        "controller": "restricted_phase_finish_v3",
         "repair_origin": "model_generated_via_allowlisted_tools",
         "initial_workspace_sha256": workspace.initial_fingerprint,
         "source_sha256": source_fingerprint(),
         "sandbox_image_id": image,
         "runner_sha256": digest(Path(__file__).read_text(encoding="utf-8")),
         "budget": {
-            "max_requests": MAX_REQUESTS,
-            "per_phase_requests": PER_PHASE_REQUESTS,
+            "max_requests": max_requests,
+            "per_phase_requests": per_phase_requests,
             "max_output_tokens": MAX_OUTPUT,
             "max_input_json_bytes": 65536,
             "max_estimated_usd": 0.25,
@@ -152,12 +161,16 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
             if stage == Stage.IMPLEMENT
             or tool["function"]["name"] not in ("write_file", "replace_in_file")
         ]
+        if force_finish:
+            stage_tools = [
+                tool for tool in stage_tools if tool["function"]["name"] == "finish_phase"
+            ]
         tool_choice = (
             {"type": "function", "function": {"name": "finish_phase"}}
             if force_finish
             else "required"
         )
-        if calls >= MAX_REQUESTS:
+        if calls >= max_requests:
             raise RunError("budget_exhausted", "Global request budget exhausted")
         if (
             len(
@@ -219,7 +232,7 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
         def execute(state):
             session.enter_stage(stage)
             remaining_phases = len(Stage) - list(Stage).index(stage) - 1
-            phase_limit = min(PER_PHASE_REQUESTS, MAX_REQUESTS - calls - remaining_phases)
+            phase_limit = min(per_phase_requests, max_requests - calls - remaining_phases)
             if phase_limit < 1:
                 raise RunError("budget_exhausted", "No reserved phase-finish request remains")
             handoff = (
@@ -253,7 +266,7 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
             for phase_index in range(phase_limit):
                 messages[0]["content"] = system + (
                     f"\nThis is phase request {phase_index + 1}/{phase_limit}; "
-                    f"{MAX_REQUESTS - calls} global requests remain including this one. "
+                    f"{max_requests - calls} global requests remain including this one. "
                     "Use actual source newlines in write_file content. Finish within these limits."
                 )
                 message = request(stage, messages, force_finish=phase_index == phase_limit - 1)
