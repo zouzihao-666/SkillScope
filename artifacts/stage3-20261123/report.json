@@ -1,0 +1,1473 @@
+{
+  "schema_version": 1,
+  "experiment_sha256": "ba31e30f6a20e5c956356530d8021f005a43e41cd3c25fad8e084200c2dbe738",
+  "plan_sha256": "23f7205ccf4427ee9fec791067e243a52deb7a287370a9ff0c258fc18a460173",
+  "main_runs_planned": 144,
+  "main_runs_recorded": 144,
+  "pilot_runs": 4,
+  "groups": {
+    "baseline": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 35819,
+      "estimated_usd_upper": 0.01824864
+    },
+    "single-root-cause": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 40326,
+      "estimated_usd_upper": 0.0214407
+    },
+    "single-minimal-fix": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 33583,
+      "estimated_usd_upper": 0.015137628
+    },
+    "single-edge-cases": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 40088,
+      "estimated_usd_upper": 0.02066094
+    },
+    "single-input-validation": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 38044,
+      "estimated_usd_upper": 0.019053864
+    },
+    "single-compatibility": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 35589,
+      "estimated_usd_upper": 0.0171657
+    },
+    "single-python-idioms": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 35487,
+      "estimated_usd_upper": 0.015994248
+    },
+    "all": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 51499,
+      "estimated_usd_upper": 0.023733815999999998
+    },
+    "scoped": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 42764,
+      "estimated_usd_upper": 0.020690904
+    },
+    "all-reversed": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 11,
+        "invalid_output": 1
+      },
+      "successes": 11,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 0.9166666666666666,
+      "completion_bounds_missing": [
+        0.9166666666666666,
+        0.9166666666666666
+      ],
+      "wilson_95_descriptive": [
+        0.646120088858883,
+        0.9851349055950829
+      ],
+      "calls": 34,
+      "reported_tokens": 47011,
+      "estimated_usd_upper": 0.021386736
+    },
+    "length-a": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 49731,
+      "estimated_usd_upper": 0.020234976
+    },
+    "length-b": {
+      "planned": 12,
+      "recorded": 12,
+      "status_counts": {
+        "passed": 12
+      },
+      "successes": 12,
+      "known_model_outcomes": 12,
+      "unknown_or_missing": 0,
+      "completion_rate_known": 1.0,
+      "completion_bounds_missing": [
+        1.0,
+        1.0
+      ],
+      "wilson_95_descriptive": [
+        0.7575059933447592,
+        1.0
+      ],
+      "calls": 36,
+      "reported_tokens": 48031,
+      "estimated_usd_upper": 0.020244684
+    }
+  },
+  "per_task": {
+    "baseline": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 6633,
+        "estimated_usd_upper": 0.002619828
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 8711,
+        "estimated_usd_upper": 0.004569492
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 11315,
+        "estimated_usd_upper": 0.006397092
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9160,
+        "estimated_usd_upper": 0.004662228
+      }
+    },
+    "single-root-cause": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 8107,
+        "estimated_usd_upper": 0.0037478879999999996
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10128,
+        "estimated_usd_upper": 0.005825183999999999
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 11808,
+        "estimated_usd_upper": 0.0065589
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10283,
+        "estimated_usd_upper": 0.005308728
+      }
+    },
+    "single-minimal-fix": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 6908,
+        "estimated_usd_upper": 0.002783388
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 8136,
+        "estimated_usd_upper": 0.0037025879999999997
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9384,
+        "estimated_usd_upper": 0.004285728
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9155,
+        "estimated_usd_upper": 0.004365924
+      }
+    },
+    "single-edge-cases": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 7918,
+        "estimated_usd_upper": 0.0035449920000000003
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9779,
+        "estimated_usd_upper": 0.00498816
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 11678,
+        "estimated_usd_upper": 0.006651924
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10713,
+        "estimated_usd_upper": 0.0054758639999999996
+      }
+    },
+    "single-input-validation": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 7443,
+        "estimated_usd_upper": 0.003162024
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9075,
+        "estimated_usd_upper": 0.004611588
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10267,
+        "estimated_usd_upper": 0.0051801239999999995
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 11259,
+        "estimated_usd_upper": 0.006100128
+      }
+    },
+    "single-compatibility": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 7105,
+        "estimated_usd_upper": 0.00300792
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 8556,
+        "estimated_usd_upper": 0.004103028
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10293,
+        "estimated_usd_upper": 0.005344524
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9635,
+        "estimated_usd_upper": 0.004710228
+      }
+    },
+    "single-python-idioms": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 7168,
+        "estimated_usd_upper": 0.0027066959999999998
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 8745,
+        "estimated_usd_upper": 0.004076496000000001
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10220,
+        "estimated_usd_upper": 0.004815132
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9354,
+        "estimated_usd_upper": 0.004395924
+      }
+    },
+    "all": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10697,
+        "estimated_usd_upper": 0.00403668
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 12136,
+        "estimated_usd_upper": 0.005476043999999999
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 14983,
+        "estimated_usd_upper": 0.00794694
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 13683,
+        "estimated_usd_upper": 0.006274152
+      }
+    },
+    "scoped": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9176,
+        "estimated_usd_upper": 0.0039495
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9571,
+        "estimated_usd_upper": 0.004396332
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 12642,
+        "estimated_usd_upper": 0.006749303999999999
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 11375,
+        "estimated_usd_upper": 0.005595767999999999
+      }
+    },
+    "all-reversed": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10046,
+        "estimated_usd_upper": 0.0035557439999999996
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 12056,
+        "estimated_usd_upper": 0.005565168
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 2,
+          "invalid_output": 1
+        },
+        "successes": 2,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 0.6666666666666666,
+        "completion_bounds_missing": [
+          0.6666666666666666,
+          0.6666666666666666
+        ],
+        "wilson_95_descriptive": [
+          0.2076596008020477,
+          0.9385080552796037
+        ],
+        "calls": 7,
+        "reported_tokens": 11764,
+        "estimated_usd_upper": 0.006333972
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 13145,
+        "estimated_usd_upper": 0.005931852
+      }
+    },
+    "length-a": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 10100,
+        "estimated_usd_upper": 0.003479808
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 12051,
+        "estimated_usd_upper": 0.0047581559999999995
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 14088,
+        "estimated_usd_upper": 0.006192756
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 13492,
+        "estimated_usd_upper": 0.005804256
+      }
+    },
+    "length-b": {
+      "clamp": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 9621,
+        "estimated_usd_upper": 0.0035303999999999995
+      },
+      "merge-intervals": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 11491,
+        "estimated_usd_upper": 0.00461688
+      },
+      "get-path": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 13719,
+        "estimated_usd_upper": 0.006295752
+      },
+      "toposort": {
+        "planned": 3,
+        "recorded": 3,
+        "status_counts": {
+          "passed": 3
+        },
+        "successes": 3,
+        "known_model_outcomes": 3,
+        "unknown_or_missing": 0,
+        "completion_rate_known": 1.0,
+        "completion_bounds_missing": [
+          1.0,
+          1.0
+        ],
+        "wilson_95_descriptive": [
+          0.4385029682449546,
+          1.0
+        ],
+        "calls": 9,
+        "reported_tokens": 13200,
+        "estimated_usd_upper": 0.005801651999999999
+      }
+    }
+  },
+  "comparisons_to_baseline": {
+    "single-root-cause": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "single-minimal-fix": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "single-edge-cases": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "single-input-validation": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "single-compatibility": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "single-python-idioms": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "all": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "scoped": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "all-reversed": {
+      "paired_wins": 0,
+      "paired_losses": 1,
+      "paired_ties": 11,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": -0.08333333333333333
+    },
+    "length-a": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    },
+    "length-b": {
+      "paired_wins": 0,
+      "paired_losses": 0,
+      "paired_ties": 12,
+      "unavailable_pairs": 0,
+      "delta_on_available_pairs": 0.0
+    }
+  },
+  "candidate_combinations": [],
+  "conclusion": "insufficient_evidence_of_stable_skill_combination_regression",
+  "missing_outcomes": 0,
+  "all_usage_complete": true,
+  "totals_including_pilot": {
+    "planned": 148,
+    "recorded": 148,
+    "status_counts": {
+      "passed": 147,
+      "invalid_output": 1
+    },
+    "successes": 147,
+    "known_model_outcomes": 148,
+    "unknown_or_missing": 0,
+    "completion_rate_known": 0.9932432432432432,
+    "completion_bounds_missing": [
+      0.9932432432432432,
+      0.9932432432432432
+    ],
+    "wilson_95_descriptive": [
+      0.962722954423538,
+      0.9988062691095932
+    ],
+    "calls": 442,
+    "reported_tokens": 510231,
+    "estimated_usd_upper": 0.240750156
+  },
+  "limitations": [
+    "Manually authored teaching skills and four fixed discovery tasks, not a representative sample.",
+    "Repetitions can correlate at temperature zero and with caching.",
+    "Wilson intervals assume independent Bernoulli observations and are descriptive only.",
+    "Task/repetition matching does not share a provider-side random seed.",
+    "Controls match characters, not tokenizer counts; passages and skill labels can influence output.",
+    "Model response aliases do not establish a pinned server-side weight revision.",
+    "Peak-rate estimates are not account invoices."
+  ]
+}

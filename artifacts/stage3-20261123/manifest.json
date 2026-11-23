@@ -1,0 +1,1125 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-23T07:35:29.498231+00:00",
+  "experiment_sha256": "ba31e30f6a20e5c956356530d8021f005a43e41cd3c25fad8e084200c2dbe738",
+  "source_sha256": "c726088eb73634c49d0bdc5c38c1fd65d3dbc67167ad918b3e584e9919df3a84",
+  "sandbox_image_id": "sha256:1d8cf3d0b6c25e562b276566057195d4f724915d6f55ac1025e5e70295ac22be",
+  "limits": {
+    "max_calls": 444,
+    "max_reported_tokens": 1000000,
+    "max_estimated_usd": 1.0,
+    "max_output_tokens": 1024,
+    "workers": 3
+  },
+  "pricing": {
+    "currency": "USD",
+    "cache_hit_per_million": 0.006,
+    "cache_miss_per_million": 0.3,
+    "output_per_million": 1.2,
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-11-23",
+    "kind": "peak_rate_upper_estimate_not_invoice"
+  },
+  "plan": {
+    "schema_version": 1,
+    "status": "planned_not_executed",
+    "experiment": "skillscope-stage3",
+    "experiment_sha256": "ba31e30f6a20e5c956356530d8021f005a43e41cd3c25fad8e084200c2dbe738",
+    "model_requested": "deepseek-flash",
+    "thinking": "disabled",
+    "split": "discovery",
+    "repeats": 3,
+    "order_seed": 731,
+    "controls": true,
+    "stages": [
+      "investigate",
+      "implement",
+      "verify"
+    ],
+    "run_count": 144,
+    "skills": [
+      {
+        "id": "root-cause",
+        "stages": [
+          "investigate"
+        ],
+        "text": "# root-cause\n\nTrace a failing example from the written contract to the current implementation. Explain the mechanism of the defect before proposing a repair. Consider whether several symptoms share one cause.\n",
+        "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+      },
+      {
+        "id": "minimal-fix",
+        "stages": [
+          "implement"
+        ],
+        "text": "# minimal-fix\n\nPreserve public names and signatures. Prefer a small, direct repair and avoid unrelated abstractions or new dependencies. Check that the small repair still satisfies the complete written contract.\n",
+        "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+      },
+      {
+        "id": "edge-cases",
+        "stages": [
+          "verify"
+        ],
+        "text": "# edge-cases\n\nReview empty inputs, single elements, repeated values, boundary values, and invalid inputs described by the contract. Try a counterexample to the proposed algorithm, rather than relying only on a happy-path example.\n",
+        "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+      },
+      {
+        "id": "input-validation",
+        "stages": [
+          "investigate",
+          "implement"
+        ],
+        "text": "# input-validation\n\nSeparate input validation from the main transformation. Validate the entire input when the contract requires invalid inputs to raise, even if an early lookup or a shortcut could otherwise return a result.\n",
+        "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+      },
+      {
+        "id": "compatibility",
+        "stages": [
+          "investigate",
+          "verify"
+        ],
+        "text": "# compatibility\n\nTreat the public interface and documented exception types as compatibility requirements. Avoid mutating caller-owned inputs unless requested. Preserve behavior that the task does not ask to change.\n",
+        "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+      },
+      {
+        "id": "python-idioms",
+        "stages": [
+          "implement"
+        ],
+        "text": "# python-idioms\n\nConsider standard-library and built-in tools before writing a broad custom framework. Sorting, sets, comprehensions, heapq, and regular expressions can simplify repairs. Check ordering, equality, escaping, and duplicate semantics before choosing an idiom.\n",
+        "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "clamp",
+        "split": "discovery",
+        "instruction": "Fix `clamp(value, lower, upper)` for numeric inputs.\n\n- Return the value if it is inside the inclusive interval [lower, upper].\n- Return lower if the value is below the interval, or upper if above it.\n- If lower is greater than upper, raise ValueError rather than silently swapping them.\n- Preserve the function name and signature. Use the Python standard library only.\n",
+        "starter": "def clamp(value, lower, upper):\n    return min(lower, max(value, upper))\n",
+        "grader_sha256": "82d148112437b249025e43475b6234e42ea942c9779fb09c9b5e7fe368d68c98",
+        "sha256": "f6e03e43b8a78cf24bd397a4f017df5bbeed1013ca453dc0c0a387c3c54edbac"
+      },
+      {
+        "id": "merge-intervals",
+        "split": "discovery",
+        "instruction": "Repair merge_intervals(intervals). Each interval is a two-number list [start, end].\nReturn a new list sorted by start with all overlapping OR touching closed intervals merged.\nAn empty input returns []. A reversed interval (start > end) anywhere in the input must raise ValueError.\nNumbers are finite. Do not mutate the input or its nested intervals. Preserve the function signature.\nUse only the Python standard library.\n",
+        "starter": "def merge_intervals(intervals):\n    intervals.sort()\n    return intervals\n",
+        "grader_sha256": "b3036ea85c2e15fc3383e0f96ed78413f85dbaea6e071273ec1e2a16279e7a07",
+        "sha256": "199641437cc84e5fa7b68d3d3a83e368a9d4c5ffd061b18ed432a6a8f17a435e"
+      },
+      {
+        "id": "get-path",
+        "split": "discovery",
+        "instruction": "Repair get_path(data, path, default). Traverse nested dictionaries using a dotted string path.\nA backslash escapes only a dot or another backslash: a\\.b.c addresses key 'a.b' then key 'c'.\nThe empty path, empty segments, trailing backslash, and other escapes are invalid and must raise ValueError.\nValidate the COMPLETE path before traversal, even if an earlier key is missing.\nReturn default for a missing key or a non-dictionary encountered before the end. Return stored None as None.\nDo not mutate inputs. Arguments are ordinary JSON values; path is a string. Preserve the signature.\nUse only the Python standard library.\n",
+        "starter": "def get_path(data, path, default):\n    for key in path.split(\".\"):\n        data = data[key]\n    return data\n",
+        "grader_sha256": "17ed786f298166de365a54db3086bf7203c6487e394fbb31cada079adf437e69",
+        "sha256": "d8ab710e5d8558750d9af0bd862cb5da2626177b89dafc302a1107b840f018cf"
+      },
+      {
+        "id": "toposort",
+        "split": "discovery",
+        "instruction": "Repair toposort(graph). graph maps each string node to a list of its prerequisite node names.\nInclude nodes mentioned only as prerequisites. Repeated prerequisites count only once.\nReturn a topological ordering, choosing the lexicographically smallest CURRENTLY AVAILABLE node at every step.\nFor example {'a': ['z'], 'b': []} returns ['b', 'z', 'a'].\nRaise ValueError for any cycle including self-loops. Empty input returns []. Do not mutate input dictionaries or lists.\nKeys and prerequisite names are strings, values are lists. Preserve the signature and use only the standard library.\n",
+        "starter": "def toposort(graph):\n    return sorted(graph)\n",
+        "grader_sha256": "7cdcae527a2540b6fce9eff12c66d24ff8c93df7a90cbd6ec2254bf1dcf5784e",
+        "sha256": "53bb2f6dc335ea63c8f4d7c49ecdb63a4860c600c095b6c7f9745e7dd307144e"
+      }
+    ],
+    "conditions": [
+      {
+        "id": "baseline",
+        "policy": "global",
+        "skill_ids": [],
+        "control": "none"
+      },
+      {
+        "id": "single-root-cause",
+        "policy": "global",
+        "skill_ids": [
+          "root-cause"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-minimal-fix",
+        "policy": "global",
+        "skill_ids": [
+          "minimal-fix"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-edge-cases",
+        "policy": "global",
+        "skill_ids": [
+          "edge-cases"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-input-validation",
+        "policy": "global",
+        "skill_ids": [
+          "input-validation"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-compatibility",
+        "policy": "global",
+        "skill_ids": [
+          "compatibility"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-python-idioms",
+        "policy": "global",
+        "skill_ids": [
+          "python-idioms"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "all",
+        "policy": "global",
+        "skill_ids": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "scoped",
+        "policy": "scoped",
+        "skill_ids": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "all-reversed",
+        "policy": "global",
+        "skill_ids": [
+          "python-idioms",
+          "compatibility",
+          "input-validation",
+          "edge-cases",
+          "minimal-fix",
+          "root-cause"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "length-a",
+        "policy": "global",
+        "skill_ids": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "control": "neutral-a"
+      },
+      {
+        "id": "length-b",
+        "policy": "global",
+        "skill_ids": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "control": "neutral-b"
+      }
+    ],
+    "runs": [
+      {
+        "id": "toposort__single-python-idioms__003",
+        "task_id": "toposort",
+        "condition_id": "single-python-idioms",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__scoped__003",
+        "task_id": "toposort",
+        "condition_id": "scoped",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__single-compatibility__001",
+        "task_id": "get-path",
+        "condition_id": "single-compatibility",
+        "repeat": 1
+      },
+      {
+        "id": "toposort__single-minimal-fix__003",
+        "task_id": "toposort",
+        "condition_id": "single-minimal-fix",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__length-b__001",
+        "task_id": "clamp",
+        "condition_id": "length-b",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__baseline__001",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-edge-cases__003",
+        "task_id": "get-path",
+        "condition_id": "single-edge-cases",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__baseline__001",
+        "task_id": "clamp",
+        "condition_id": "baseline",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-python-idioms__003",
+        "task_id": "merge-intervals",
+        "condition_id": "single-python-idioms",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__baseline__002",
+        "task_id": "toposort",
+        "condition_id": "baseline",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__scoped__001",
+        "task_id": "merge-intervals",
+        "condition_id": "scoped",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-input-validation__003",
+        "task_id": "get-path",
+        "condition_id": "single-input-validation",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__baseline__002",
+        "task_id": "clamp",
+        "condition_id": "baseline",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__single-root-cause__001",
+        "task_id": "merge-intervals",
+        "condition_id": "single-root-cause",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__single-input-validation__001",
+        "task_id": "clamp",
+        "condition_id": "single-input-validation",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-root-cause__002",
+        "task_id": "merge-intervals",
+        "condition_id": "single-root-cause",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__single-edge-cases__002",
+        "task_id": "clamp",
+        "condition_id": "single-edge-cases",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__single-root-cause__002",
+        "task_id": "toposort",
+        "condition_id": "single-root-cause",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__scoped__001",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__single-compatibility__003",
+        "task_id": "clamp",
+        "condition_id": "single-compatibility",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__length-a__003",
+        "task_id": "clamp",
+        "condition_id": "length-a",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__single-input-validation__003",
+        "task_id": "clamp",
+        "condition_id": "single-input-validation",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__length-a__001",
+        "task_id": "merge-intervals",
+        "condition_id": "length-a",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__single-minimal-fix__003",
+        "task_id": "clamp",
+        "condition_id": "single-minimal-fix",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__all__003",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__single-root-cause__002",
+        "task_id": "clamp",
+        "condition_id": "single-root-cause",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__length-a__003",
+        "task_id": "toposort",
+        "condition_id": "length-a",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__all__001",
+        "task_id": "clamp",
+        "condition_id": "all",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__single-minimal-fix__001",
+        "task_id": "clamp",
+        "condition_id": "single-minimal-fix",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__length-b__001",
+        "task_id": "get-path",
+        "condition_id": "length-b",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-minimal-fix__001",
+        "task_id": "merge-intervals",
+        "condition_id": "single-minimal-fix",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__all__002",
+        "task_id": "clamp",
+        "condition_id": "all",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__single-compatibility__001",
+        "task_id": "clamp",
+        "condition_id": "single-compatibility",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-input-validation__002",
+        "task_id": "get-path",
+        "condition_id": "single-input-validation",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__single-edge-cases__002",
+        "task_id": "get-path",
+        "condition_id": "single-edge-cases",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__length-b__003",
+        "task_id": "toposort",
+        "condition_id": "length-b",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__single-minimal-fix__003",
+        "task_id": "merge-intervals",
+        "condition_id": "single-minimal-fix",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__baseline__003",
+        "task_id": "clamp",
+        "condition_id": "baseline",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__single-python-idioms__002",
+        "task_id": "toposort",
+        "condition_id": "single-python-idioms",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__all-reversed__002",
+        "task_id": "merge-intervals",
+        "condition_id": "all-reversed",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__baseline__003",
+        "task_id": "toposort",
+        "condition_id": "baseline",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__single-edge-cases__003",
+        "task_id": "toposort",
+        "condition_id": "single-edge-cases",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__single-edge-cases__002",
+        "task_id": "toposort",
+        "condition_id": "single-edge-cases",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__length-b__003",
+        "task_id": "get-path",
+        "condition_id": "length-b",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__baseline__002",
+        "task_id": "merge-intervals",
+        "condition_id": "baseline",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__scoped__002",
+        "task_id": "toposort",
+        "condition_id": "scoped",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__single-edge-cases__002",
+        "task_id": "merge-intervals",
+        "condition_id": "single-edge-cases",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__all__003",
+        "task_id": "clamp",
+        "condition_id": "all",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__scoped__001",
+        "task_id": "toposort",
+        "condition_id": "scoped",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__all-reversed__002",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__length-a__003",
+        "task_id": "merge-intervals",
+        "condition_id": "length-a",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__all-reversed__003",
+        "task_id": "toposort",
+        "condition_id": "all-reversed",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__length-b__002",
+        "task_id": "clamp",
+        "condition_id": "length-b",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__all-reversed__001",
+        "task_id": "clamp",
+        "condition_id": "all-reversed",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-python-idioms__002",
+        "task_id": "merge-intervals",
+        "condition_id": "single-python-idioms",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__baseline__003",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__scoped__003",
+        "task_id": "merge-intervals",
+        "condition_id": "scoped",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__single-input-validation__001",
+        "task_id": "merge-intervals",
+        "condition_id": "single-input-validation",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-minimal-fix__002",
+        "task_id": "get-path",
+        "condition_id": "single-minimal-fix",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__single-minimal-fix__002",
+        "task_id": "clamp",
+        "condition_id": "single-minimal-fix",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__length-b__001",
+        "task_id": "toposort",
+        "condition_id": "length-b",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__all-reversed__003",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__all__003",
+        "task_id": "merge-intervals",
+        "condition_id": "all",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__single-root-cause__003",
+        "task_id": "get-path",
+        "condition_id": "single-root-cause",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__all__002",
+        "task_id": "toposort",
+        "condition_id": "all",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__single-python-idioms__001",
+        "task_id": "toposort",
+        "condition_id": "single-python-idioms",
+        "repeat": 1
+      },
+      {
+        "id": "toposort__single-root-cause__003",
+        "task_id": "toposort",
+        "condition_id": "single-root-cause",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__scoped__003",
+        "task_id": "clamp",
+        "condition_id": "scoped",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__length-a__002",
+        "task_id": "merge-intervals",
+        "condition_id": "length-a",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__single-python-idioms__002",
+        "task_id": "get-path",
+        "condition_id": "single-python-idioms",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__scoped__002",
+        "task_id": "clamp",
+        "condition_id": "scoped",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__single-python-idioms__001",
+        "task_id": "get-path",
+        "condition_id": "single-python-idioms",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-root-cause__002",
+        "task_id": "get-path",
+        "condition_id": "single-root-cause",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__single-input-validation__002",
+        "task_id": "clamp",
+        "condition_id": "single-input-validation",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__single-input-validation__002",
+        "task_id": "toposort",
+        "condition_id": "single-input-validation",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__all__001",
+        "task_id": "merge-intervals",
+        "condition_id": "all",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__all-reversed__001",
+        "task_id": "merge-intervals",
+        "condition_id": "all-reversed",
+        "repeat": 1
+      },
+      {
+        "id": "toposort__baseline__001",
+        "task_id": "toposort",
+        "condition_id": "baseline",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__length-b__002",
+        "task_id": "get-path",
+        "condition_id": "length-b",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__length-b__001",
+        "task_id": "merge-intervals",
+        "condition_id": "length-b",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-minimal-fix__002",
+        "task_id": "merge-intervals",
+        "condition_id": "single-minimal-fix",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__all__002",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__length-b__003",
+        "task_id": "clamp",
+        "condition_id": "length-b",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__single-root-cause__001",
+        "task_id": "toposort",
+        "condition_id": "single-root-cause",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__length-a__001",
+        "task_id": "clamp",
+        "condition_id": "length-a",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-compatibility__002",
+        "task_id": "get-path",
+        "condition_id": "single-compatibility",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__length-a__001",
+        "task_id": "get-path",
+        "condition_id": "length-a",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__scoped__002",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__length-a__002",
+        "task_id": "toposort",
+        "condition_id": "length-a",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__single-python-idioms__001",
+        "task_id": "merge-intervals",
+        "condition_id": "single-python-idioms",
+        "repeat": 1
+      },
+      {
+        "id": "toposort__single-compatibility__002",
+        "task_id": "toposort",
+        "condition_id": "single-compatibility",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__single-compatibility__001",
+        "task_id": "toposort",
+        "condition_id": "single-compatibility",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__length-a__002",
+        "task_id": "get-path",
+        "condition_id": "length-a",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__length-b__002",
+        "task_id": "toposort",
+        "condition_id": "length-b",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__baseline__003",
+        "task_id": "merge-intervals",
+        "condition_id": "baseline",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__all-reversed__002",
+        "task_id": "toposort",
+        "condition_id": "all-reversed",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__single-compatibility__003",
+        "task_id": "get-path",
+        "condition_id": "single-compatibility",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__single-minimal-fix__001",
+        "task_id": "toposort",
+        "condition_id": "single-minimal-fix",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-compatibility__002",
+        "task_id": "merge-intervals",
+        "condition_id": "single-compatibility",
+        "repeat": 2
+      },
+      {
+        "id": "get-path__single-input-validation__001",
+        "task_id": "get-path",
+        "condition_id": "single-input-validation",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-edge-cases__001",
+        "task_id": "get-path",
+        "condition_id": "single-edge-cases",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__baseline__001",
+        "task_id": "merge-intervals",
+        "condition_id": "baseline",
+        "repeat": 1
+      },
+      {
+        "id": "toposort__length-a__001",
+        "task_id": "toposort",
+        "condition_id": "length-a",
+        "repeat": 1
+      },
+      {
+        "id": "toposort__all-reversed__001",
+        "task_id": "toposort",
+        "condition_id": "all-reversed",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__scoped__001",
+        "task_id": "clamp",
+        "condition_id": "scoped",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__single-python-idioms__001",
+        "task_id": "clamp",
+        "condition_id": "single-python-idioms",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-root-cause__003",
+        "task_id": "merge-intervals",
+        "condition_id": "single-root-cause",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__length-a__002",
+        "task_id": "clamp",
+        "condition_id": "length-a",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__single-input-validation__001",
+        "task_id": "toposort",
+        "condition_id": "single-input-validation",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__scoped__003",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__single-edge-cases__001",
+        "task_id": "toposort",
+        "condition_id": "single-edge-cases",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-edge-cases__001",
+        "task_id": "merge-intervals",
+        "condition_id": "single-edge-cases",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-minimal-fix__003",
+        "task_id": "get-path",
+        "condition_id": "single-minimal-fix",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__length-b__003",
+        "task_id": "merge-intervals",
+        "condition_id": "length-b",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__baseline__002",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__single-input-validation__002",
+        "task_id": "merge-intervals",
+        "condition_id": "single-input-validation",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__single-input-validation__003",
+        "task_id": "toposort",
+        "condition_id": "single-input-validation",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__single-python-idioms__003",
+        "task_id": "get-path",
+        "condition_id": "single-python-idioms",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__single-compatibility__002",
+        "task_id": "clamp",
+        "condition_id": "single-compatibility",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__single-input-validation__003",
+        "task_id": "merge-intervals",
+        "condition_id": "single-input-validation",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__all__003",
+        "task_id": "toposort",
+        "condition_id": "all",
+        "repeat": 3
+      },
+      {
+        "id": "toposort__single-minimal-fix__002",
+        "task_id": "toposort",
+        "condition_id": "single-minimal-fix",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__single-edge-cases__003",
+        "task_id": "merge-intervals",
+        "condition_id": "single-edge-cases",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__all-reversed__002",
+        "task_id": "clamp",
+        "condition_id": "all-reversed",
+        "repeat": 2
+      },
+      {
+        "id": "toposort__all__001",
+        "task_id": "toposort",
+        "condition_id": "all",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__all-reversed__003",
+        "task_id": "clamp",
+        "condition_id": "all-reversed",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__all-reversed__001",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__single-python-idioms__002",
+        "task_id": "clamp",
+        "condition_id": "single-python-idioms",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__all-reversed__003",
+        "task_id": "merge-intervals",
+        "condition_id": "all-reversed",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__single-edge-cases__001",
+        "task_id": "clamp",
+        "condition_id": "single-edge-cases",
+        "repeat": 1
+      },
+      {
+        "id": "clamp__single-python-idioms__003",
+        "task_id": "clamp",
+        "condition_id": "single-python-idioms",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__all__001",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__length-b__002",
+        "task_id": "merge-intervals",
+        "condition_id": "length-b",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__scoped__002",
+        "task_id": "merge-intervals",
+        "condition_id": "scoped",
+        "repeat": 2
+      },
+      {
+        "id": "merge-intervals__all__002",
+        "task_id": "merge-intervals",
+        "condition_id": "all",
+        "repeat": 2
+      },
+      {
+        "id": "clamp__single-root-cause__003",
+        "task_id": "clamp",
+        "condition_id": "single-root-cause",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__length-a__003",
+        "task_id": "get-path",
+        "condition_id": "length-a",
+        "repeat": 3
+      },
+      {
+        "id": "get-path__single-root-cause__001",
+        "task_id": "get-path",
+        "condition_id": "single-root-cause",
+        "repeat": 1
+      },
+      {
+        "id": "merge-intervals__single-compatibility__003",
+        "task_id": "merge-intervals",
+        "condition_id": "single-compatibility",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__single-edge-cases__003",
+        "task_id": "clamp",
+        "condition_id": "single-edge-cases",
+        "repeat": 3
+      },
+      {
+        "id": "clamp__single-root-cause__001",
+        "task_id": "clamp",
+        "condition_id": "single-root-cause",
+        "repeat": 1
+      },
+      {
+        "id": "get-path__single-minimal-fix__001",
+        "task_id": "get-path",
+        "condition_id": "single-minimal-fix",
+        "repeat": 1
+      },
+      {
+        "id": "toposort__single-compatibility__003",
+        "task_id": "toposort",
+        "condition_id": "single-compatibility",
+        "repeat": 3
+      },
+      {
+        "id": "merge-intervals__single-compatibility__001",
+        "task_id": "merge-intervals",
+        "condition_id": "single-compatibility",
+        "repeat": 1
+      }
+    ]
+  },
+  "plan_sha256": "23f7205ccf4427ee9fec791067e243a52deb7a287370a9ff0c258fc18a460173",
+  "pilot": {
+    "minimum_success_fraction": 0.5,
+    "tasks": [
+      "clamp",
+      "merge-intervals",
+      "get-path",
+      "toposort"
+    ]
+  },
+  "order": "pilot_then_fully_shuffled_main; pilot_excluded_from_main_statistics"
+}

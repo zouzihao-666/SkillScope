@@ -6,9 +6,13 @@
 
 可以把 Skill 理解为工作指南。SkillScope 希望通过相同任务、不同指南组合的重复实验，找到值得进一步验证的退化组合，并尝试按工作阶段加载指南。
 
-**当前 v0.2：已能运行单道真实任务。包括实验准备、DeepSeek 工具调用、LangGraph 三阶段流程、Docker 候选执行和容器外独立评分。尚未实现批量执行、自动组合缩减或策略学习。**
+**当前 v0.3：支持单题运行、冻结输入的重复批次、6 技能对照实验、顺序/长度对照、预算控制和描述性统计报告。自动组合缩减与策略学习属于后续阶段。**
 
 [中文入门](docs/step-by-step.md) · [跑通真实任务](docs/first-real-run.md) · [试运行记录](docs/smoke-results.md) · [开发路线](docs/roadmap.md) · [原始研究设计](docs/design.md)
+
+第三阶段已完成：[逐步操作与作用](docs/stage3-guide.md) · [执行前固定的方案](docs/stage3-protocol.md) · [结论与异常解释](docs/stage3-findings.md) · [原始数据及报告](artifacts/stage3-20261123/report.md)。
+
+本轮主实验 143/144 次完成任务，唯一失败是反向加载的一次输出截断；没有观察到满足预先规则的稳定退化候选。含预检共 442 次实际模型调用、510,231 tokens；按固定高峰价上界估算约 USD 0.24075，并非账户账单。
 
 ## 快速开始
 
@@ -74,7 +78,7 @@ Copy-Item .env.example .env
 
 `run` 只运行指定的一道题和一个分组，不会自动执行 `plan` 的 15 次排期。数据保存在新建输出目录中，已有目录会被拒绝。`--allow-holdout` 才允许显式运行验收题。
 
-评分时，可信 pytest 测试留在宿主机，候选代码在无网络、只读挂载、非 root、限制资源的容器中执行；每次函数调用使用新容器。测试通过 JSON 代理调用候选函数。当前只支持示例中的 `clamp`、`deduplicate` 及其普通 JSON 参数，保留顶层列表/字典修改和返回值与参数的顶层身份关系；不支持任意 Python 对象、跨调用状态或通用代码仓库任务。评分测试是可信输入。
+评分时，可信 pytest 测试留在宿主机，候选代码在无网络、只读挂载、非 root、限制资源的容器中执行；每次函数调用使用新容器。测试通过 JSON 代理调用公开函数，支持本项目 6 道教学任务及其普通 JSON 位置参数，保留顶层列表/字典修改和返回值与参数的顶层身份关系；不支持任意 Python 对象、关键字参数、跨调用状态或通用代码仓库任务。评分测试是可信输入。
 
 基础镜像固定摘要，实际运行还记录本地镜像 ID。模型返回的别名不能证明服务端权重版本固定。日志中的费用保持未知，不根据 token 数编造账单。
 
@@ -90,6 +94,8 @@ docs/                  中文操作步骤、路线和原始方案
 requirements-dev.lock 本阶段验证过的依赖版本
 .github/workflows/     Windows/Linux 自动检查
 results/               本地计划、调用日志、候选代码、评分记录；Git 忽略
+benchmarks/stage3/     六份人工技能、四道开发题、两道保留题与参考实现
+artifacts/             经检查后公开的实验摘要与压缩原始记录
 ```
 
 配置引用的文件必须在配置文件所在目录内。容器只挂载候选代码文件，不挂载项目、密钥、宿主机评分文件或 Docker socket。模型不能自行改变评分规则。
@@ -100,7 +106,16 @@ results/               本地计划、调用日志、候选代码、评分记录
 
 `.env` 由本机读取并被 Git 忽略。不要将模型密钥提交到仓库。
 
-之后再做稳定退化案例搜集、顺序及长度对照、组合缩减，以及在新任务上的策略验证。完成这些真实实验前，不能宣称已经发现技能冲突或提升了完成率。
+第三阶段通过 12 组配置、每题 3 次重复观察技能影响；先做 4 次基线预检，再随机执行 144 次主实验。保留题不请求模型。使用固定高峰价格记录费用上界估算，API/环境错误保持未知；统计区间只作描述，不代表新任务总体效果。方案、评分标准和候选阈值在执行前固定。
+
+查看计划与重新生成已有报告都不请求模型：
+
+```powershell
+.\.venv\Scripts\python.exe -m skillscope plan --config benchmarks/stage3/experiment.json --controls --output results/my-stage3-plan.json
+.\.venv\Scripts\python.exe -m skillscope report results/stage3-20261123
+```
+
+真实批次命令、费用预算和续跑要求见[第三阶段教程](docs/stage3-guide.md)。后续组合缩减与策略验证需要可复查的退化候选；证据不足时如实记录负面结果。
 
 ## 开发验证
 
@@ -114,7 +129,7 @@ results/               本地计划、调用日志、候选代码、评分记录
 
 ```powershell
 $env:SKILLSCOPE_TEST_DOCKER = 'docker' # 或 docker.exe 的完整路径
-.\.venv\Scripts\python.exe -m pytest tests/test_sandbox_integration.py -q
+.\.venv\Scripts\python.exe -m pytest tests/test_sandbox_integration.py tests/test_stage3_corpus_integration.py -q
 ```
 
 CI 在 Windows/Linux 检查工具代码，并在 Linux 运行真实 Docker 测试；CI 不配置模型密钥，不产生模型 API 费用。

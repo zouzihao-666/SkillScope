@@ -1,0 +1,20 @@
+{
+  "execution_code_commit": "4ec0043f29b1ccde2b607c79f7477d4ae50feee2",
+  "source_sha256": "c726088eb73634c49d0bdc5c38c1fd65d3dbc67167ad918b3e584e9919df3a84",
+  "corpus_matches_frozen_inputs": true,
+  "raw_records": 148,
+  "raw_jsonl_sha256": "95e17867ca2ec78c89a1e33b5a99c8d524bb5629ae423f35bfb49b01b37ca071",
+  "redactions": "HTTP headers never recorded; host paths replaced in failed grader logs.",
+  "text_encoding": "UTF-8 with LF; candidate_sha256 hashes the normalized candidate text",
+  "raw_fields": [
+    "run metadata",
+    "all recorded model requests/responses",
+    "candidate code",
+    "failed grader log with host paths redacted"
+  ],
+  "not_in_archive": [
+    "API keys",
+    "environment files",
+    "account balance"
+  ]
+}

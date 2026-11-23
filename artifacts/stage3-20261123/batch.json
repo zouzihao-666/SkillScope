@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "stop_reason": null,
+  "completed": 148,
+  "planned": 148,
+  "main_completed": 144,
+  "calls_attempted": 442,
+  "reported_tokens": 510231,
+  "estimated_usd_upper": 0.240750156,
+  "usage_complete": true,
+  "remaining_ids": [],
+  "elapsed_this_session_seconds": 754.812
+}

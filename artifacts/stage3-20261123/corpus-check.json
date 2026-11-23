@@ -1,0 +1,152 @@
+{
+  "experiment_sha256": "ba31e30f6a20e5c956356530d8021f005a43e41cd3c25fad8e084200c2dbe738",
+  "sandbox_image_id": "sha256:1d8cf3d0b6c25e562b276566057195d4f724915d6f55ac1025e5e70295ac22be",
+  "passed": true,
+  "records": [
+    {
+      "task": "clamp",
+      "kind": "reference",
+      "expected": "passed",
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 9,
+        "failures": 0,
+        "container_calls": 9
+      }
+    },
+    {
+      "task": "clamp",
+      "kind": "starter",
+      "expected": "failed",
+      "grading": {
+        "status": "failed",
+        "passed": false,
+        "tests": 9,
+        "failures": 5,
+        "container_calls": 9
+      }
+    },
+    {
+      "task": "merge-intervals",
+      "kind": "reference",
+      "expected": "passed",
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 11,
+        "failures": 0,
+        "container_calls": 11
+      }
+    },
+    {
+      "task": "merge-intervals",
+      "kind": "starter",
+      "expected": "failed",
+      "grading": {
+        "status": "failed",
+        "passed": false,
+        "tests": 11,
+        "failures": 11,
+        "container_calls": 11
+      }
+    },
+    {
+      "task": "get-path",
+      "kind": "reference",
+      "expected": "passed",
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 16,
+        "failures": 0,
+        "container_calls": 16
+      }
+    },
+    {
+      "task": "get-path",
+      "kind": "starter",
+      "expected": "failed",
+      "grading": {
+        "status": "failed",
+        "passed": false,
+        "tests": 16,
+        "failures": 13,
+        "container_calls": 16
+      }
+    },
+    {
+      "task": "toposort",
+      "kind": "reference",
+      "expected": "passed",
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 11,
+        "failures": 0,
+        "container_calls": 11
+      }
+    },
+    {
+      "task": "toposort",
+      "kind": "starter",
+      "expected": "failed",
+      "grading": {
+        "status": "failed",
+        "passed": false,
+        "tests": 11,
+        "failures": 7,
+        "container_calls": 11
+      }
+    },
+    {
+      "task": "deduplicate",
+      "kind": "reference",
+      "expected": "passed",
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 5,
+        "failures": 0,
+        "container_calls": 5
+      }
+    },
+    {
+      "task": "deduplicate",
+      "kind": "starter",
+      "expected": "failed",
+      "grading": {
+        "status": "failed",
+        "passed": false,
+        "tests": 5,
+        "failures": 3,
+        "container_calls": 5
+      }
+    },
+    {
+      "task": "parse-duration",
+      "kind": "reference",
+      "expected": "passed",
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 15,
+        "failures": 0,
+        "container_calls": 15
+      }
+    },
+    {
+      "task": "parse-duration",
+      "kind": "starter",
+      "expected": "failed",
+      "grading": {
+        "status": "failed",
+        "passed": false,
+        "tests": 15,
+        "failures": 7,
+        "container_calls": 15
+      }
+    }
+  ],
+  "model_calls": 0
+}

@@ -1,0 +1,12 @@
+{
+  "batch.json": "aed2c2826ae341a61ea4e0022f30a2b63866fa600352be88075d26e04de17ce5",
+  "corpus-check.json": "78222076338207a1a428e2f9250f54f0a7b42940601809b7390a5e0df44a7873",
+  "manifest.json": "dbc8bac9c88dc0341663449cd41d8683fae59c7cf907ea87b2e8bfe795f2296c",
+  "provenance.json": "a43bcaa1775827073bd6a341c9e0209f3f93fe25e34f56ae3fa23b573f6d6d3f",
+  "raw-runs.jsonl.gz": "d9b9e08c932d69fff599275ed4697c83925032fd754bc2b31c5b7c143ebb56af",
+  "report.json": "9896492d8621865986931f8112f1a45b1b23d59f14a1a18a904eeffcbdeb57a7",
+  "report.md": "02dbacfb06b9c0f7d3d916ccfa8b3ead9bc140922da68da8e076b0103a443491",
+  "results.jsonl": "098e7b415600a472cdcc75fcfa4cdc6a3ca55a70d6e6ca1bca9632dbf1697963",
+  "token-comparison.json": "db15c9eb901718ec5b944d971b32d52316b2b840f1f56155a49943a93250fb78",
+  "token-comparison.md": "cffdc27fa07f96386874ea2dfe77c661ca217585f33b0ed2930e7d6574e7df42"
+}
