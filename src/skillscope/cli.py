@@ -214,3 +214,97 @@ def report(batch_dir: Annotated[Path, typer.Argument()]) -> None:
     except (ValueError, OSError, KeyError) as error:
         fail(error)
     typer.echo(f"报告已生成：{batch_dir / 'report.md'}；结论：{result['conclusion']}")
+
+
+@app.command("analyze")
+def analyze(
+    evidence: Annotated[Path, typer.Option("--evidence")] = Path("artifacts/repo-skills-20261123"),
+    output: Annotated[Path, typer.Option("--output", "-o")] = Path("results/analysis"),
+) -> None:
+    """分析已有真实记录，生成可疑技能、阶段方案草稿和 HTML 报告；不调用模型。"""
+    from skillscope.evidence import analyze_evidence
+
+    try:
+        result = analyze_evidence(evidence, output)
+    except (ValueError, OSError, KeyError) as error:
+        fail(error)
+    typer.echo(f"已生成分析：{output / 'report.html'}；模型调用：0")
+    typer.echo(f"待复核技能：{', '.join(result['policy']['suspects']) or '未确定'}")
+    typer.echo("阶段方案为草稿，未声称已通过新验证。")
+
+
+@app.command("diagnose")
+def diagnose(
+    config: ConfigOption = Path("diagnosis.json"),
+    output: Annotated[Path, typer.Option("--output", "-o")] = Path("results/diagnosis"),
+    env_file: Path = Path(".env"),
+    docker: Annotated[str | None, typer.Option()] = None,
+    plan_only: bool = False,
+    resume: bool = False,
+    allow_holdout: bool = False,
+) -> None:
+    """一键：新基线→退化复核→集合缩减→阶段方案→独立验证；受预算约束。"""
+    from skillscope.presentation import workflow_report
+    from skillscope.repo_config import load_repository_config
+    from skillscope.sandbox import SandboxError
+    from skillscope.settings import load_settings
+    from skillscope.workflow import prepare
+
+    try:
+        spec, _, _ = load_repository_config(config)
+        if spec.validate_holdout and not allow_holdout and not plan_only:
+            raise ValueError(
+                "配置请求保留题验证；实际执行请明确传 --allow-holdout。策略将在调用保留题前冻结。"
+            )
+        settings = None if plan_only else load_settings(env_file, docker)
+        workflow = prepare(config, output, settings, plan_only, resume)
+        typer.echo(
+            f"预算：最多 {spec.limits.max_calls} 次请求；费用估算上限 USD {spec.limits.max_usd:.2f}"
+        )
+        if plan_only:
+            workflow_report(output)
+            typer.echo(f"仅生成方案：{output / 'plan.json'}；模型调用：0")
+            return
+        try:
+            state = workflow.execute()
+        finally:
+            workflow_report(output)
+    except (ValueError, OSError, KeyError, SandboxError) as error:
+        fail(error)
+    typer.echo(f"诊断状态：{state['status']}；报告：{output / 'report.html'}")
+    for value in state["diagnoses"].values():
+        typer.echo(
+            f"{value['task']}：{value['classification']}；可疑技能：{', '.join(value['suspects']) or '未确定'}"
+        )
+    typer.echo(
+        f"加载方案：{output / 'policy.json'}；保留集已开启：{state.get('holdout_opened', False)}"
+    )
+    if state["status"] != "completed":
+        raise typer.Exit(code=1)
+
+
+@app.command("diagnosis-report")
+def diagnosis_report(directory: Annotated[Path, typer.Argument()]) -> None:
+    """从诊断记录重新生成中文和 HTML 报告；不调用模型。"""
+    from skillscope.presentation import workflow_report
+
+    try:
+        workflow_report(directory)
+    except (ValueError, OSError, KeyError) as error:
+        fail(error)
+    typer.echo(f"报告：{directory / 'report.html'}；模型调用：0")
+
+
+@app.command("export-diagnosis")
+def export_diagnosis(
+    directory: Annotated[Path, typer.Argument()],
+    output: Annotated[Path, typer.Option("--output", "-o")],
+) -> None:
+    """校验并导出冻结方案、结果和压缩原始轨迹；不调用模型。"""
+    from skillscope.evidence import export_workflow
+
+    try:
+        result = export_workflow(directory, output)
+    except (ValueError, OSError, KeyError) as error:
+        fail(error)
+    typer.echo(f"已导出 {result['trials']} 次运行：{output}；模型调用：0")

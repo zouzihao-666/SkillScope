@@ -6,7 +6,19 @@
 
 可以把 Skill 理解为工作指南。SkillScope 希望通过相同任务、不同指南组合的重复实验，找到值得进一步验证的退化组合，并尝试按工作阶段加载指南。
 
-**当前 v0.5：支持冻结批次、真实库多文件技能对照、阶段加载、预算与中断核算、外部评分和诊断前提检查。自动组合缩减与策略学习尚未完成。**
+**当前 v0.6：统一命令已接通新基线、退化复核、自动集合缩减、单技能/组合分类、阶段方案构造与选择、固定方案后的保留题验证、HTML 报告与证据导出。生成规则使用已有阶段声明，不声称学习到了最优策略。**
+
+## 直接使用
+
+```powershell
+# 使用现有真实记录生成诊断概览与阶段方案草稿，不调用模型
+.\.venv\Scripts\python.exe -m skillscope analyze --output results/my-analysis
+
+# 一次命令完成新诊断与验证；会消耗 API 额度，由 diagnosis.json 限定
+.\.venv\Scripts\python.exe -m skillscope diagnose --config diagnosis.json --output results/my-diagnosis --allow-holdout
+```
+
+打开输出目录的 `report.html` 查看结果，`policy.json` 保存阶段映射。可先加 `--plan-only` 查看冻结输入，再用 `--resume` 执行；不会覆盖旧目录或重发未知用量的中断请求。[完整使用步骤](docs/one-command-guide.md) · [本轮执行前约定](docs/one-command-protocol.md)。
 
 [中文入门](docs/step-by-step.md) · [跑通真实任务](docs/first-real-run.md) · [试运行记录](docs/smoke-results.md) · [开发路线](docs/roadmap.md) · [原始研究设计](docs/design.md)
 
@@ -22,7 +34,7 @@
 
 v4 已完成[真实 API 验证与独立校准](artifacts/controller-v4-20261123/report.json)：工程验证隐藏测试 9/9；新校准中注释题 2/2、反斜杠题 1/2，全部到达最终评分。共 50 次请求、204,116 tokens，费用上界估算约 USD 0.04703，工程样本不计入校准。
 
-[首轮真实库技能对照已记录全部 36 项排期](docs/repo-skill-findings.md)：20 次通过、13 次功能失败、1 次格式失败、2 次环境中断。部分单技能本身表现较差，关键对照也有缺失评分，未达到预设组合退化候选标准。335 次请求尝试中 2 次响应与费用未知；已保存响应估算 USD 0.44175，另预留 USD 0.448512，保守合计约 USD 0.89026，不能当作实际账单。保留题没有模型调用或评分。
+[v0.5 首轮真实库技能对照记录了全部 36 项排期](docs/repo-skill-findings.md)：20 次通过、13 次功能失败、1 次格式失败、2 次环境中断。部分单技能本身表现较差，关键对照也有缺失评分，未达到该轮预设组合退化候选标准。335 次请求尝试中 2 次响应与费用未知；已保存响应估算 USD 0.44175，另预留 USD 0.448512，保守合计约 USD 0.89026，不能当作实际账单。该轮未调用或评分保留题。
 
 ## 快速开始
 

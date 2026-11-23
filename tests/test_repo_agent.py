@@ -260,13 +260,17 @@ def test_automatic_handoff_records_actual_edits_and_tests_without_invented_analy
     assert "No model reasoning summary" in verify
 
 
-def test_invalid_phase_finish_is_recorded_as_model_output_failure(tmp_path, fake_agent):
+def test_long_phase_summary_is_explicitly_bounded_without_losing_the_trial(tmp_path, fake_agent):
     _, grades, sequence = fake_agent
-    sequence.extend([finish("x" * 2001)])
+    sequence.extend([finish("x" * 2001), finish(), finish()])
     result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "run")
-    assert result["status"] == "invalid_output"
-    assert result["calls_attempted"] == 1 and result["usage_complete"]
-    assert grades == [False]
+    assert result["status"] == "failed"
+    assert result["calls_attempted"] == 3 and result["usage_complete"]
+    assert grades == [False, True]
+    events = [json.loads(line) for line in (tmp_path / "run/trace.jsonl").read_text().splitlines()]
+    phase = next(event for event in events if event["type"] == "phase_finished")
+    assert phase["summary_truncated"] and phase["original_summary_chars"] == 2001
+    assert len(phase["summary"]) == 2000
 
 
 def test_legitimate_parallel_inventory_reads_do_not_trip_a_request_count_limit(

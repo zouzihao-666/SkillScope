@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "skillscope-complete-diagnosis",
+  "model": "deepseek-flash",
+  "skills": [
+    {"id": "root-cause", "file": "benchmarks/stage3/skills/root-cause.md", "stages": ["investigate"]},
+    {"id": "minimal-fix", "file": "benchmarks/stage3/skills/minimal-fix.md", "stages": ["implement"]},
+    {"id": "edge-cases", "file": "benchmarks/stage3/skills/edge-cases.md", "stages": ["verify"]},
+    {"id": "input-validation", "file": "benchmarks/stage3/skills/input-validation.md", "stages": ["investigate", "implement"]},
+    {"id": "compatibility", "file": "benchmarks/stage3/skills/compatibility.md", "stages": ["investigate", "verify"]},
+    {"id": "python-idioms", "file": "benchmarks/stage3/skills/python-idioms.md", "stages": ["implement"]}
+  ],
+  "tasks": [
+    {"id": "dotenv-backslash", "manifest": "benchmarks/upstream/dotenv-backslash/task.json", "split": "discovery"},
+    {"id": "dotenv-bom", "manifest": "benchmarks/upstream/dotenv-bom/task.json", "split": "holdout"}
+  ],
+  "repeats": 3,
+  "limits": {"max_calls": 360, "max_runs": 36, "max_usd": 1.5, "per_run_calls": 10, "per_phase_calls": 4, "max_subset_evaluations": 6},
+  "prior_evidence": "artifacts/repo-skills-20261123",
+  "validate_holdout": true
+}
