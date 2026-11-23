@@ -301,6 +301,12 @@ def test_export_and_html_report_are_complete_and_do_not_execute_model_text(
     result = export_workflow(root, exported)
     assert result["status"] == "completed"
     audited_files(exported)
+    state = json.loads((exported / "state.json").read_text(encoding="utf-8"))
+    assert hashlib.sha256((exported / "plan.json").read_bytes()).hexdigest() == state["plan_sha256"]
+    assert (
+        hashlib.sha256((exported / "policy.json").read_bytes()).hexdigest()
+        == state["policy_frozen_sha256"]
+    )
     write_report(
         tmp_path / "html",
         {
@@ -312,3 +318,28 @@ def test_export_and_html_report_are_complete_and_do_not_execute_model_text(
     )
     content = (tmp_path / "html/report.html").read_text(encoding="utf-8")
     assert "<script>" not in content and "<img src=x" not in content
+
+
+def test_unreliable_baseline_does_not_block_selecting_and_testing_a_helpful_configuration(
+    diagnosis_config, tmp_path, oracle
+):
+    evaluate, _ = oracle
+
+    def helpful(task, settings, output, *, skills, condition, **kwargs):
+        result = evaluate(task, settings, output, skills=skills, condition=condition, **kwargs)
+        active = any(
+            skill.id in condition.skill_ids and Stage.IMPLEMENT in skill.stages for skill in skills
+        )
+        status = "passed" if active else "failed"
+        result = {**result, "status": status, "grading": {"status": status, "tests": 9}}
+        write_json(output / "run.json", result)
+        return result
+
+    workflow = prepare(
+        diagnosis_config, tmp_path / "helpful", Settings(api_key="unit-secret"), evaluator=helpful
+    )
+    state = workflow.execute()
+    diagnosis = state["diagnoses"]["discovery"]
+    assert state["status"] == "completed" and state["holdout_opened"]
+    assert diagnosis["classification"] == "baseline_unreliable" and not diagnosis["suspects"]
+    assert state["policy"]["method"] == "all"

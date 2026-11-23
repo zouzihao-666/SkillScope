@@ -151,7 +151,8 @@ def export_workflow(root: Path, output: Path):
         raise ValueError("Credential-like content found; export aborted")
     output.mkdir(parents=True, exist_ok=False)
     for name in selected:
-        (output / name).write_bytes((root / name).read_text(encoding="utf-8").encode())
+        # Keep the exact bytes used by frozen plan and policy hashes.
+        (output / name).write_bytes((root / name).read_bytes())
     with (output / "raw-workflow.json.gz").open("wb") as stream:
         with gzip.GzipFile(filename="", fileobj=stream, mode="wb", mtime=0) as archive:
             archive.write(raw)

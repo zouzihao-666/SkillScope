@@ -273,6 +273,27 @@ def test_long_phase_summary_is_explicitly_bounded_without_losing_the_trial(tmp_p
     assert len(phase["summary"]) == 2000
 
 
+def test_editable_context_contains_current_source_without_hidden_or_readonly_files(
+    tmp_path, fake_agent
+):
+    requests, _, sequence = fake_agent
+    patch = "def amount(text): return 0\n"
+    sequence.extend(
+        [
+            finish(),
+            [("write_file", {"path": "shop/money.py", "content": patch})],
+            finish(),
+            finish(),
+        ]
+    )
+    repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "context")
+    first = json.loads(requests[0]["messages"][1]["content"])["editable_source_context"]
+    last = json.loads(requests[-1]["messages"][1]["content"])["editable_source_context"]
+    assert set(first) == {"shop/money.py", "shop/cart.py"}
+    assert last["shop/money.py"] == patch
+    assert all("hidden_tests.py" not in value for value in first)
+
+
 def test_legitimate_parallel_inventory_reads_do_not_trip_a_request_count_limit(
     tmp_path, fake_agent
 ):

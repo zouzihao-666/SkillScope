@@ -326,7 +326,66 @@ class DiagnosisWorkflow:
                 "No skill attribution when the no-guide control is unreliable."
             )
             self.save()
-            return
+        if baseline.decision == "good":
+            self.attribute_regression(task, diagnosis, validation_reserve)
+        suspects = tuple(diagnosis["suspects"])
+        candidates = {
+            "all": full_policy(self.ids),
+            "generated": policy_from_suspects(self.ids, self.declared, suspects)
+            if suspects
+            else {
+                stage.value: [skill.id for skill in self.skills if stage in skill.stages]
+                for stage in Stage
+            },
+            "manual_scoped": {
+                stage.value: [skill.id for skill in self.skills if stage in skill.stages]
+                for stage in Stage
+            },
+            "relevance": self.relevant_policy(task),
+        }
+        if suspects:
+            candidates["remove_suspects"] = full_policy(
+                tuple(id_ for id_ in self.ids if id_ not in suspects)
+            )
+        scored = []
+        for name, policy in candidates.items():
+            try:
+                result = self.measure(task, policy, name, holdout_reserve)
+            except BudgetExhausted:
+                diagnosis["notes"].append(
+                    f"Policy comparison {name} was not completed within quota."
+                )
+                break
+            scored.append({"name": name, "policy": policy, "measurement": result.record()})
+            diagnosis["policy_comparisons"] = list(scored)
+            self.save()
+        diagnosis["policy_comparisons"] = scored
+        eligible = [
+            item
+            for item in scored
+            if item["measurement"]["unresolved"] == 0
+            and item["measurement"]["decision"] == "good"
+            and item["measurement"]["passed"] >= baseline.passed
+            and item["measurement"]["passed"] >= all_result.passed
+        ]
+        # Prefer equal/better observed successes, then retain more guide-phase
+        # slots. This is explicit selection, not a learned optimal policy.
+        eligible.sort(
+            key=lambda item: (
+                -item["measurement"]["passed"],
+                -sum(map(len, item["policy"].values())),
+                item["name"],
+            )
+        )
+        if eligible:
+            chosen = eligible[0]
+            diagnosis["selected_policy"] = chosen
+            diagnosis["observed_improvement_over_all"] = (
+                chosen["measurement"]["passed"] - all_result.passed
+            )
+        self.save()
+
+    def attribute_regression(self, task, diagnosis, validation_reserve):
         hint = self.seed_hint(task)
         initial = self.ids
         if hint:
@@ -376,60 +435,6 @@ class DiagnosisWorkflow:
         elif initial_result.decision == "unknown":
             diagnosis["classification"] = "inconclusive"
         self.save()
-        suspects = tuple(diagnosis["suspects"])
-        candidates = {
-            "generated": policy_from_suspects(self.ids, self.declared, suspects)
-            if suspects
-            else {
-                stage.value: [skill.id for skill in self.skills if stage in skill.stages]
-                for stage in Stage
-            },
-            "manual_scoped": {
-                stage.value: [skill.id for skill in self.skills if stage in skill.stages]
-                for stage in Stage
-            },
-            "relevance": self.relevant_policy(task),
-        }
-        if suspects:
-            candidates["remove_suspects"] = full_policy(
-                tuple(id_ for id_ in self.ids if id_ not in suspects)
-            )
-        scored = []
-        for name, policy in candidates.items():
-            try:
-                result = self.measure(task, policy, name, holdout_reserve)
-            except BudgetExhausted:
-                diagnosis["notes"].append(
-                    f"Policy comparison {name} was not completed within quota."
-                )
-                break
-            scored.append({"name": name, "policy": policy, "measurement": result.record()})
-            diagnosis["policy_comparisons"] = list(scored)
-            self.save()
-        diagnosis["policy_comparisons"] = scored
-        eligible = [
-            item
-            for item in scored
-            if item["measurement"]["unresolved"] == 0
-            and item["measurement"]["passed"] >= baseline.passed
-            and item["measurement"]["passed"] >= all_result.passed
-        ]
-        # Prefer equal/better observed successes, then retain more guide-phase
-        # slots. This is explicit selection, not a learned optimal policy.
-        eligible.sort(
-            key=lambda item: (
-                -item["measurement"]["passed"],
-                -sum(map(len, item["policy"].values())),
-                item["name"],
-            )
-        )
-        if eligible:
-            chosen = eligible[0]
-            diagnosis["selected_policy"] = chosen
-            diagnosis["observed_improvement_over_all"] = (
-                chosen["measurement"]["passed"] - all_result.passed
-            )
-        self.save()
 
     def freeze_policy(self):
         selected = [
@@ -437,6 +442,7 @@ class DiagnosisWorkflow:
         ]
         if not selected:
             self.state["policy"] = {"status": "unvalidated", "phases": {}, "holdout_tested": False}
+            write_json(self.root / "policy.json", self.state["policy"])
             self.save()
             return False
         # One transferable policy must be chosen before seeing any holdout.

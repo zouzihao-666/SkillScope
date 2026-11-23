@@ -1,0 +1,811 @@
+{
+  "status": "completed",
+  "trials": [
+    {
+      "id": "9aecfc4e20edb9876706-01",
+      "task": "dotenv-backslash",
+      "split": "discovery",
+      "measurement": "9aecfc4e20edb9876706",
+      "repeat": 1,
+      "status": "recorded",
+      "reserved_usd": 0.224256,
+      "result": {
+        "task": "dotenv-backslash",
+        "model": "deepseek-flash",
+        "condition": "9aecfc4e20edb9876706",
+        "skill_configuration": {
+          "condition": {
+            "id": "9aecfc4e20edb9876706",
+            "policy": "scoped",
+            "skill_ids": [],
+            "control": "none"
+          },
+          "skills": [
+            {
+              "id": "root-cause",
+              "stages": [],
+              "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+            },
+            {
+              "id": "minimal-fix",
+              "stages": [],
+              "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+            },
+            {
+              "id": "edge-cases",
+              "stages": [],
+              "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+            },
+            {
+              "id": "input-validation",
+              "stages": [],
+              "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+            },
+            {
+              "id": "compatibility",
+              "stages": [],
+              "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+            },
+            {
+              "id": "python-idioms",
+              "stages": [],
+              "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+            }
+          ]
+        },
+        "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+        "execution_mode": "directory",
+        "controller": "bounded_stage_summaries_v5",
+        "repair_origin": "model_generated_via_allowlisted_tools",
+        "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+        "source_sha256": "be57426cb12dd9aea020eb223bf30f74e40747fc4a5f31ee77446a9cd0602c0e",
+        "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+        "runner_sha256": "fce83bc9322521000fef14f0a585f7aa1c766afbd65aa8997c2e8b520a4e06df",
+        "budget": {
+          "max_requests": 10,
+          "per_phase_requests": 4,
+          "max_output_tokens": 2048,
+          "max_input_json_bytes": 65536,
+          "max_estimated_usd": 0.25,
+          "max_sdk_retries": 0,
+          "max_tools_per_response": 18,
+          "phase_end_policy": "model_finish_or_controller_request_limit"
+        },
+        "initial_public": {
+          "status": "failed",
+          "passed": false,
+          "tests": 2,
+          "failures": 1,
+          "container_calls": 2
+        },
+        "grading": {
+          "status": "failed",
+          "passed": false,
+          "tests": 13,
+          "failures": 3,
+          "container_calls": 13
+        },
+        "status": "failed",
+        "calls_attempted": 10,
+        "responses_received": 10,
+        "usage_complete": true,
+        "reported_tokens": {
+          "prompt_tokens": 51806,
+          "completion_tokens": 2445,
+          "total_tokens": 54251
+        },
+        "estimated_usd_upper": 0.017196312,
+        "final_workspace_sha256": "812672e17ae9301d10e3765644fdbdc2a7c0de93429d307c5bef450d8b598e19",
+        "public_test_runs_by_model": 1,
+        "elapsed_seconds": 31.031
+      }
+    },
+    {
+      "id": "9aecfc4e20edb9876706-02",
+      "task": "dotenv-backslash",
+      "split": "discovery",
+      "measurement": "9aecfc4e20edb9876706",
+      "repeat": 2,
+      "status": "recorded",
+      "reserved_usd": 0.224256,
+      "result": {
+        "task": "dotenv-backslash",
+        "model": "deepseek-flash",
+        "condition": "9aecfc4e20edb9876706",
+        "skill_configuration": {
+          "condition": {
+            "id": "9aecfc4e20edb9876706",
+            "policy": "scoped",
+            "skill_ids": [],
+            "control": "none"
+          },
+          "skills": [
+            {
+              "id": "root-cause",
+              "stages": [],
+              "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+            },
+            {
+              "id": "minimal-fix",
+              "stages": [],
+              "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+            },
+            {
+              "id": "edge-cases",
+              "stages": [],
+              "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+            },
+            {
+              "id": "input-validation",
+              "stages": [],
+              "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+            },
+            {
+              "id": "compatibility",
+              "stages": [],
+              "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+            },
+            {
+              "id": "python-idioms",
+              "stages": [],
+              "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+            }
+          ]
+        },
+        "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+        "execution_mode": "directory",
+        "controller": "bounded_stage_summaries_v5",
+        "repair_origin": "model_generated_via_allowlisted_tools",
+        "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+        "source_sha256": "be57426cb12dd9aea020eb223bf30f74e40747fc4a5f31ee77446a9cd0602c0e",
+        "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+        "runner_sha256": "fce83bc9322521000fef14f0a585f7aa1c766afbd65aa8997c2e8b520a4e06df",
+        "budget": {
+          "max_requests": 10,
+          "per_phase_requests": 4,
+          "max_output_tokens": 2048,
+          "max_input_json_bytes": 65536,
+          "max_estimated_usd": 0.25,
+          "max_sdk_retries": 0,
+          "max_tools_per_response": 18,
+          "phase_end_policy": "model_finish_or_controller_request_limit"
+        },
+        "initial_public": {
+          "status": "failed",
+          "passed": false,
+          "tests": 2,
+          "failures": 1,
+          "container_calls": 2
+        },
+        "grading": {
+          "status": "failed",
+          "passed": false,
+          "tests": 13,
+          "failures": 3,
+          "container_calls": 13
+        },
+        "status": "failed",
+        "calls_attempted": 10,
+        "responses_received": 10,
+        "usage_complete": true,
+        "reported_tokens": {
+          "prompt_tokens": 48123,
+          "completion_tokens": 2373,
+          "total_tokens": 50496
+        },
+        "estimated_usd_upper": 0.013483667999999999,
+        "final_workspace_sha256": "7fc5b72549ed3be4f11587ca07d65a3cfa80d6d1222e3195d210c76147321466",
+        "public_test_runs_by_model": 1,
+        "elapsed_seconds": 27.422
+      }
+    },
+    {
+      "id": "9aecfc4e20edb9876706-03",
+      "task": "dotenv-backslash",
+      "split": "discovery",
+      "measurement": "9aecfc4e20edb9876706",
+      "repeat": 3,
+      "status": "recorded",
+      "reserved_usd": 0.224256,
+      "result": {
+        "task": "dotenv-backslash",
+        "model": "deepseek-flash",
+        "condition": "9aecfc4e20edb9876706",
+        "skill_configuration": {
+          "condition": {
+            "id": "9aecfc4e20edb9876706",
+            "policy": "scoped",
+            "skill_ids": [],
+            "control": "none"
+          },
+          "skills": [
+            {
+              "id": "root-cause",
+              "stages": [],
+              "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+            },
+            {
+              "id": "minimal-fix",
+              "stages": [],
+              "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+            },
+            {
+              "id": "edge-cases",
+              "stages": [],
+              "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+            },
+            {
+              "id": "input-validation",
+              "stages": [],
+              "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+            },
+            {
+              "id": "compatibility",
+              "stages": [],
+              "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+            },
+            {
+              "id": "python-idioms",
+              "stages": [],
+              "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+            }
+          ]
+        },
+        "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+        "execution_mode": "directory",
+        "controller": "bounded_stage_summaries_v5",
+        "repair_origin": "model_generated_via_allowlisted_tools",
+        "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+        "source_sha256": "be57426cb12dd9aea020eb223bf30f74e40747fc4a5f31ee77446a9cd0602c0e",
+        "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+        "runner_sha256": "fce83bc9322521000fef14f0a585f7aa1c766afbd65aa8997c2e8b520a4e06df",
+        "budget": {
+          "max_requests": 10,
+          "per_phase_requests": 4,
+          "max_output_tokens": 2048,
+          "max_input_json_bytes": 65536,
+          "max_estimated_usd": 0.25,
+          "max_sdk_retries": 0,
+          "max_tools_per_response": 18,
+          "phase_end_policy": "model_finish_or_controller_request_limit"
+        },
+        "initial_public": {
+          "status": "failed",
+          "passed": false,
+          "tests": 2,
+          "failures": 1,
+          "container_calls": 2
+        },
+        "grading": {
+          "status": "passed",
+          "passed": true,
+          "tests": 13,
+          "failures": 0,
+          "container_calls": 13
+        },
+        "status": "passed",
+        "calls_attempted": 10,
+        "responses_received": 10,
+        "usage_complete": true,
+        "reported_tokens": {
+          "prompt_tokens": 47244,
+          "completion_tokens": 984,
+          "total_tokens": 48228
+        },
+        "estimated_usd_upper": 0.007978128,
+        "final_workspace_sha256": "f1d120945155a3173f943ec995a0239e1c9f3f1ca4bab156db4fe4946c670aea",
+        "public_test_runs_by_model": 2,
+        "elapsed_seconds": 23.812
+      }
+    },
+    {
+      "id": "4661792e448129573fdc-01",
+      "task": "dotenv-backslash",
+      "split": "discovery",
+      "measurement": "4661792e448129573fdc",
+      "repeat": 1,
+      "status": "recorded",
+      "reserved_usd": 0.224256,
+      "result": {
+        "task": "dotenv-backslash",
+        "model": "deepseek-flash",
+        "condition": "4661792e448129573fdc",
+        "skill_configuration": {
+          "condition": {
+            "id": "4661792e448129573fdc",
+            "policy": "scoped",
+            "skill_ids": [
+              "root-cause",
+              "minimal-fix",
+              "edge-cases",
+              "input-validation",
+              "compatibility",
+              "python-idioms"
+            ],
+            "control": "none"
+          },
+          "skills": [
+            {
+              "id": "root-cause",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+            },
+            {
+              "id": "minimal-fix",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+            },
+            {
+              "id": "edge-cases",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+            },
+            {
+              "id": "input-validation",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+            },
+            {
+              "id": "compatibility",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+            },
+            {
+              "id": "python-idioms",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+            }
+          ]
+        },
+        "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+        "execution_mode": "directory",
+        "controller": "bounded_stage_summaries_v5",
+        "repair_origin": "model_generated_via_allowlisted_tools",
+        "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+        "source_sha256": "be57426cb12dd9aea020eb223bf30f74e40747fc4a5f31ee77446a9cd0602c0e",
+        "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+        "runner_sha256": "fce83bc9322521000fef14f0a585f7aa1c766afbd65aa8997c2e8b520a4e06df",
+        "budget": {
+          "max_requests": 10,
+          "per_phase_requests": 4,
+          "max_output_tokens": 2048,
+          "max_input_json_bytes": 65536,
+          "max_estimated_usd": 0.25,
+          "max_sdk_retries": 0,
+          "max_tools_per_response": 18,
+          "phase_end_policy": "model_finish_or_controller_request_limit"
+        },
+        "initial_public": {
+          "status": "failed",
+          "passed": false,
+          "tests": 2,
+          "failures": 1,
+          "container_calls": 2
+        },
+        "grading": {
+          "status": "passed",
+          "passed": true,
+          "tests": 13,
+          "failures": 0,
+          "container_calls": 13
+        },
+        "status": "passed",
+        "calls_attempted": 10,
+        "responses_received": 10,
+        "usage_complete": true,
+        "reported_tokens": {
+          "prompt_tokens": 49670,
+          "completion_tokens": 1096,
+          "total_tokens": 50766
+        },
+        "estimated_usd_upper": 0.014184071999999999,
+        "final_workspace_sha256": "61f20121c8477b5286ff56b050ab8719d39daeae8a90f0196b621ac503a60172",
+        "public_test_runs_by_model": 2,
+        "elapsed_seconds": 24.672
+      }
+    },
+    {
+      "id": "4661792e448129573fdc-02",
+      "task": "dotenv-backslash",
+      "split": "discovery",
+      "measurement": "4661792e448129573fdc",
+      "repeat": 2,
+      "status": "recorded",
+      "reserved_usd": 0.224256,
+      "result": {
+        "task": "dotenv-backslash",
+        "model": "deepseek-flash",
+        "condition": "4661792e448129573fdc",
+        "skill_configuration": {
+          "condition": {
+            "id": "4661792e448129573fdc",
+            "policy": "scoped",
+            "skill_ids": [
+              "root-cause",
+              "minimal-fix",
+              "edge-cases",
+              "input-validation",
+              "compatibility",
+              "python-idioms"
+            ],
+            "control": "none"
+          },
+          "skills": [
+            {
+              "id": "root-cause",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+            },
+            {
+              "id": "minimal-fix",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+            },
+            {
+              "id": "edge-cases",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+            },
+            {
+              "id": "input-validation",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+            },
+            {
+              "id": "compatibility",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+            },
+            {
+              "id": "python-idioms",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+            }
+          ]
+        },
+        "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+        "execution_mode": "directory",
+        "controller": "bounded_stage_summaries_v5",
+        "repair_origin": "model_generated_via_allowlisted_tools",
+        "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+        "source_sha256": "be57426cb12dd9aea020eb223bf30f74e40747fc4a5f31ee77446a9cd0602c0e",
+        "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+        "runner_sha256": "fce83bc9322521000fef14f0a585f7aa1c766afbd65aa8997c2e8b520a4e06df",
+        "budget": {
+          "max_requests": 10,
+          "per_phase_requests": 4,
+          "max_output_tokens": 2048,
+          "max_input_json_bytes": 65536,
+          "max_estimated_usd": 0.25,
+          "max_sdk_retries": 0,
+          "max_tools_per_response": 18,
+          "phase_end_policy": "model_finish_or_controller_request_limit"
+        },
+        "initial_public": {
+          "status": "failed",
+          "passed": false,
+          "tests": 2,
+          "failures": 1,
+          "container_calls": 2
+        },
+        "grading": {
+          "status": "passed",
+          "passed": true,
+          "tests": 13,
+          "failures": 0,
+          "container_calls": 13
+        },
+        "status": "passed",
+        "calls_attempted": 10,
+        "responses_received": 10,
+        "usage_complete": true,
+        "reported_tokens": {
+          "prompt_tokens": 53970,
+          "completion_tokens": 1237,
+          "total_tokens": 55207
+        },
+        "estimated_usd_upper": 0.010939272,
+        "final_workspace_sha256": "cd30676cc6702ab32c972980cda4a3cde719ed27f2d9fd22fb885e9dee3fcd73",
+        "public_test_runs_by_model": 2,
+        "elapsed_seconds": 26.438
+      }
+    },
+    {
+      "id": "4661792e448129573fdc-03",
+      "task": "dotenv-backslash",
+      "split": "discovery",
+      "measurement": "4661792e448129573fdc",
+      "repeat": 3,
+      "status": "recorded",
+      "reserved_usd": 0.224256,
+      "result": {
+        "task": "dotenv-backslash",
+        "model": "deepseek-flash",
+        "condition": "4661792e448129573fdc",
+        "skill_configuration": {
+          "condition": {
+            "id": "4661792e448129573fdc",
+            "policy": "scoped",
+            "skill_ids": [
+              "root-cause",
+              "minimal-fix",
+              "edge-cases",
+              "input-validation",
+              "compatibility",
+              "python-idioms"
+            ],
+            "control": "none"
+          },
+          "skills": [
+            {
+              "id": "root-cause",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+            },
+            {
+              "id": "minimal-fix",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+            },
+            {
+              "id": "edge-cases",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+            },
+            {
+              "id": "input-validation",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+            },
+            {
+              "id": "compatibility",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+            },
+            {
+              "id": "python-idioms",
+              "stages": [
+                "investigate",
+                "implement",
+                "verify"
+              ],
+              "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+            }
+          ]
+        },
+        "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+        "execution_mode": "directory",
+        "controller": "bounded_stage_summaries_v5",
+        "repair_origin": "model_generated_via_allowlisted_tools",
+        "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+        "source_sha256": "be57426cb12dd9aea020eb223bf30f74e40747fc4a5f31ee77446a9cd0602c0e",
+        "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+        "runner_sha256": "fce83bc9322521000fef14f0a585f7aa1c766afbd65aa8997c2e8b520a4e06df",
+        "budget": {
+          "max_requests": 10,
+          "per_phase_requests": 4,
+          "max_output_tokens": 2048,
+          "max_input_json_bytes": 65536,
+          "max_estimated_usd": 0.25,
+          "max_sdk_retries": 0,
+          "max_tools_per_response": 18,
+          "phase_end_policy": "model_finish_or_controller_request_limit"
+        },
+        "initial_public": {
+          "status": "failed",
+          "passed": false,
+          "tests": 2,
+          "failures": 1,
+          "container_calls": 2
+        },
+        "grading": {
+          "status": "passed",
+          "passed": true,
+          "tests": 13,
+          "failures": 0,
+          "container_calls": 13
+        },
+        "status": "passed",
+        "calls_attempted": 10,
+        "responses_received": 10,
+        "usage_complete": true,
+        "reported_tokens": {
+          "prompt_tokens": 53608,
+          "completion_tokens": 1292,
+          "total_tokens": 54900
+        },
+        "estimated_usd_upper": 0.010896672,
+        "final_workspace_sha256": "dd60418cb5b8520a881641a0f7c1afe4a6dac5278f91bb9fdb2527498be8d534",
+        "public_test_runs_by_model": 2,
+        "elapsed_seconds": 26.265
+      }
+    }
+  ],
+  "measurements": {
+    "9aecfc4e20edb9876706": {
+      "key": "9aecfc4e20edb9876706",
+      "task": "dotenv-backslash",
+      "split": "discovery",
+      "policy": {
+        "investigate": [],
+        "implement": [],
+        "verify": []
+      },
+      "roles": [
+        "baseline"
+      ],
+      "measurement": {
+        "passed": 1,
+        "failed": 2,
+        "unresolved": 0,
+        "run_ids": [
+          "9aecfc4e20edb9876706-01",
+          "9aecfc4e20edb9876706-02",
+          "9aecfc4e20edb9876706-03"
+        ]
+      },
+      "complete": true
+    },
+    "4661792e448129573fdc": {
+      "key": "4661792e448129573fdc",
+      "task": "dotenv-backslash",
+      "split": "discovery",
+      "policy": {
+        "investigate": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "implement": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "verify": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ]
+      },
+      "roles": [
+        "all"
+      ],
+      "measurement": {
+        "passed": 3,
+        "failed": 0,
+        "unresolved": 0,
+        "run_ids": [
+          "4661792e448129573fdc-01",
+          "4661792e448129573fdc-02",
+          "4661792e448129573fdc-03"
+        ]
+      },
+      "complete": true
+    }
+  },
+  "diagnoses": {
+    "dotenv-backslash": {
+      "task": "dotenv-backslash",
+      "baseline": {
+        "passed": 1,
+        "failed": 2,
+        "unresolved": 0,
+        "run_ids": [
+          "9aecfc4e20edb9876706-01",
+          "9aecfc4e20edb9876706-02",
+          "9aecfc4e20edb9876706-03"
+        ],
+        "decision": "bad"
+      },
+      "all": {
+        "passed": 3,
+        "failed": 0,
+        "unresolved": 0,
+        "run_ids": [
+          "4661792e448129573fdc-01",
+          "4661792e448129573fdc-02",
+          "4661792e448129573fdc-03"
+        ],
+        "decision": "good"
+      },
+      "classification": "baseline_unreliable",
+      "suspects": [],
+      "notes": [
+        "No skill attribution when the no-guide control is unreliable."
+      ]
+    }
+  },
+  "holdout_opened": false,
+  "plan_sha256": "57caae27185c9748d192f0c672e1bd78398621fe9143ca9880e644a9cdf21177",
+  "budget": {
+    "known_response_estimate_usd": 0.07467812399999998,
+    "unknown_reserved_usd": 0.0,
+    "conservative_cost_bound_usd": 0.07467812399999998,
+    "charged_or_reserved_calls": 60,
+    "logged_call_attempts": 60,
+    "reported_tokens": 313848,
+    "usage_complete": true
+  },
+  "policy": {
+    "status": "unvalidated",
+    "phases": {},
+    "holdout_tested": false
+  }
+}

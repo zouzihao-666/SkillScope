@@ -128,8 +128,15 @@ def load_repository_config(config: Path) -> tuple[DiagnosisSpec, dict, dict]:
             "tasks": original["workspace_sha256"],
             "conditions": report["conditions"],
         }
+    portable_spec = spec.model_dump(mode="json")
+    for value, item in zip(portable_spec["skills"], spec.skills, strict=True):
+        value["file"] = item.file.as_posix()
+    for value, item in zip(portable_spec["tasks"], spec.tasks, strict=True):
+        value["manifest"] = item.manifest.as_posix()
+    if spec.prior_evidence:
+        portable_spec["prior_evidence"] = spec.prior_evidence.as_posix()
     value = {
-        "spec": spec.model_dump(mode="json"),
+        "spec": portable_spec,
         "skills": [skill.model_dump(mode="json") for skill in skills],
         "tasks": tasks,
         "prior": prior,

@@ -134,7 +134,7 @@ def run_agent(
         },
         "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
         "execution_mode": workspace.execution_mode,
-        "controller": "bounded_stage_summaries_v5",
+        "controller": "bounded_source_context_v6",
         "repair_origin": "model_generated_via_allowlisted_tools",
         "initial_workspace_sha256": workspace.initial_fingerprint,
         "source_sha256": source_fingerprint(),
@@ -275,6 +275,10 @@ def run_agent(
                     "inventory": session.call("list_files", {})["files"],
                     "initial_public_grading": result["initial_public"],
                     "handoff": handoff[:2000],
+                    "editable_source_context": {
+                        path: workspace.read_file(path) for path in source_context_paths(workspace)
+                    },
+                    "source_context_note": "Current editable sources only, bounded to 24 KiB; use read_file for omitted files. Previous instruction messages are not carried; edited code may retain earlier effects.",
                 },
                 ensure_ascii=False,
             )
@@ -446,6 +450,16 @@ def run_agent(
         write_json(output / "run.json", backend.redact(result))
         backend.close()
     return result
+
+
+def source_context_paths(workspace: Workspace) -> list[str]:
+    selected, used = [], 0
+    for path in sorted(workspace.editable):
+        size = len(workspace.read_file(path).encode("utf-8"))
+        if used + size <= 24576:
+            selected.append(path)
+            used += size
+    return selected
 
 
 def main():

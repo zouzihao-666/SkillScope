@@ -1,0 +1,8 @@
+{
+  "preregistered_commit": "de61b884fa6fe59b9d39d4b02981e908f8df0c29",
+  "source_sha256": "be57426cb12dd9aea020eb223bf30f74e40747fc4a5f31ee77446a9cd0602c0e",
+  "config_sha256": "4623acd2c70db5b058f7315069e9f8fd8875e49b50ffb82aaa9be64bbc5f11f0",
+  "recorded_before_api_calls_utc": "2026-11-23T13:13:36.426897+00:00",
+  "protocol": "docs/one-command-protocol.md",
+  "note": "Fresh confirmation; historical results only prioritize the first suspect. Frozen policy precedes any holdout request."
+}

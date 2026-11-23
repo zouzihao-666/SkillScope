@@ -15,7 +15,7 @@
     {"id": "dotenv-bom", "manifest": "benchmarks/upstream/dotenv-bom/task.json", "split": "holdout"}
   ],
   "repeats": 3,
-  "limits": {"max_calls": 360, "max_runs": 36, "max_usd": 1.5, "per_run_calls": 10, "per_phase_calls": 4, "max_subset_evaluations": 6},
+  "limits": {"max_calls": 300, "max_runs": 30, "max_usd": 1.4, "per_run_calls": 10, "per_phase_calls": 4, "max_subset_evaluations": 6},
   "prior_evidence": "artifacts/repo-skills-20261123",
   "validate_holdout": true
 }

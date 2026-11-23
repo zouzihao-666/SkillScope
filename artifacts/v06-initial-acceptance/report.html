@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>skillscope-complete-diagnosis：自动诊断报告</title>
+<style>body{font:16px/1.7 system-ui,sans-serif;background:#f5f7fa;color:#172638;margin:0}main{max-width:1080px;margin:auto;padding:40px 24px}h1{font-size:32px}section{background:white;border:1px solid #dce3eb;border-radius:12px;padding:24px;margin:20px 0}table{border-collapse:collapse;width:100%}th,td{padding:10px;text-align:left;border-bottom:1px solid #e7edf3}th{color:#46617d}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f5f9;padding:16px;border-radius:8px}.tag{color:#234b76;background:#e4effc;padding:4px 12px;border-radius:20px}.note{color:#506176}.scroll{overflow-x:auto}</style>
+<main><span class="tag">SkillScope · 实际记录</span><h1>skillscope-complete-diagnosis：自动诊断报告</h1><p>状态：执行完成；已记录 6 次运行。单技能干扰、组合候选和未知情况分别报告。</p>
+<section><h2>对照结果</h2><div class="scroll"><table><thead><tr><th>任务</th><th>配置</th><th>通过</th><th>功能失败</th><th>未获有效评分</th></tr></thead><tbody><tr><td>dotenv-backslash</td><td>无技能基线</td><td>1</td><td>2</td><td>0</td></tr><tr><td>dotenv-backslash</td><td>全部加载</td><td>3</td><td>0</td><td>0</td></tr></tbody></table></div><p class="note">共享配置会复用已有记录；未获有效评分不当作功能失败。</p></section>
+<section><h2>自动诊断</h2><ul><li><b>dotenv-backslash</b>：无技能基线不可靠；可疑技能：未确定</li></ul></section>
+<section><h2>阶段加载方案</h2><pre>{
+  &quot;status&quot;: &quot;unvalidated&quot;,
+  &quot;phases&quot;: {},
+  &quot;holdout_tested&quot;: false,
+  &quot;holdout_opened&quot;: false,
+  &quot;holdout_validation_record&quot;: null
+}</pre></section>
+<section><h2>预算与可信范围</h2><pre>{
+  &quot;known_response_estimate_usd&quot;: 0.07467812399999998,
+  &quot;unknown_reserved_usd&quot;: 0.0,
+  &quot;conservative_cost_bound_usd&quot;: 0.07467812399999998,
+  &quot;charged_or_reserved_calls&quot;: 60,
+  &quot;logged_call_attempts&quot;: 60,
+  &quot;reported_tokens&quot;: 313848,
+  &quot;usage_complete&quot;: true
+}</pre><p class="note">费用为估算，不是账单。单个开发题和少量重复不能证明普遍因果；自动生成的阶段方案仍需独立验证。</p></section></main></html>
