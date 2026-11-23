@@ -65,14 +65,13 @@ def apply_saved_policy(study: Path, task: Path, settings: Settings, output: Path
     materialize_project(candidate_root, snapshot)
     patch = []
     for path in sorted(workspace.editable):
-        patch.extend(
-            difflib.unified_diff(
-                workspace.read_file(path).splitlines(keepends=True),
-                snapshot[path].splitlines(keepends=True),
-                fromfile="a/" + path,
-                tofile="b/" + path,
-            )
-        )
+        for line in difflib.unified_diff(
+            workspace.read_file(path).splitlines(keepends=True),
+            snapshot[path].splitlines(keepends=True),
+            fromfile="a/" + path,
+            tofile="b/" + path,
+        ):
+            patch.append(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n")
     (output / "changes.patch").write_bytes("".join(patch).encode())
     applied = {
         "source_policy_sha256": checksum,
