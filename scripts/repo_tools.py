@@ -20,6 +20,7 @@ class ToolSession:
             "list_files": set(),
             "read_file": {"path"},
             "write_files": {"files"},
+            "write_file": {"path", "content"},
             "run_public_tests": set(),
         }
         if (
@@ -49,13 +50,20 @@ class ToolSession:
                     else self.workspace.read_file(path)
                 )
                 return {"ok": True, "content": content}
-            if name == "write_files":
+            if name in ("write_files", "write_file"):
                 if self.stage != Stage.IMPLEMENT:
                     return {
                         "ok": False,
                         "error": "Writes are allowed only in the implementation phase",
                     }
-                self.workspace.write_files(arguments["files"])
+                if name == "write_file" and not isinstance(arguments["path"], str):
+                    raise ValueError("File path must be text")
+                changes = (
+                    arguments["files"]
+                    if name == "write_files"
+                    else {arguments["path"]: arguments["content"]}
+                )
+                self.workspace.write_files(changes)
                 return {"ok": True, "fingerprint": self.workspace.fingerprint()}
             if self.public_runs >= self.max_public_runs:
                 return {"ok": False, "error": "Public test budget exhausted"}

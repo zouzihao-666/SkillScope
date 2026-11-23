@@ -47,3 +47,15 @@
 ```powershell
 .\.venv\Scripts\python.exe -m scripts.repo_agent --output results/repo-agent-smoke-v2-20261123
 ```
+
+## 版本 3：单文件写入与预算内工具错误反馈
+
+版本 2 成功完成文件查阅，但模型在修改阶段输出了无效的嵌套 JSON。该次进行了 4 次请求、使用 6,478 tokens，未修改工作区、未进入隐藏评分；保留为一次模型工具提交失败。
+
+版本 3 采用更简单的 write_file(path, content) 模型工具，读取结果以正常换行源码展示。工具参数 JSON 或源码语法错误作为明确的工具错误返回，模型可在原先每阶段 4 次、全局 10 次请求上限内自行修正。程序不猜测参数、不自动修补代码；网络请求仍不自动重试。阶段结束格式和输出截断仍按协议记录失败。
+
+提示中显示剩余请求数。总请求、输出、公开测试次数、文件范围和费用上限不增加。此前两次已知费用估算加新运行的保守预留，必须仍小于原 USD 0.25 预算。该运行只用于原型联调，不与前两版合并计算模型成功率。
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.repo_agent --output results/repo-agent-smoke-v3-20261123
+```

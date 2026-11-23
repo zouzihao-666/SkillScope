@@ -30,7 +30,12 @@ def response(calls):
                             {
                                 "id": f"call{index}",
                                 "type": "function",
-                                "function": {"name": name, "arguments": json.dumps(arguments)},
+                                "function": {
+                                    "name": name,
+                                    "arguments": arguments
+                                    if isinstance(arguments, str)
+                                    else json.dumps(arguments),
+                                },
                             }
                             for index, (name, arguments) in enumerate(calls)
                         ],
@@ -93,7 +98,7 @@ def test_agent_reads_patches_tests_and_keeps_hidden_grader_out_of_messages(tmp_p
         [
             [("read_file", {"path": "shop/cart.py"}), ("read_file", {"path": "shop/money.py"})],
             finish(),
-            [("write_files", {"files": changes})],
+            [("write_file", {"path": path, "content": text}) for path, text in changes.items()],
             [("run_public_tests", {})],
             finish(),
             finish(),
@@ -106,9 +111,7 @@ def test_agent_reads_patches_tests_and_keeps_hidden_grader_out_of_messages(tmp_p
     assert result["public_test_runs_by_model"] == 1
     hidden = (TASK.parent / "hidden_tests.py").read_text(encoding="utf-8")
     assert hidden not in json.dumps(requests)
-    assert requests[0]["messages"][0]["content"].endswith(
-        "4 model requests are available in this phase."
-    )
+    assert "4 model requests are available in this phase." in requests[0]["messages"][0]["content"]
     phase_starts = [request for request in requests if len(request["messages"]) == 2]
     assert len(phase_starts) == 3  # New input history per phase.
     assert all(request["extra_body"]["thinking"]["type"] == "disabled" for request in requests)
@@ -122,7 +125,7 @@ def test_agent_reads_patches_tests_and_keeps_hidden_grader_out_of_messages(tmp_p
 def test_readonly_phase_rejects_writes_and_retains_failed_candidate(tmp_path, fake_agent):
     _, grades, sequence = fake_agent
     sequence.extend(
-        [[("write_files", {"files": {"shop/cart.py": "bad"}})], finish(), finish(), finish()]
+        [[("write_file", {"path": "shop/cart.py", "content": "bad"})], finish(), finish(), finish()]
     )
     result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "run")
     assert result["status"] == "failed"
@@ -173,7 +176,7 @@ def test_legitimate_parallel_inventory_reads_do_not_trip_a_request_count_limit(
         [
             reads,
             finish(),
-            [("write_files", {"files": changes})],
+            [("write_file", {"path": path, "content": text}) for path, text in changes.items()],
             [("run_public_tests", {})],
             finish(),
             finish(),
@@ -182,3 +185,39 @@ def test_legitimate_parallel_inventory_reads_do_not_trip_a_request_count_limit(
     result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "run")
     assert result["status"] == "passed" and len(requests) == 6
     assert result["budget"]["max_tools_per_response"] == 18
+
+
+def test_invalid_json_tool_arguments_get_bounded_feedback_and_can_be_corrected(
+    tmp_path, fake_agent
+):
+    requests, _, sequence = fake_agent
+    changes = {
+        path: (TASK.parent / "reference" / path).read_text(encoding="utf-8")
+        for path in ("shop/money.py", "shop/cart.py")
+    }
+    sequence.extend(
+        [
+            [("read_file", {"path": "shop/cart.py"})],
+            finish(),
+            [("write_file", '{"path":')],
+            [("write_file", {"path": path, "content": text}) for path, text in changes.items()],
+            [("run_public_tests", {})],
+            finish(),
+            finish(),
+        ]
+    )
+    output = tmp_path / "run"
+    result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), output)
+    assert result["status"] == "passed" and len(requests) == 7
+    events = [json.loads(line) for line in (output / "trace.jsonl").read_text().splitlines()]
+    rejected = [
+        event for event in events if event["type"] == "tool_result" and not event["result"]["ok"]
+    ]
+    assert len(rejected) == 1 and rejected[0]["raw_arguments"] == '{"path":'
+    read_results = [
+        message["content"]
+        for request in requests
+        for message in request["messages"]
+        if message["role"] == "tool" and message["content"].startswith("File:")
+    ]
+    assert any("def checkout(lines, discount_bps):\n" in text for text in read_results)

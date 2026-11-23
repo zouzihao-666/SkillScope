@@ -37,15 +37,11 @@ def tool_definitions(workspace: Workspace) -> list[dict]:
         ("list_files", "List the visible project inventory.", {}),
         ("read_file", "Read one visible file or public_tests.py.", {"path": {"type": "string"}}),
         (
-            "write_files",
-            "Atomically replace declared editable Python files, implementation phase only.",
+            "write_file",
+            "Replace one editable Python file. Content is source text with normal newlines, not a JSON-encoded string.",
             {
-                "files": {
-                    "type": "object",
-                    "properties": {path: {"type": "string"} for path in sorted(workspace.editable)},
-                    "additionalProperties": False,
-                    "minProperties": 1,
-                }
+                "path": {"type": "string", "enum": sorted(workspace.editable)},
+                "content": {"type": "string"},
             },
         ),
         (
@@ -132,6 +128,7 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
 
     session = ToolSession(workspace, public, max_public_runs=2)
     tools = tool_definitions(workspace)
+    declared_tools = {tool["function"]["name"] for tool in tools}
 
     def request(stage, messages):
         nonlocal calls
@@ -217,7 +214,12 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
                 ensure_ascii=False,
             )
             messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-            for _ in range(PER_PHASE_REQUESTS):
+            for phase_index in range(PER_PHASE_REQUESTS):
+                messages[0]["content"] = system + (
+                    f"\nThis is phase request {phase_index + 1}/{PER_PHASE_REQUESTS}; "
+                    f"{MAX_REQUESTS - calls} global requests remain including this one. "
+                    "Use actual source newlines in write_file content. Finish within these limits."
+                )
                 message = request(stage, messages)
                 messages.append(
                     {
@@ -230,7 +232,27 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
                     try:
                         arguments = json.loads(call.function.arguments)
                     except ValueError:
-                        raise RunError("invalid_output", "Malformed JSON tool arguments") from None
+                        response = {
+                            "ok": False,
+                            "error": "Arguments are not valid JSON; resubmit valid JSON within the request budget.",
+                        }
+                        record(
+                            {
+                                "type": "tool_result",
+                                "stage": stage.value,
+                                "name": call.function.name,
+                                "raw_arguments": call.function.arguments,
+                                "result": response,
+                            }
+                        )
+                        messages.append(
+                            {
+                                "role": "tool",
+                                "tool_call_id": call.id,
+                                "content": json.dumps(response),
+                            }
+                        )
+                        continue
                     if call.function.name == "finish_phase":
                         if (
                             len(message.tool_calls) != 1
@@ -248,7 +270,11 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
                             Stage.VERIFY: "review",
                         }[stage]
                         return {field: summary}
-                    response = session.call(call.function.name, arguments)
+                    response = (
+                        session.call(call.function.name, arguments)
+                        if call.function.name in declared_tools
+                        else {"ok": False, "error": "Tool not declared for this run"}
+                    )
                     record(
                         {
                             "type": "tool_result",
@@ -258,11 +284,16 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
                             "result": response,
                         }
                     )
+                    content = (
+                        f"File: {arguments['path']}\n\n{response['content']}"
+                        if call.function.name == "read_file" and response.get("ok")
+                        else json.dumps(response, ensure_ascii=False)
+                    )
                     messages.append(
                         {
                             "role": "tool",
                             "tool_call_id": call.id,
-                            "content": json.dumps(response, ensure_ascii=False),
+                            "content": content,
                         }
                     )
             raise RunError("budget_exhausted", f"Phase request budget exhausted: {stage.value}")
