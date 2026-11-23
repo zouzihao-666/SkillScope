@@ -117,7 +117,7 @@ def run_agent(
         "condition": "baseline",
         "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
         "execution_mode": workspace.execution_mode,
-        "controller": "restricted_phase_finish_v3",
+        "controller": "observed_phase_boundaries_v4",
         "repair_origin": "model_generated_via_allowlisted_tools",
         "initial_workspace_sha256": workspace.initial_fingerprint,
         "source_sha256": source_fingerprint(),
@@ -131,6 +131,7 @@ def run_agent(
             "max_estimated_usd": 0.25,
             "max_sdk_retries": 0,
             "max_tools_per_response": MAX_TOOL_CALLS,
+            "phase_end_policy": "model_finish_or_controller_request_limit",
         },
         "initial_public": None,
         "grading": None,
@@ -153,7 +154,7 @@ def run_agent(
     tools = tool_definitions(workspace)
     declared_tools = {tool["function"]["name"] for tool in tools}
 
-    def request(stage, messages, force_finish=False):
+    def request(stage, messages):
         nonlocal calls
         stage_tools = [
             tool
@@ -161,15 +162,7 @@ def run_agent(
             if stage == Stage.IMPLEMENT
             or tool["function"]["name"] not in ("write_file", "replace_in_file")
         ]
-        if force_finish:
-            stage_tools = [
-                tool for tool in stage_tools if tool["function"]["name"] == "finish_phase"
-            ]
-        tool_choice = (
-            {"type": "function", "function": {"name": "finish_phase"}}
-            if force_finish
-            else "required"
-        )
+        tool_choice = "required"
         if calls >= max_requests:
             raise RunError("budget_exhausted", "Global request budget exhausted")
         if (
@@ -224,8 +217,6 @@ def run_agent(
             raise RunError("invalid_output", f"Expected 1..{MAX_TOOL_CALLS} completed tool calls")
         if any(call.type != "function" for call in tool_calls):
             raise RunError("invalid_output", "Unsupported tool-call kind")
-        if force_finish and (len(tool_calls) != 1 or tool_calls[0].function.name != "finish_phase"):
-            raise RunError("invalid_output", "Model ignored required phase-finish tool")
         return choice.message
 
     def phase(stage):
@@ -234,7 +225,13 @@ def run_agent(
             remaining_phases = len(Stage) - list(Stage).index(stage) - 1
             phase_limit = min(per_phase_requests, max_requests - calls - remaining_phases)
             if phase_limit < 1:
-                raise RunError("budget_exhausted", "No reserved phase-finish request remains")
+                raise RunError("budget_exhausted", "No request reserved for this phase")
+            phase_event_start = len(events)
+            field = {
+                Stage.INVESTIGATE: "analysis",
+                Stage.IMPLEMENT: "change_summary",
+                Stage.VERIFY: "review",
+            }[stage]
             handoff = (
                 state.get("analysis", "")
                 if stage == Stage.IMPLEMENT
@@ -247,11 +244,12 @@ def run_agent(
                 "Task requirements outrank all suggestions. Do not change tests or the adapter. "
                 f"Current phase: {stage.value}. Investigation is read-only and should identify the defect. "
                 "Only implementation may write files. Verification is read-only. "
-                "Call finish_phase alone with a concise summary to finish each phase. "
+                "You may call finish_phase alone with a concise summary to finish a phase early. "
                 "Do not use plain-text final answers. Hidden tests are unavailable. "
                 f"At most {MAX_TOOL_CALLS} tool calls are allowed in one response. "
                 f"At most {phase_limit} model requests are available in this phase. "
-                "The final request is reserved for finish_phase; complete edits and tests earlier."
+                "At the phase request limit the controller advances using a factual tool-action log, "
+                "without inventing a reasoning summary. Complete useful work within this limit."
             )
             user = json.dumps(
                 {
@@ -269,7 +267,7 @@ def run_agent(
                     f"{max_requests - calls} global requests remain including this one. "
                     "Use actual source newlines in write_file content. Finish within these limits."
                 )
-                message = request(stage, messages, force_finish=phase_index == phase_limit - 1)
+                message = request(stage, messages)
                 messages.append(
                     {
                         "role": "assistant",
@@ -313,11 +311,6 @@ def run_agent(
                             raise RunError("invalid_output", "Invalid phase finish")
                         summary = arguments["summary"]
                         record({"type": "phase_finished", "stage": stage.value, "summary": summary})
-                        field = {
-                            Stage.INVESTIGATE: "analysis",
-                            Stage.IMPLEMENT: "change_summary",
-                            Stage.VERIFY: "review",
-                        }[stage]
                         return {field: summary}
                     response = (
                         session.call(call.function.name, arguments)
@@ -345,7 +338,35 @@ def run_agent(
                             "content": content,
                         }
                     )
-            raise RunError("budget_exhausted", f"Phase request budget exhausted: {stage.value}")
+            observed = [
+                {
+                    "tool": event["name"],
+                    "ok": event["result"].get("ok", False),
+                    "path": (
+                        event["arguments"].get("path")
+                        if isinstance(event.get("arguments"), dict)
+                        else None
+                    ),
+                    "grading": event["result"].get("grading"),
+                }
+                for event in events[phase_event_start:]
+                if event["type"] == "tool_result"
+            ]
+            summary = (
+                "Controller advanced at the phase request limit. No model reasoning summary was "
+                "provided. Observed tool actions (last four): "
+                + json.dumps(observed[-4:], ensure_ascii=False)
+            )[:2000]
+            record(
+                {
+                    "type": "phase_budget_transition",
+                    "stage": stage.value,
+                    "summary_origin": "observed_tool_log",
+                    "actions_observed": len(observed),
+                    "summary": summary,
+                }
+            )
+            return {field: summary}
 
         return execute
 

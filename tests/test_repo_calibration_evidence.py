@@ -3,7 +3,31 @@ import hashlib
 import json
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.mark.parametrize(
+    "folder,calls,tokens",
+    [("phase-finish-smoke-20261123", 8, 28235), ("phase-finish-smoke-v3-20261123", 6, 18915)],
+)
+def test_failed_engineering_versions_are_independent_and_checksum_complete(folder, calls, tokens):
+    directory = ROOT / "artifacts" / folder
+    for name, expected in json.loads((directory / "checksums.json").read_text()).items():
+        assert hashlib.sha256((directory / name).read_bytes()).hexdigest() == expected
+    report = json.loads((directory / "report.json").read_text())
+    (record,) = [
+        json.loads(line)
+        for line in gzip.decompress((directory / "raw-runs.jsonl.gz").read_bytes())
+        .decode()
+        .splitlines()
+    ]
+    assert report["calls"] == calls and report["reported_tokens"] == tokens
+    assert record["result"]["status"] == "invalid_output"
+    assert record["result"]["grading"] is None
+    assert record["result"]["error"] == "Model ignored required phase-finish tool"
+    assert record["job"]["task"] == "dotenv-comment"
 
 
 def test_all_four_stopped_trials_are_preserved_and_not_reported_as_hidden_failures():

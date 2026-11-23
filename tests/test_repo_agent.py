@@ -135,21 +135,22 @@ def test_readonly_phase_rejects_writes_and_retains_failed_candidate(tmp_path, fa
     assert tool["result"]["ok"] is False
 
 
-def test_ignored_forced_phase_finish_stops_without_hidden_grade_or_automatic_retry(
-    tmp_path, fake_agent
-):
+def test_controller_transitions_without_model_finish_or_additional_requests(tmp_path, fake_agent):
     requests, grades, sequence = fake_agent
-    sequence.extend([[("list_files", {})]] * 4)
+    sequence.extend([[("list_files", {})]] * 10)
     result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "run")
-    assert result["status"] == "invalid_output"
-    assert result["error"] == "Model ignored required phase-finish tool"
-    assert result["calls_attempted"] == len(requests) == 4
-    assert grades == [False]
+    assert result["status"] == "failed"  # Trusted final grader still rejects untouched code.
+    assert result["calls_attempted"] == len(requests) == 10
+    assert grades == [False, True]
+    events = [json.loads(line) for line in (tmp_path / "run/trace.jsonl").read_text().splitlines()]
+    transitions = [event for event in events if event["type"] == "phase_budget_transition"]
+    assert [event["stage"] for event in transitions] == ["investigate", "implement", "verify"]
+    assert all(event["summary_origin"] == "observed_tool_log" for event in transitions)
+    assert all("No model reasoning summary" in event["summary"] for event in transitions)
+    assert all(len(event["summary"]) <= 2000 for event in transitions)
 
 
-def test_controller_reserves_finish_calls_and_verification_within_global_budget(
-    tmp_path, fake_agent
-):
+def test_controller_reserves_verification_within_global_budget(tmp_path, fake_agent):
     requests, grades, sequence = fake_agent
     changes = {
         path: (TASK.parent / "reference" / path).read_text(encoding="utf-8")
@@ -170,12 +171,7 @@ def test_controller_reserves_finish_calls_and_verification_within_global_budget(
     result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "run")
     assert result["status"] == "passed" and result["calls_attempted"] == 10
     assert grades == [False, False, False, True]
-    for index in (3, 7, 9):
-        assert requests[index]["tool_choice"] == {
-            "type": "function",
-            "function": {"name": "finish_phase"},
-        }
-        assert [tool["function"]["name"] for tool in requests[index]["tools"]] == ["finish_phase"]
+    assert all(request["tool_choice"] == "required" for request in requests)
     for request in (requests[0], requests[-1]):
         assert "write_file" not in {tool["function"]["name"] for tool in request["tools"]}
 
@@ -205,6 +201,36 @@ def test_reduced_eight_request_budget_keeps_all_three_phases(tmp_path, fake_agen
     assert result["budget"]["max_requests"] == 8
     assert result["budget"]["per_phase_requests"] == 3
     assert len(requests) == 8 and grades[-1] is True
+
+
+def test_automatic_handoff_records_actual_edits_and_tests_without_invented_analysis(
+    tmp_path, fake_agent
+):
+    requests, _, sequence = fake_agent
+    sequence.extend(
+        [
+            [("read_file", {"path": "shop/money.py"})],
+            [("read_file", {"path": "public_tests.py"})],
+            [("list_files", [])],  # Malformed argument shape is logged, not executed.
+            [("write_file", {"path": "shop/money.py", "content": "def amount(text): return 0\n"})],
+            [("run_public_tests", {})],
+            [("list_files", {})],
+            [("list_files", {})],
+            [("list_files", {})],
+        ]
+    )
+    result = repo_agent.run_agent(
+        TASK,
+        Settings(api_key="test-secret"),
+        tmp_path / "run",
+        max_requests=8,
+        per_phase_requests=3,
+    )
+    assert result["status"] == "passed" and result["calls_attempted"] == 8
+    assert "shop/money.py" in requests[3]["messages"][1]["content"]
+    verify = json.loads(requests[6]["messages"][1]["content"])["handoff"]
+    assert "write_file" in verify and '"status": "passed"' in verify
+    assert "No model reasoning summary" in verify
 
 
 def test_invalid_phase_finish_is_recorded_as_model_output_failure(tmp_path, fake_agent):
