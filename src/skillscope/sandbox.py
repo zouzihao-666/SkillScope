@@ -148,7 +148,7 @@ def invoke(function: str, args: tuple):
         "--tmpfs",
         "/tmp:rw,noexec,nosuid,size=16m",
         "--mount",
-        f"type=bind,source={candidate_dir},target=/candidate,readonly",
+        f"type=bind,source={Path(candidate_dir) / 'candidate.py'},target=/candidate/candidate.py,readonly",
         image,
     ]
     status = "ok"
@@ -174,7 +174,9 @@ def invoke(function: str, args: tuple):
                 "ZeroDivisionError": ZeroDivisionError,
                 "RuntimeError": RuntimeError,
             }
-            raise allowed.get(response["exception"], CandidateError)("Remote candidate exception")
+            raise allowed.get(response["exception"], CandidateError)(
+                f"Remote candidate exception: {response['exception']}"
+            )
         if not all(key in response for key in ("result", "args_after", "result_aliases")):
             raise CandidateError("Incomplete RPC response")
         # Preserve mutations and top-level result identity for the starter task tests.
@@ -210,6 +212,8 @@ def grade(candidate: str, grader: str, docker: str, image: str, output: Path) ->
         with tempfile.TemporaryDirectory(prefix="skillscope-grader-") as test_dir:
             code_root, test_root = Path(code_dir), Path(test_dir)
             (code_root / "candidate.py").write_text(candidate, encoding="utf-8")
+            if os.name != "nt":
+                (code_root / "candidate.py").chmod(0o444)
             (test_root / "test_subject.py").write_text(grader, encoding="utf-8")
             (test_root / "candidate.py").write_text(
                 "from skillscope.sandbox import invoke\n"

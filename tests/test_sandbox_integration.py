@@ -59,6 +59,9 @@ def test_rpc_preserves_mutation_and_identity_checks(config, tmp_path, code, expe
 def rpc_environment(tmp_path, monkeypatch, code):
     docker = os.environ["SKILLSCOPE_TEST_DOCKER"]
     (tmp_path / "candidate.py").write_text(code, encoding="utf-8")
+    if os.name != "nt":
+        # Keep pytest's private directory mode; only this file becomes container-readable.
+        (tmp_path / "candidate.py").chmod(0o444)
     group = uuid.uuid4().hex
     for key, value in {
         "DOCKER": docker,
