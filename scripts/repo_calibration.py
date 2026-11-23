@@ -137,15 +137,27 @@ def export(study: Path, output: Path):
     rows = json.loads((study / "results.json").read_text())
     state = json.loads((study / "study.json").read_text())
     plan = manifest["plan"]
-    if state["status"] != "completed" or [row["job"] for row in rows] != plan["runs"]:
-        raise ValueError("Expected every scheduled run in its original order")
+    if [row["job"] for row in rows] != plan["runs"][: len(rows)] or len(rows) > len(plan["runs"]):
+        raise ValueError("Results must be an exact prefix of the frozen schedule")
+    if state["status"] == "completed":
+        if len(rows) != len(plan["runs"]):
+            raise ValueError("Completed study is missing scheduled runs")
+    elif state["status"] not in (
+        "pilot_gate_stopped",
+        "budget_stopped",
+        "unknown_usage_stopped",
+        "interrupted",
+    ):
+        raise ValueError("Unsupported study completion state")
     records = []
     for row in rows:
         directory = study / "runs" / row["job"]["id"]
-        trace = [
-            json.loads(line)
-            for line in (directory / "trace.jsonl").read_text(encoding="utf-8").splitlines()
-        ]
+        trace_path = directory / "trace.jsonl"
+        trace = (
+            [json.loads(line) for line in trace_path.read_text(encoding="utf-8").splitlines()]
+            if trace_path.exists()
+            else []
+        )
         if (
             row["result"]["initial_workspace_sha256"]
             != plan["workspace_sha256"][row["job"]["task"]]
@@ -179,8 +191,15 @@ def export(study: Path, output: Path):
         rb"(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})", raw
     ):
         raise ValueError("Credential-like content found; export aborted")
+    has_cohorts = any("cohort" in row["job"] for row in rows)
+    research_rows = (
+        [row for row in rows if row["job"]["cohort"] == "calibration"] if has_cohorts else rows
+    )
     report = {
         "purpose": plan["purpose"],
+        "status": state["status"],
+        "planned": len(plan["runs"]),
+        "unattempted": plan["runs"][len(rows) :],
         "runs": len(rows),
         "calls": sum(row["result"]["calls_attempted"] for row in rows),
         "reported_tokens": sum(row["result"]["reported_tokens"]["total_tokens"] for row in rows),
@@ -188,12 +207,18 @@ def export(study: Path, output: Path):
         "estimated_usd_upper": sum(row["result"]["estimated_usd_upper"] for row in rows),
         "tasks": {
             task: {
-                "recorded": sum(row["job"]["task"] == task for row in rows),
+                "recorded": sum(row["job"]["task"] == task for row in research_rows),
                 "passed": sum(
                     row["job"]["task"] == task and row["result"]["status"] == "passed"
-                    for row in rows
+                    for row in research_rows
                 ),
-                "statuses": [row["result"]["status"] for row in rows if row["job"]["task"] == task],
+                "statuses": [
+                    row["result"]["status"] for row in research_rows if row["job"]["task"] == task
+                ],
+                "hidden_graded": sum(
+                    row["job"]["task"] == task and row["result"]["grading"] is not None
+                    for row in research_rows
+                ),
             }
             for task in plan["workspace_sha256"]
         },
@@ -202,6 +227,16 @@ def export(study: Path, output: Path):
             "Two related historical library issues, two repeats each. Author-written regression tests, no complete upstream suite. No holdout calls or grades. Descriptive only; no skill comparison.",
         ),
     }
+    if has_cohorts:
+        report["cohorts"] = {
+            cohort: {
+                "recorded": sum(row["job"]["cohort"] == cohort for row in rows),
+                "statuses": [
+                    row["result"]["status"] for row in rows if row["job"]["cohort"] == cohort
+                ],
+            }
+            for cohort in ("engineering", "calibration")
+        }
     if (
         report["calls"] > plan["budget"]["max_requests"]
         or report["estimated_usd_upper"] > plan["budget"]["max_estimated_usd"]
