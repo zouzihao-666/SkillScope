@@ -1,0 +1,49 @@
+{
+  "purpose": "controller-v4 engineering gate followed by four independent baseline calibration trials",
+  "status": "completed",
+  "planned": 5,
+  "unattempted": [],
+  "runs": 5,
+  "calls": 50,
+  "reported_tokens": 204116,
+  "usage_complete": true,
+  "estimated_usd_upper": 0.047026206,
+  "tasks": {
+    "dotenv-backslash": {
+      "recorded": 2,
+      "passed": 1,
+      "statuses": [
+        "passed",
+        "failed"
+      ],
+      "hidden_graded": 2
+    },
+    "dotenv-comment": {
+      "recorded": 2,
+      "passed": 2,
+      "statuses": [
+        "passed",
+        "passed"
+      ],
+      "hidden_graded": 2
+    }
+  },
+  "limitations": "Engineering pilot excluded from per-task calibration results. Two related library issues, two fresh repeats each. Old protocols and results remain separate. No holdout calls or grades. Author-written regression tests, no complete upstream suite; descriptive only.",
+  "cohorts": {
+    "engineering": {
+      "recorded": 1,
+      "statuses": [
+        "passed"
+      ]
+    },
+    "calibration": {
+      "recorded": 4,
+      "statuses": [
+        "passed",
+        "passed",
+        "passed",
+        "failed"
+      ]
+    }
+  }
+}

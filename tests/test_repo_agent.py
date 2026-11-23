@@ -135,6 +135,33 @@ def test_readonly_phase_rejects_writes_and_retains_failed_candidate(tmp_path, fa
     assert tool["result"]["ok"] is False
 
 
+def test_scoped_guides_enter_only_declared_phases_and_do_not_change_tool_permissions(
+    tmp_path, fake_agent
+):
+    from skillscope.loader import digest
+    from skillscope.models import Condition, Skill, Stage
+
+    requests, _, sequence = fake_agent
+    sequence.extend([finish(), finish(), finish()])
+    skills = (
+        Skill(
+            id="patch-guide",
+            text="Use a minimal repair.",
+            stages=(Stage.IMPLEMENT,),
+            sha256=digest("Use a minimal repair."),
+        ),
+    )
+    condition = Condition(id="scoped", policy="scoped", skill_ids=("patch-guide",))
+    result = repo_agent.run_agent(
+        TASK, Settings(api_key="test-secret"), tmp_path / "run", skills=skills, condition=condition
+    )
+    assert result["condition"] == "scoped"
+    assert "Use a minimal repair." not in requests[0]["messages"][0]["content"]
+    assert "Use a minimal repair." in requests[1]["messages"][0]["content"]
+    assert "Use a minimal repair." not in requests[2]["messages"][0]["content"]
+    assert "write_file" not in {tool["function"]["name"] for tool in requests[2]["tools"]}
+
+
 def test_controller_transitions_without_model_finish_or_additional_requests(tmp_path, fake_agent):
     requests, grades, sequence = fake_agent
     sequence.extend([[("list_files", {})]] * 10)

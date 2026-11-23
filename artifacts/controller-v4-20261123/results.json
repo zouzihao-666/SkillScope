@@ -1,0 +1,292 @@
+[
+  {
+    "job": {
+      "id": "v4-engineering",
+      "task": "dotenv-comment",
+      "repeat": 1,
+      "cohort": "engineering"
+    },
+    "result": {
+      "task": "dotenv-comment",
+      "model": "deepseek-flash",
+      "condition": "baseline",
+      "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+      "execution_mode": "directory",
+      "controller": "observed_phase_boundaries_v4",
+      "repair_origin": "model_generated_via_allowlisted_tools",
+      "initial_workspace_sha256": "5ff2e0cf4d0b29f86aba87b5097cdb51b543090f428eb3409fa2791188901444",
+      "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+      "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+      "runner_sha256": "2bc633d12452c4680759694dc5d0b5f82d5801616b39ca851c50192d75b9161c",
+      "budget": {
+        "max_requests": 10,
+        "per_phase_requests": 4,
+        "max_output_tokens": 2048,
+        "max_input_json_bytes": 65536,
+        "max_estimated_usd": 0.25,
+        "max_sdk_retries": 0,
+        "max_tools_per_response": 18,
+        "phase_end_policy": "model_finish_or_controller_request_limit"
+      },
+      "initial_public": {
+        "status": "failed",
+        "passed": false,
+        "tests": 2,
+        "failures": 1,
+        "container_calls": 2
+      },
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 9,
+        "failures": 0,
+        "container_calls": 9
+      },
+      "status": "passed",
+      "calls_attempted": 10,
+      "responses_received": 10,
+      "usage_complete": true,
+      "reported_tokens": {
+        "prompt_tokens": 31662,
+        "completion_tokens": 888,
+        "total_tokens": 32550
+      },
+      "estimated_usd_upper": 0.0105642,
+      "final_workspace_sha256": "e70e477f1ef8aba6d2eb251de4b0fb3eea80b7187a1c6f0c1c4ba175c1ab6f75",
+      "public_test_runs_by_model": 2,
+      "elapsed_seconds": 26.5
+    }
+  },
+  {
+    "job": {
+      "id": "dotenv-comment__1",
+      "task": "dotenv-comment",
+      "repeat": 1,
+      "cohort": "calibration"
+    },
+    "result": {
+      "task": "dotenv-comment",
+      "model": "deepseek-flash",
+      "condition": "baseline",
+      "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+      "execution_mode": "directory",
+      "controller": "observed_phase_boundaries_v4",
+      "repair_origin": "model_generated_via_allowlisted_tools",
+      "initial_workspace_sha256": "5ff2e0cf4d0b29f86aba87b5097cdb51b543090f428eb3409fa2791188901444",
+      "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+      "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+      "runner_sha256": "2bc633d12452c4680759694dc5d0b5f82d5801616b39ca851c50192d75b9161c",
+      "budget": {
+        "max_requests": 10,
+        "per_phase_requests": 4,
+        "max_output_tokens": 2048,
+        "max_input_json_bytes": 65536,
+        "max_estimated_usd": 0.25,
+        "max_sdk_retries": 0,
+        "max_tools_per_response": 18,
+        "phase_end_policy": "model_finish_or_controller_request_limit"
+      },
+      "initial_public": {
+        "status": "failed",
+        "passed": false,
+        "tests": 2,
+        "failures": 1,
+        "container_calls": 2
+      },
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 9,
+        "failures": 0,
+        "container_calls": 9
+      },
+      "status": "passed",
+      "calls_attempted": 10,
+      "responses_received": 10,
+      "usage_complete": true,
+      "reported_tokens": {
+        "prompt_tokens": 32472,
+        "completion_tokens": 1178,
+        "total_tokens": 33650
+      },
+      "estimated_usd_upper": 0.0049835520000000005,
+      "final_workspace_sha256": "c6b37d7b4320b40c19ab650af863c1a62413dd0016c5743514adebb6ff7a2a9b",
+      "public_test_runs_by_model": 2,
+      "elapsed_seconds": 22.671
+    }
+  },
+  {
+    "job": {
+      "id": "dotenv-comment__2",
+      "task": "dotenv-comment",
+      "repeat": 2,
+      "cohort": "calibration"
+    },
+    "result": {
+      "task": "dotenv-comment",
+      "model": "deepseek-flash",
+      "condition": "baseline",
+      "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+      "execution_mode": "directory",
+      "controller": "observed_phase_boundaries_v4",
+      "repair_origin": "model_generated_via_allowlisted_tools",
+      "initial_workspace_sha256": "5ff2e0cf4d0b29f86aba87b5097cdb51b543090f428eb3409fa2791188901444",
+      "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+      "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+      "runner_sha256": "2bc633d12452c4680759694dc5d0b5f82d5801616b39ca851c50192d75b9161c",
+      "budget": {
+        "max_requests": 10,
+        "per_phase_requests": 4,
+        "max_output_tokens": 2048,
+        "max_input_json_bytes": 65536,
+        "max_estimated_usd": 0.25,
+        "max_sdk_retries": 0,
+        "max_tools_per_response": 18,
+        "phase_end_policy": "model_finish_or_controller_request_limit"
+      },
+      "initial_public": {
+        "status": "failed",
+        "passed": false,
+        "tests": 2,
+        "failures": 1,
+        "container_calls": 2
+      },
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 9,
+        "failures": 0,
+        "container_calls": 9
+      },
+      "status": "passed",
+      "calls_attempted": 10,
+      "responses_received": 10,
+      "usage_complete": true,
+      "reported_tokens": {
+        "prompt_tokens": 31986,
+        "completion_tokens": 1226,
+        "total_tokens": 33212
+      },
+      "estimated_usd_upper": 0.0048953519999999995,
+      "final_workspace_sha256": "0ea3659ed9807906c6eeace9dfcd4ccb52de769ab782606f379b2d678a3e52ef",
+      "public_test_runs_by_model": 2,
+      "elapsed_seconds": 22.39
+    }
+  },
+  {
+    "job": {
+      "id": "dotenv-backslash__1",
+      "task": "dotenv-backslash",
+      "repeat": 1,
+      "cohort": "calibration"
+    },
+    "result": {
+      "task": "dotenv-backslash",
+      "model": "deepseek-flash",
+      "condition": "baseline",
+      "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+      "execution_mode": "directory",
+      "controller": "observed_phase_boundaries_v4",
+      "repair_origin": "model_generated_via_allowlisted_tools",
+      "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+      "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+      "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+      "runner_sha256": "2bc633d12452c4680759694dc5d0b5f82d5801616b39ca851c50192d75b9161c",
+      "budget": {
+        "max_requests": 10,
+        "per_phase_requests": 4,
+        "max_output_tokens": 2048,
+        "max_input_json_bytes": 65536,
+        "max_estimated_usd": 0.25,
+        "max_sdk_retries": 0,
+        "max_tools_per_response": 18,
+        "phase_end_policy": "model_finish_or_controller_request_limit"
+      },
+      "initial_public": {
+        "status": "failed",
+        "passed": false,
+        "tests": 2,
+        "failures": 1,
+        "container_calls": 2
+      },
+      "grading": {
+        "status": "passed",
+        "passed": true,
+        "tests": 13,
+        "failures": 0,
+        "container_calls": 13
+      },
+      "status": "passed",
+      "calls_attempted": 10,
+      "responses_received": 10,
+      "usage_complete": true,
+      "reported_tokens": {
+        "prompt_tokens": 53626,
+        "completion_tokens": 2314,
+        "total_tokens": 55940
+      },
+      "estimated_usd_upper": 0.01773564,
+      "final_workspace_sha256": "eea0aac0c04ad36f91d1efd5ea5aee2a151513e085b6e8a5620195809e5c9a86",
+      "public_test_runs_by_model": 2,
+      "elapsed_seconds": 27.594
+    }
+  },
+  {
+    "job": {
+      "id": "dotenv-backslash__2",
+      "task": "dotenv-backslash",
+      "repeat": 2,
+      "cohort": "calibration"
+    },
+    "result": {
+      "task": "dotenv-backslash",
+      "model": "deepseek-flash",
+      "condition": "baseline",
+      "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+      "execution_mode": "directory",
+      "controller": "observed_phase_boundaries_v4",
+      "repair_origin": "model_generated_via_allowlisted_tools",
+      "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+      "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+      "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+      "runner_sha256": "2bc633d12452c4680759694dc5d0b5f82d5801616b39ca851c50192d75b9161c",
+      "budget": {
+        "max_requests": 10,
+        "per_phase_requests": 4,
+        "max_output_tokens": 2048,
+        "max_input_json_bytes": 65536,
+        "max_estimated_usd": 0.25,
+        "max_sdk_retries": 0,
+        "max_tools_per_response": 18,
+        "phase_end_policy": "model_finish_or_controller_request_limit"
+      },
+      "initial_public": {
+        "status": "failed",
+        "passed": false,
+        "tests": 2,
+        "failures": 1,
+        "container_calls": 2
+      },
+      "grading": {
+        "status": "failed",
+        "passed": false,
+        "tests": 13,
+        "failures": 5,
+        "container_calls": 13
+      },
+      "status": "failed",
+      "calls_attempted": 10,
+      "responses_received": 10,
+      "usage_complete": true,
+      "reported_tokens": {
+        "prompt_tokens": 46784,
+        "completion_tokens": 1980,
+        "total_tokens": 48764
+      },
+      "estimated_usd_upper": 0.008847462,
+      "final_workspace_sha256": "6e3cdf0c8317ceb1ef2c7c160a78bbe28556ecb3359bf21d415fdd11bbd60e78",
+      "public_test_runs_by_model": 0,
+      "elapsed_seconds": 22.469
+    }
+  }
+]

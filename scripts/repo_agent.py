@@ -10,12 +10,13 @@ from langgraph.graph import END, START, StateGraph
 from openai import APIConnectionError, APIStatusError
 
 from scripts.repo_execution import grade_workspace
+from scripts.repo_skills import active_skills, render_guides
 from scripts.repo_tools import ToolSession
 from scripts.repo_workspace import MAX_FILES, Workspace
 from skillscope.backend import DeepSeekBackend, RunError
 from skillscope.batch import estimate_cost, source_fingerprint, write_json
 from skillscope.loader import digest
-from skillscope.models import Stage
+from skillscope.models import Condition, Skill, Stage
 from skillscope.sandbox import SandboxError, preflight
 from skillscope.settings import Settings, load_settings
 
@@ -92,9 +93,13 @@ def run_agent(
     *,
     max_requests: int = MAX_REQUESTS,
     per_phase_requests: int = PER_PHASE_REQUESTS,
+    skills: tuple[Skill, ...] = (),
+    condition: Condition | None = None,
 ) -> dict:
     if not 3 <= max_requests <= MAX_REQUESTS or not 1 <= per_phase_requests <= PER_PHASE_REQUESTS:
         raise ValueError("Request limits exceed supported bounds")
+    condition = condition or Condition(id="baseline", policy="global", skill_ids=())
+    guide_texts = {stage: render_guides(skills, condition, stage) for stage in Stage}
     workspace = Workspace(task)
     image = preflight(settings.docker)
     ceiling = estimate_cost(
@@ -114,7 +119,18 @@ def run_agent(
     result = {
         "task": workspace.task_id,
         "model": MODEL,
-        "condition": "baseline",
+        "condition": condition.id,
+        "skill_configuration": {
+            "condition": condition.model_dump(mode="json"),
+            "skills": [
+                {
+                    "id": skill.id,
+                    "stages": [stage.value for stage in skill.stages],
+                    "sha256": skill.sha256,
+                }
+                for skill in skills
+            ],
+        },
         "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
         "execution_mode": workspace.execution_mode,
         "controller": "observed_phase_boundaries_v4",
@@ -188,6 +204,7 @@ def run_agent(
                 "temperature": 0,
                 "tool_choice": tool_choice,
                 "max_retries": 0,
+                "active_skill_ids": [skill.id for skill in active_skills(skills, condition, stage)],
             }
         )
         try:
@@ -250,7 +267,7 @@ def run_agent(
                 f"At most {phase_limit} model requests are available in this phase. "
                 "At the phase request limit the controller advances using a factual tool-action log, "
                 "without inventing a reasoning summary. Complete useful work within this limit."
-            )
+            ) + guide_texts[stage]
             user = json.dumps(
                 {
                     "task": workspace.instruction,

@@ -29,6 +29,9 @@ def make_plan(docker: str) -> dict:
     plan["scripts_sha256"]["continue_repo_study.py"] = digest(
         Path(__file__).read_text(encoding="utf-8")
     )
+    plan["scripts_sha256"]["repo_skills.py"] = digest(
+        (ROOT / "scripts/repo_skills.py").read_text(encoding="utf-8")
+    )
     plan["limitations"] = (
         "Engineering pilot excluded from per-task calibration results. Two related library issues, two fresh repeats each. Old protocols and results remain separate. No holdout calls or grades. Author-written regression tests, no complete upstream suite; descriptive only."
     )

@@ -13,9 +13,11 @@ from pathlib import Path
 from dotenv import dotenv_values
 
 from scripts.repo_agent import MAX_OUTPUT, MAX_REQUESTS, run_agent
+from scripts.repo_skills import active_skills, render_guides
 from scripts.repo_workspace import Workspace
 from skillscope.batch import PRICE, estimate_cost, source_fingerprint
 from skillscope.loader import digest
+from skillscope.models import Condition, Skill, Stage
 from skillscope.sandbox import preflight
 from skillscope.settings import load_settings
 
@@ -132,11 +134,13 @@ def run(output: Path):
         )
 
 
-def export(study: Path, output: Path):
+def export(study: Path, output: Path, report_extra: dict | None = None):
     manifest = json.loads((study / "manifest.json").read_text())
     rows = json.loads((study / "results.json").read_text())
     state = json.loads((study / "study.json").read_text())
     plan = manifest["plan"]
+    if state.get("recorded") != len(rows):
+        raise ValueError("Study state and result count differ")
     if [row["job"] for row in rows] != plan["runs"][: len(rows)] or len(rows) > len(plan["runs"]):
         raise ValueError("Results must be an exact prefix of the frozen schedule")
     if state["status"] == "completed":
@@ -168,6 +172,28 @@ def export(study: Path, output: Path):
             or row["result"]["runner_sha256"] != plan["scripts_sha256"]["repo_agent.py"]
         ):
             raise ValueError("Execution code differs from frozen plan")
+        if "conditions" in plan:
+            condition = next(
+                value for value in plan["conditions"] if value["id"] == row["job"]["condition"]
+            )
+            if row["result"]["condition"] != condition["id"]:
+                raise ValueError("Run used the wrong condition")
+            skills = tuple(Skill.model_validate(value) for value in plan["skills"])
+            selected = Condition.model_validate(condition)
+            requests = [event for event in trace if event["type"] == "request"]
+            if len(requests) != row["result"]["calls_attempted"]:
+                raise ValueError("Trace request count differs from run metadata")
+            for event in requests:
+                stage = Stage(event["stage"])
+                if event["active_skill_ids"] != [
+                    skill.id for skill in active_skills(skills, selected, stage)
+                ]:
+                    raise ValueError("Active guides differ from frozen condition")
+                system = event["messages"][0]["content"].rpartition("\nThis is phase request ")[0]
+                marker = "\n\n--- Skill guide:"
+                actual = system[system.index(marker) :] if marker in system else ""
+                if actual != render_guides(skills, selected, stage):
+                    raise ValueError("Model input contains unexpected guide text")
         records.append(
             {
                 **row,
@@ -237,6 +263,10 @@ def export(study: Path, output: Path):
             }
             for cohort in ("engineering", "calibration")
         }
+    if report_extra:
+        if report.keys() & report_extra.keys():
+            raise ValueError("Additional report fields cannot replace audited totals")
+        report.update(report_extra)
     if (
         report["calls"] > plan["budget"]["max_requests"]
         or report["estimated_usd_upper"] > plan["budget"]["max_estimated_usd"]
