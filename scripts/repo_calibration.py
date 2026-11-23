@@ -263,6 +263,19 @@ def export(study: Path, output: Path, report_extra: dict | None = None):
             }
             for cohort in ("engineering", "calibration")
         }
+    unknown_rows = [row for row in rows if not row["result"]["usage_complete"]]
+    unknown_reserved = sum(
+        row["result"].get("unknown_usage_reserved_usd_upper", 0) for row in unknown_rows
+    )
+    report["unknown_usage_reserved_usd_upper"] = unknown_reserved
+    report["conservative_cost_bound_usd"] = (
+        report["estimated_usd_upper"] + unknown_reserved
+        if all(row["result"].get("unknown_usage_reserved_usd_upper", 0) > 0 for row in unknown_rows)
+        else None
+    )
+    report["cost_note"] = (
+        "estimated_usd_upper sums recorded responses only; usage_complete=false means actual billing remains unknown. Unknown-run reservation is a conservative estimate, not an invoice."
+    )
     if report_extra:
         if report.keys() & report_extra.keys():
             raise ValueError("Additional report fields cannot replace audited totals")

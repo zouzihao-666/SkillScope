@@ -1,0 +1,362 @@
+{
+  "purpose": "exploratory skill comparison on a task selected from disclosed discovery calibration",
+  "status": "unknown_usage_stopped",
+  "planned": 36,
+  "unattempted": [
+    {
+      "id": "dotenv-backslash__all-reversed__1",
+      "task": "dotenv-backslash",
+      "condition": "all-reversed",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__single-input-validation__2",
+      "task": "dotenv-backslash",
+      "condition": "single-input-validation",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__single-input-validation__1",
+      "task": "dotenv-backslash",
+      "condition": "single-input-validation",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__single-minimal-fix__2",
+      "task": "dotenv-backslash",
+      "condition": "single-minimal-fix",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__length-b__2",
+      "task": "dotenv-backslash",
+      "condition": "length-b",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__length-b__1",
+      "task": "dotenv-backslash",
+      "condition": "length-b",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__length-a__3",
+      "task": "dotenv-backslash",
+      "condition": "length-a",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__length-b__3",
+      "task": "dotenv-backslash",
+      "condition": "length-b",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__single-root-cause__1",
+      "task": "dotenv-backslash",
+      "condition": "single-root-cause",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__single-compatibility__3",
+      "task": "dotenv-backslash",
+      "condition": "single-compatibility",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__single-root-cause__3",
+      "task": "dotenv-backslash",
+      "condition": "single-root-cause",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__length-a__1",
+      "task": "dotenv-backslash",
+      "condition": "length-a",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__scoped__3",
+      "task": "dotenv-backslash",
+      "condition": "scoped",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__single-python-idioms__2",
+      "task": "dotenv-backslash",
+      "condition": "single-python-idioms",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__single-edge-cases__1",
+      "task": "dotenv-backslash",
+      "condition": "single-edge-cases",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__single-minimal-fix__3",
+      "task": "dotenv-backslash",
+      "condition": "single-minimal-fix",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__single-minimal-fix__1",
+      "task": "dotenv-backslash",
+      "condition": "single-minimal-fix",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__single-python-idioms__1",
+      "task": "dotenv-backslash",
+      "condition": "single-python-idioms",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__all__1",
+      "task": "dotenv-backslash",
+      "condition": "all",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__baseline__3",
+      "task": "dotenv-backslash",
+      "condition": "baseline",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__single-edge-cases__3",
+      "task": "dotenv-backslash",
+      "condition": "single-edge-cases",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__all-reversed__3",
+      "task": "dotenv-backslash",
+      "condition": "all-reversed",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__all__2",
+      "task": "dotenv-backslash",
+      "condition": "all",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__scoped__1",
+      "task": "dotenv-backslash",
+      "condition": "scoped",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__baseline__1",
+      "task": "dotenv-backslash",
+      "condition": "baseline",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__scoped__2",
+      "task": "dotenv-backslash",
+      "condition": "scoped",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__single-python-idioms__3",
+      "task": "dotenv-backslash",
+      "condition": "single-python-idioms",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__all-reversed__2",
+      "task": "dotenv-backslash",
+      "condition": "all-reversed",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__single-compatibility__1",
+      "task": "dotenv-backslash",
+      "condition": "single-compatibility",
+      "repeat": 1
+    },
+    {
+      "id": "dotenv-backslash__single-input-validation__3",
+      "task": "dotenv-backslash",
+      "condition": "single-input-validation",
+      "repeat": 3
+    },
+    {
+      "id": "dotenv-backslash__single-compatibility__2",
+      "task": "dotenv-backslash",
+      "condition": "single-compatibility",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__length-a__2",
+      "task": "dotenv-backslash",
+      "condition": "length-a",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__single-edge-cases__2",
+      "task": "dotenv-backslash",
+      "condition": "single-edge-cases",
+      "repeat": 2
+    },
+    {
+      "id": "dotenv-backslash__all__3",
+      "task": "dotenv-backslash",
+      "condition": "all",
+      "repeat": 3
+    }
+  ],
+  "runs": 2,
+  "calls": 2,
+  "reported_tokens": 0,
+  "usage_complete": false,
+  "estimated_usd_upper": 0.0,
+  "tasks": {
+    "dotenv-backslash": {
+      "recorded": 2,
+      "passed": 0,
+      "statuses": [
+        "interrupted",
+        "interrupted"
+      ],
+      "hidden_graded": 0
+    }
+  },
+  "limitations": "One selected discovery issue, three repeats per condition. Character-matched neutral guide bodies do not match token counts or remove guide-name hints. Fresh histories per phase can retain indirect skill effects through summaries or patches. No population or causal claim; protocol failures separate from valid functional grades. Calibration not pooled with comparison.",
+  "conditions": {
+    "baseline": {
+      "recorded": 1,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {
+        "interrupted": 1
+      },
+      "calls": 1,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "single-root-cause": {
+      "recorded": 1,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {
+        "interrupted": 1
+      },
+      "calls": 1,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "single-minimal-fix": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "single-edge-cases": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "single-input-validation": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "single-compatibility": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "single-python-idioms": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "all": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "scoped": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "all-reversed": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "length-a": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    },
+    "length-b": {
+      "recorded": 0,
+      "valid_final_grades": 0,
+      "passed": 0,
+      "functional_failures": 0,
+      "statuses": {},
+      "calls": 0,
+      "tokens": 0,
+      "descriptive_wilson95_valid": null
+    }
+  },
+  "candidate_screen": {
+    "candidates": [],
+    "rule": "All required groups have three valid final grades; baseline=3/3, every single>=2/3, both neutral controls>=2/3, scoped>=2/3, and all or all-reversed<=1/3. Exploratory candidate only; no semantic-conflict proof.",
+    "interpretation": "Exploratory screen; missing or unsuccessful controls do not demonstrate an absence of effects."
+  },
+  "unknown_usage_reserved_usd_upper": 0.448512,
+  "conservative_cost_bound_usd": 0.448512,
+  "cost_note": "The response-based estimate of zero is not a zero bill: both responses and their usage remain unknown. Reserve the full original per-run ceiling for each interrupted trial."
+}

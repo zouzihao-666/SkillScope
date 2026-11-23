@@ -139,6 +139,11 @@ def run(output: Path):
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, check=True, capture_output=True, text=True
     ).stdout.strip()
+    execute(plan, settings, output, commit, lambda: make_plan(settings.docker) == plan)
+
+
+def execute(plan: dict, settings, output: Path, commit: str, unchanged):
+    """Execute a committed schedule; caller supplies its exact source/input guard."""
     output.mkdir(parents=True, exist_ok=False)
     save(output / "manifest.json", {"preregistered_commit": commit, "plan": plan})
     shutil.copytree(COLLECTION / TASK, output / "inputs" / TASK)
@@ -195,7 +200,7 @@ def run(output: Path):
         ordered = [completed[j["id"]] for j in plan["runs"] if j["id"] in completed]
         save(output / "results.json", ordered)
         print(
-            f"{len(completed)}/36 {job['id']}: {result['status']}; calls={result['calls_attempted']}",
+            f"{len(completed)}/{len(plan['runs'])} {job['id']}: {result['status']}; calls={result['calls_attempted']}",
             flush=True,
         )
 
@@ -216,7 +221,7 @@ def run(output: Path):
                 ):
                     state = "budget_stopped"
                     break
-                if make_plan(settings.docker) != plan:
+                if not unchanged():
                     raise ValueError("Inputs changed during execution")
                 job = plan["runs"][scheduled]
                 pending[executor.submit(trial, job)] = job

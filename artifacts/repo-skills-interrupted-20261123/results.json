@@ -1,0 +1,66 @@
+[
+  {
+    "job": {
+      "id": "dotenv-backslash__single-root-cause__2",
+      "task": "dotenv-backslash",
+      "condition": "single-root-cause",
+      "repeat": 2
+    },
+    "result": {
+      "task": "dotenv-backslash",
+      "condition": "single-root-cause",
+      "status": "interrupted",
+      "error": "Execution process disappeared before an API response was durably recorded; billing unknown",
+      "grading": null,
+      "calls_attempted": 1,
+      "responses_received": 0,
+      "usage_complete": false,
+      "reported_tokens": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "estimated_usd_upper": 0.0,
+      "unknown_usage_reserved_usd_upper": 0.224256,
+      "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+      "final_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+      "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+      "runner_sha256": "7108bc11b9cac605dbd373d75d5c961bec4c888db9d8a48bc9aa14a2e83a9cfc",
+      "controller": "observed_phase_boundaries_v4",
+      "recovery_origin": "request_only_trace_and_unchanged_initial_workspace",
+      "cost_note": "Zero is the recorded-response estimate only; actual usage and invoice remain unknown"
+    }
+  },
+  {
+    "job": {
+      "id": "dotenv-backslash__baseline__2",
+      "task": "dotenv-backslash",
+      "condition": "baseline",
+      "repeat": 2
+    },
+    "result": {
+      "task": "dotenv-backslash",
+      "condition": "baseline",
+      "status": "interrupted",
+      "error": "Execution process disappeared before an API response was durably recorded; billing unknown",
+      "grading": null,
+      "calls_attempted": 1,
+      "responses_received": 0,
+      "usage_complete": false,
+      "reported_tokens": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "estimated_usd_upper": 0.0,
+      "unknown_usage_reserved_usd_upper": 0.224256,
+      "initial_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+      "final_workspace_sha256": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+      "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+      "runner_sha256": "7108bc11b9cac605dbd373d75d5c961bec4c888db9d8a48bc9aa14a2e83a9cfc",
+      "controller": "observed_phase_boundaries_v4",
+      "recovery_origin": "request_only_trace_and_unchanged_initial_workspace",
+      "cost_note": "Zero is the recorded-response estimate only; actual usage and invoice remain unknown"
+    }
+  }
+]
