@@ -308,3 +308,29 @@ def export_diagnosis(
     except (ValueError, OSError, KeyError) as error:
         fail(error)
     typer.echo(f"已导出 {result['trials']} 次运行：{output}；模型调用：0")
+
+
+@app.command("run-policy")
+def run_policy(
+    study: Annotated[Path, typer.Option("--study")],
+    task_manifest: Annotated[Path, typer.Option("--task-manifest")],
+    output: Annotated[Path, typer.Option("--output", "-o")] = Path("results/policy-run"),
+    env_file: Path = Path(".env"),
+    docker: Annotated[str | None, typer.Option()] = None,
+) -> None:
+    """直接使用已保存的冻结方案修复新任务；不重新诊断，会消耗 API 额度。"""
+    from skillscope.policy import apply_saved_policy, load_saved_policy
+    from skillscope.sandbox import SandboxError
+    from skillscope.settings import load_settings
+
+    try:
+        plan, _, _, _, _ = load_saved_policy(study)
+        typer.echo(
+            f"本次最多 {plan['spec']['limits']['per_run_calls']} 次请求；不重新搜索技能集合。"
+        )
+        result = apply_saved_policy(study, task_manifest, load_settings(env_file, docker), output)
+    except (ValueError, OSError, KeyError, SandboxError) as error:
+        fail(error)
+    typer.echo(f"状态：{result['status']}；报告：{output / 'report.html'}")
+    if result["status"] != "passed":
+        raise typer.Exit(code=1)

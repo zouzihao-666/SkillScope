@@ -45,3 +45,13 @@
 作用：离线重建报告，导出方案、状态、原始轨迹、冻结输入、候选代码和校验和。导出会检查常见凭证形式，结果不覆盖已有文件。
 
 原始研究脚本保留用于对应历史提交的复现，新使用从上述统一命令开始。历史实验的冻结源码与旧统计不会被新版本覆盖。
+
+## 5. 直接把现成方案用于新任务
+
+```powershell
+.\.venv\Scripts\python.exe -m skillscope run-policy --study artifacts/v06-complete-diagnosis --task-manifest benchmarks/upstream/dotenv-comment/task.json --output results/my-policy-run
+```
+
+作用：校验保存的方案与指南，从原计划读取准确的指南正文，直接修复并评分指定新任务。不重新诊断、缩减或选择策略，最多使用保存计划规定的一次运行额度。输出 run.json、applied-policy.json 和 report.html。
+
+本轮首次完整验收已使用 dotenv-bom，因此它已不再是未使用保留题。后续要验证真正的新任务效果，应另建未参与开发的新任务集。

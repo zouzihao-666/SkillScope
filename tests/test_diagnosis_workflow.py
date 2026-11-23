@@ -343,3 +343,41 @@ def test_unreliable_baseline_does_not_block_selecting_and_testing_a_helpful_conf
     assert state["status"] == "completed" and state["holdout_opened"]
     assert diagnosis["classification"] == "baseline_unreliable" and not diagnosis["suspects"]
     assert state["policy"]["method"] == "all"
+
+
+def test_saved_policy_applies_to_a_new_task_without_rerunning_diagnosis(
+    diagnosis_config, tmp_path, oracle, monkeypatch
+):
+    from skillscope import policy as module
+
+    evaluate, calls = oracle
+    root = tmp_path / "selected"
+    workflow = prepare(diagnosis_config, root, Settings(api_key="unit-secret"), evaluator=evaluate)
+    workflow.execute()
+    previous = len(calls)
+    captured = []
+
+    def apply(task, settings, output, **kwargs):
+        captured.append(kwargs)
+        output.mkdir(parents=True)
+        return {
+            "status": "passed",
+            "grading": {"status": "passed", "tests": 9},
+            "calls_attempted": 1,
+            "usage_complete": True,
+            "estimated_usd_upper": 0.001,
+        }
+
+    monkeypatch.setattr(module, "run_agent", apply)
+    result = module.apply_saved_policy(
+        root,
+        diagnosis_config.parent / "discovery/task.json",
+        Settings(api_key="unit-secret"),
+        tmp_path / "new-task",
+    )
+    assert result["status"] == "passed" and len(calls) == previous and len(captured) == 1
+    bad = next(skill for skill in captured[0]["skills"] if skill.id == "bad")
+    assert bad.stages == (Stage.VERIFY,)
+    (root / "policy.json").write_text("{}")
+    with pytest.raises(ValueError, match="frozen bytes"):
+        module.load_saved_policy(root)
