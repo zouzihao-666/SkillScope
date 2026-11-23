@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "stop_reason": null,
+  "completed": 40,
+  "planned": 40,
+  "calls_attempted": 114,
+  "reported_tokens": 167289,
+  "estimated_usd_upper": 0.083289066,
+  "usage_complete": true
+}

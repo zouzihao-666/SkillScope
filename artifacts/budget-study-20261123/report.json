@@ -1,0 +1,88 @@
+{
+  "groups": {
+    "baseline/1024": {
+      "recorded": 5,
+      "planned": 5,
+      "passed": 5,
+      "length_truncations": 0,
+      "other_model_failures": 0,
+      "unknown": 0,
+      "tokens": 18598,
+      "estimated_usd_upper": 0.010054872
+    },
+    "baseline/2048": {
+      "recorded": 5,
+      "planned": 5,
+      "passed": 5,
+      "length_truncations": 0,
+      "other_model_failures": 0,
+      "unknown": 0,
+      "tokens": 17941,
+      "estimated_usd_upper": 0.00892092
+    },
+    "all/1024": {
+      "recorded": 5,
+      "planned": 5,
+      "passed": 4,
+      "length_truncations": 1,
+      "other_model_failures": 0,
+      "unknown": 0,
+      "tokens": 21137,
+      "estimated_usd_upper": 0.010259592
+    },
+    "all/2048": {
+      "recorded": 5,
+      "planned": 5,
+      "passed": 5,
+      "length_truncations": 0,
+      "other_model_failures": 0,
+      "unknown": 0,
+      "tokens": 24745,
+      "estimated_usd_upper": 0.011770943999999998
+    },
+    "all-reversed/1024": {
+      "recorded": 5,
+      "planned": 5,
+      "passed": 3,
+      "length_truncations": 2,
+      "other_model_failures": 0,
+      "unknown": 0,
+      "tokens": 18111,
+      "estimated_usd_upper": 0.009204312
+    },
+    "all-reversed/2048": {
+      "recorded": 5,
+      "planned": 5,
+      "passed": 5,
+      "length_truncations": 0,
+      "other_model_failures": 0,
+      "unknown": 0,
+      "tokens": 24812,
+      "estimated_usd_upper": 0.011955239999999999
+    },
+    "scoped/1024": {
+      "recorded": 5,
+      "planned": 5,
+      "passed": 5,
+      "length_truncations": 0,
+      "other_model_failures": 0,
+      "unknown": 0,
+      "tokens": 20776,
+      "estimated_usd_upper": 0.010333674000000001
+    },
+    "scoped/2048": {
+      "recorded": 5,
+      "planned": 5,
+      "passed": 5,
+      "length_truncations": 0,
+      "other_model_failures": 0,
+      "unknown": 0,
+      "tokens": 21169,
+      "estimated_usd_upper": 0.010789512
+    }
+  },
+  "observed_budget_sensitive_candidates": [
+    "all-reversed"
+  ],
+  "conclusion": "budget_sensitive_candidates_need_confirmation"
+}

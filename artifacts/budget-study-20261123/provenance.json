@@ -1,0 +1,13 @@
+{
+  "preregistered_execution_commit": "fdb8252a0c8a42acd2aeaf1d53654761d9ebc5f0",
+  "raw_records": 40,
+  "raw_jsonl_sha256": "a263332537e38612183603c346f649842d639be40f143a9adf00c0848cc5b004",
+  "text_encoding": "UTF-8/LF; candidate hashes use normalized candidate text",
+  "source_sha256": "c726088eb73634c49d0bdc5c38c1fd65d3dbc67167ad918b3e584e9919df3a84",
+  "study_script_sha256": "522d5a397730df475c1d1c20e493e66d1d5421d042b159873b22c8a1e070965b",
+  "not_in_archive": [
+    "API keys",
+    "HTTP authentication headers",
+    "environment files"
+  ]
+}

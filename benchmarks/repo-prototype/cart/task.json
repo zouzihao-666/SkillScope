@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "cart-rounding",
+  "project": "project",
+  "visible": ["shop/__init__.py", "shop/money.py", "shop/cart.py", "README.md"],
+  "editable": ["shop/money.py", "shop/cart.py"],
+  "instruction": "instruction.md",
+  "adapter": "adapter.py",
+  "public_grader": "public_tests.py",
+  "hidden_grader": "hidden_tests.py"
+}

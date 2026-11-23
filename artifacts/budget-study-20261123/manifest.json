@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "plan": {
+    "task": "get-path",
+    "conditions": [
+      "baseline",
+      "all",
+      "all-reversed",
+      "scoped"
+    ],
+    "caps": [
+      1024,
+      2048
+    ],
+    "repeats": 5,
+    "seed": 1041,
+    "runs": [
+      {
+        "id": "get-path__scoped__cap2048__005",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 2048,
+        "repeat": 5
+      },
+      {
+        "id": "get-path__all-reversed__cap2048__004",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 2048,
+        "repeat": 4
+      },
+      {
+        "id": "get-path__scoped__cap1024__004",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 1024,
+        "repeat": 4
+      },
+      {
+        "id": "get-path__all__cap1024__001",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 1024,
+        "repeat": 1
+      },
+      {
+        "id": "get-path__all-reversed__cap1024__003",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 1024,
+        "repeat": 3
+      },
+      {
+        "id": "get-path__all__cap1024__005",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 1024,
+        "repeat": 5
+      },
+      {
+        "id": "get-path__all__cap2048__005",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 2048,
+        "repeat": 5
+      },
+      {
+        "id": "get-path__scoped__cap1024__005",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 1024,
+        "repeat": 5
+      },
+      {
+        "id": "get-path__all__cap1024__003",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 1024,
+        "repeat": 3
+      },
+      {
+        "id": "get-path__all__cap1024__002",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 1024,
+        "repeat": 2
+      },
+      {
+        "id": "get-path__scoped__cap1024__003",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 1024,
+        "repeat": 3
+      },
+      {
+        "id": "get-path__scoped__cap1024__002",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 1024,
+        "repeat": 2
+      },
+      {
+        "id": "get-path__all-reversed__cap2048__005",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 2048,
+        "repeat": 5
+      },
+      {
+        "id": "get-path__scoped__cap2048__002",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 2048,
+        "repeat": 2
+      },
+      {
+        "id": "get-path__baseline__cap1024__002",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 1024,
+        "repeat": 2
+      },
+      {
+        "id": "get-path__baseline__cap1024__005",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 1024,
+        "repeat": 5
+      },
+      {
+        "id": "get-path__scoped__cap1024__001",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 1024,
+        "repeat": 1
+      },
+      {
+        "id": "get-path__all__cap1024__004",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 1024,
+        "repeat": 4
+      },
+      {
+        "id": "get-path__all__cap2048__003",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 2048,
+        "repeat": 3
+      },
+      {
+        "id": "get-path__all-reversed__cap1024__001",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 1024,
+        "repeat": 1
+      },
+      {
+        "id": "get-path__scoped__cap2048__001",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 2048,
+        "repeat": 1
+      },
+      {
+        "id": "get-path__all-reversed__cap2048__003",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 2048,
+        "repeat": 3
+      },
+      {
+        "id": "get-path__all-reversed__cap2048__002",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 2048,
+        "repeat": 2
+      },
+      {
+        "id": "get-path__scoped__cap2048__004",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 2048,
+        "repeat": 4
+      },
+      {
+        "id": "get-path__all-reversed__cap2048__001",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 2048,
+        "repeat": 1
+      },
+      {
+        "id": "get-path__baseline__cap1024__003",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 1024,
+        "repeat": 3
+      },
+      {
+        "id": "get-path__all-reversed__cap1024__004",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 1024,
+        "repeat": 4
+      },
+      {
+        "id": "get-path__baseline__cap2048__005",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 2048,
+        "repeat": 5
+      },
+      {
+        "id": "get-path__baseline__cap2048__003",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 2048,
+        "repeat": 3
+      },
+      {
+        "id": "get-path__baseline__cap2048__002",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 2048,
+        "repeat": 2
+      },
+      {
+        "id": "get-path__scoped__cap2048__003",
+        "task_id": "get-path",
+        "condition_id": "scoped",
+        "cap": 2048,
+        "repeat": 3
+      },
+      {
+        "id": "get-path__baseline__cap2048__001",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 2048,
+        "repeat": 1
+      },
+      {
+        "id": "get-path__all-reversed__cap1024__005",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 1024,
+        "repeat": 5
+      },
+      {
+        "id": "get-path__all__cap2048__001",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 2048,
+        "repeat": 1
+      },
+      {
+        "id": "get-path__all__cap2048__002",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 2048,
+        "repeat": 2
+      },
+      {
+        "id": "get-path__baseline__cap1024__001",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 1024,
+        "repeat": 1
+      },
+      {
+        "id": "get-path__baseline__cap1024__004",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 1024,
+        "repeat": 4
+      },
+      {
+        "id": "get-path__all__cap2048__004",
+        "task_id": "get-path",
+        "condition_id": "all",
+        "cap": 2048,
+        "repeat": 4
+      },
+      {
+        "id": "get-path__all-reversed__cap1024__002",
+        "task_id": "get-path",
+        "condition_id": "all-reversed",
+        "cap": 1024,
+        "repeat": 2
+      },
+      {
+        "id": "get-path__baseline__cap2048__004",
+        "task_id": "get-path",
+        "condition_id": "baseline",
+        "cap": 2048,
+        "repeat": 4
+      }
+    ]
+  },
+  "plan_sha256": "154b71b55458893e99f83dd527472762fa4a62a9ff2b0abfae5beb00a0aa0f25",
+  "limits": {
+    "max_calls": 120,
+    "max_reported_tokens": 500000,
+    "max_estimated_usd": 0.5,
+    "max_output_tokens": 2048,
+    "workers": 2
+  },
+  "pricing": {
+    "currency": "USD",
+    "cache_hit_per_million": 0.006,
+    "cache_miss_per_million": 0.3,
+    "output_per_million": 1.2,
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-11-23",
+    "kind": "peak_rate_upper_estimate_not_invoice"
+  },
+  "sandbox_image_id": "sha256:1d8cf3d0b6c25e562b276566057195d4f724915d6f55ac1025e5e70295ac22be",
+  "experiment_sha256": "ba31e30f6a20e5c956356530d8021f005a43e41cd3c25fad8e084200c2dbe738",
+  "source_sha256": "c726088eb73634c49d0bdc5c38c1fd65d3dbc67167ad918b3e584e9919df3a84",
+  "study_script_sha256": "522d5a397730df475c1d1c20e493e66d1d5421d042b159873b22c8a1e070965b",
+  "protocol": "docs/next-steps.md; whole-pipeline per-stage output-cap comparison"
+}
