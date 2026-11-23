@@ -6,13 +6,21 @@ from typing import Literal
 from skillscope.models import Condition, Experiment, PlannedRun, Stage
 
 
-def conditions_for(experiment: Experiment) -> tuple[Condition, ...]:
+def conditions_for(experiment: Experiment, controls: bool = False) -> tuple[Condition, ...]:
     ids = tuple(skill.id for skill in experiment.skills)
-    return (
+    base = (
         Condition(id="baseline", policy="global", skill_ids=()),
         *(Condition(id=f"single-{id_}", policy="global", skill_ids=(id_,)) for id_ in ids),
         Condition(id="all", policy="global", skill_ids=ids),
         Condition(id="scoped", policy="scoped", skill_ids=ids),
+    )
+    if not controls:
+        return base
+    return (
+        *base,
+        Condition(id="all-reversed", policy="global", skill_ids=tuple(reversed(ids))),
+        Condition(id="length-a", policy="global", skill_ids=ids, control="neutral-a"),
+        Condition(id="length-b", policy="global", skill_ids=ids, control="neutral-b"),
     )
 
 
@@ -22,6 +30,7 @@ def build_plan(
     seed: int = 42,
     split: Literal["discovery", "holdout"] = "discovery",
     max_runs: int = 1000,
+    controls: bool = False,
 ) -> dict:
     if repeats < 1 or max_runs < 1:
         raise ValueError("repeats and max_runs must be positive")
@@ -30,7 +39,7 @@ def build_plan(
     tasks = tuple(task for task in experiment.tasks if task.split == split)
     if not tasks:
         raise ValueError(f"no tasks in split: {split}")
-    conditions = conditions_for(experiment)
+    conditions = conditions_for(experiment, controls)
     count = len(tasks) * len(conditions) * repeats
     if count > max_runs:
         raise ValueError(f"plan needs {count} runs, exceeding max_runs={max_runs}")
@@ -57,6 +66,7 @@ def build_plan(
         "split": split,
         "repeats": repeats,
         "order_seed": seed,
+        "controls": controls,
         "stages": [stage.value for stage in Stage],
         "run_count": len(runs),
         "skills": [skill.model_dump(mode="json") for skill in experiment.skills],

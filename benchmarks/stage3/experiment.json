@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "name": "skillscope-stage3",
+  "model": "deepseek-flash",
+  "skills": [
+    {
+      "id": "root-cause",
+      "file": "skills/root-cause.md",
+      "stages": [
+        "investigate"
+      ]
+    },
+    {
+      "id": "minimal-fix",
+      "file": "skills/minimal-fix.md",
+      "stages": [
+        "implement"
+      ]
+    },
+    {
+      "id": "edge-cases",
+      "file": "skills/edge-cases.md",
+      "stages": [
+        "verify"
+      ]
+    },
+    {
+      "id": "input-validation",
+      "file": "skills/input-validation.md",
+      "stages": [
+        "investigate",
+        "implement"
+      ]
+    },
+    {
+      "id": "compatibility",
+      "file": "skills/compatibility.md",
+      "stages": [
+        "investigate",
+        "verify"
+      ]
+    },
+    {
+      "id": "python-idioms",
+      "file": "skills/python-idioms.md",
+      "stages": [
+        "implement"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "clamp",
+      "split": "discovery",
+      "instruction_file": "tasks/clamp/instruction.md",
+      "starter_file": "tasks/clamp/starter.py",
+      "grader_file": "graders/test_clamp.py"
+    },
+    {
+      "id": "merge-intervals",
+      "split": "discovery",
+      "instruction_file": "tasks/merge-intervals/instruction.md",
+      "starter_file": "tasks/merge-intervals/starter.py",
+      "grader_file": "graders/test_merge_intervals.py"
+    },
+    {
+      "id": "get-path",
+      "split": "discovery",
+      "instruction_file": "tasks/get-path/instruction.md",
+      "starter_file": "tasks/get-path/starter.py",
+      "grader_file": "graders/test_get_path.py"
+    },
+    {
+      "id": "toposort",
+      "split": "discovery",
+      "instruction_file": "tasks/toposort/instruction.md",
+      "starter_file": "tasks/toposort/starter.py",
+      "grader_file": "graders/test_toposort.py"
+    },
+    {
+      "id": "deduplicate",
+      "split": "holdout",
+      "instruction_file": "tasks/deduplicate/instruction.md",
+      "starter_file": "tasks/deduplicate/starter.py",
+      "grader_file": "graders/test_deduplicate.py"
+    },
+    {
+      "id": "parse-duration",
+      "split": "holdout",
+      "instruction_file": "tasks/parse-duration/instruction.md",
+      "starter_file": "tasks/parse-duration/starter.py",
+      "grader_file": "graders/test_parse_duration.py"
+    }
+  ]
+}

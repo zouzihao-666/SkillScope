@@ -51,6 +51,11 @@ class DeepSeekBackend:
 
     def complete(self, model: str, stage: str, messages: list, record) -> str:
         tool = tool_schema(stage)
+        if (
+            len(json.dumps({"messages": messages, "tool": tool}, ensure_ascii=False).encode())
+            > 65536
+        ):
+            raise RunError("budget_exhausted", "Request input exceeds 64 KiB limit")
         started = time.monotonic()
         record(
             {

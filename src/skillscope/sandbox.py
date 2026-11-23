@@ -108,6 +108,8 @@ def bounded_process(command: list[str], payload: bytes, timeout: float) -> tuple
 
 def invoke(function: str, args: tuple):
     """Called by a trusted proxy imported by the independent pytest grader."""
+    if not function.isidentifier() or function.startswith("_"):
+        raise ValueError("Only public Python function names are allowed")
     docker = os.environ["SKILLSCOPE_RPC_DOCKER"]
     image = os.environ["SKILLSCOPE_RPC_IMAGE"]
     candidate_dir = os.environ["SKILLSCOPE_RPC_CANDIDATE"]
@@ -217,10 +219,12 @@ def grade(candidate: str, grader: str, docker: str, image: str, output: Path) ->
             (test_root / "test_subject.py").write_text(grader, encoding="utf-8")
             (test_root / "candidate.py").write_text(
                 "from skillscope.sandbox import invoke\n"
-                "def clamp(value, lower, upper):\n"
-                "    return invoke('clamp', (value, lower, upper))\n"
-                "def deduplicate(items):\n"
-                "    return invoke('deduplicate', (items,))\n",
+                "def __getattr__(name):\n"
+                "    if not name.isidentifier() or name.startswith('_'):\n"
+                "        raise AttributeError(name)\n"
+                "    def call(*args):\n"
+                "        return invoke(name, args)\n"
+                "    return call\n",
                 encoding="utf-8",
             )
             (test_root / "conftest.py").write_text(

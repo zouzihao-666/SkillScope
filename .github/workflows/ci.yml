@@ -28,6 +28,6 @@ jobs:
       - if: runner.os == 'Linux'
         run: python -m skillscope sandbox-build --docker docker
       - if: runner.os == 'Linux'
-        run: python -m pytest tests/test_sandbox_integration.py -q
+        run: python -m pytest tests/test_sandbox_integration.py tests/test_stage3_corpus_integration.py -q
         env:
           SKILLSCOPE_TEST_DOCKER: docker

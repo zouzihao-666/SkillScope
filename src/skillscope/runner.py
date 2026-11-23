@@ -36,12 +36,16 @@ def run_task(
     max_tokens: int = 1024,
     timeout: float = 45,
     allow_holdout: bool = False,
+    quiet: bool = False,
 ) -> dict:
     if not 1 <= max_calls <= 3 or not 128 <= max_tokens <= 4096 or not 1 <= timeout <= 120:
         raise ValueError("Invalid request budget: calls 1..3, tokens 128..4096, timeout 1..120")
     experiment = load_experiment(config)
     task = next((item for item in experiment.tasks if item.id == task_id), None)
-    condition = next((item for item in conditions_for(experiment) if item.id == condition_id), None)
+    condition = next(
+        (item for item in conditions_for(experiment, controls=True) if item.id == condition_id),
+        None,
+    )
     if task is None or condition is None:
         raise ValueError("Unknown task or condition")
     if task.split == "holdout" and not allow_holdout:
@@ -106,7 +110,8 @@ def run_task(
                 messages[-1]["content"] += "\n\nCandidate module to review:\n" + state["code"]
             calls += 1
             record({"type": "phase", "stage": stage.value, "call": calls})
-            print(f"阶段：{stage.value}（模型调用 {calls}/{max_calls}）", flush=True)
+            if not quiet:
+                print(f"阶段：{stage.value}（模型调用 {calls}/{max_calls}）", flush=True)
             value = backend.complete(experiment.model, stage.value, messages, record)
             if stage == Stage.IMPLEMENT:
                 (output / "candidate.py").write_text(value, encoding="utf-8")
@@ -137,7 +142,8 @@ def run_task(
         (output / "handoffs.json").write_text(
             json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8"
         )
-        print("阶段：独立 Docker 评分", flush=True)
+        if not quiet:
+            print("阶段：独立 Docker 评分", flush=True)
         summary["grading"] = grade(state["code"], grader, settings.docker, image_id, output)
         summary["status"] = summary["grading"]["status"]
     except RunError as error:

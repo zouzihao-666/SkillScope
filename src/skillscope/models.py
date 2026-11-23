@@ -84,6 +84,7 @@ class Condition(Record):
     id: str
     policy: Literal["global", "scoped"]
     skill_ids: tuple[str, ...]
+    control: Literal["none", "neutral-a", "neutral-b"] = "none"
 
 
 class PlannedRun(Record):

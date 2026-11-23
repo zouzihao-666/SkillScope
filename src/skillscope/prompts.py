@@ -15,6 +15,15 @@ PHASE_INSTRUCTIONS = {
 }
 
 
+def neutral_text(length: int, variant: str) -> str:
+    passages = {
+        "neutral-a": "In an imaginary garden, a marble rests near a pale curtain. The trees cast shadows across a quiet stone path. ",
+        "neutral-b": "A fictional atlas describes amber hills beside a silver lake. Small islands appear as colored circles on its pages. ",
+    }
+    passage = passages[variant]
+    return (passage * (length // len(passage) + 1))[:length]
+
+
 def build_messages(
     experiment: Experiment,
     task_id: str,
@@ -39,7 +48,12 @@ def build_messages(
         stage=stage.value, phase_instruction=PHASE_INSTRUCTIONS[stage]
     )
     for skill in active:
-        system += f"\n\n--- Skill guide: {skill.id} ---\n{skill.text}"
+        text = (
+            skill.text
+            if condition.control == "none"
+            else neutral_text(len(skill.text), condition.control)
+        )
+        system += f"\n\n--- Skill guide: {skill.id} ---\n{text}"
     user = (
         f"Task: {task.id}\n\n{task.instruction}\n\nStarter module:\n```python\n{task.starter}\n```"
     )
