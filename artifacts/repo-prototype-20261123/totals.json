@@ -1,0 +1,7 @@
+{
+  "calls": 14,
+  "reported_tokens": 25225,
+  "estimated_usd_upper": 0.009576791999999999,
+  "max_estimated_usd": 0.25,
+  "note": "Engineering attempts used different protocol versions; do not pool success rates."
+}
