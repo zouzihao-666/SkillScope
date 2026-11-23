@@ -1,6 +1,8 @@
 """Offline CLI. No command in this milestone makes a model API request."""
 
+import io
 import json
+import sys
 from enum import StrEnum
 from pathlib import Path
 from typing import Annotated
@@ -16,6 +18,14 @@ app = typer.Typer(
     help="SkillScope：实验准备与阶段指令预览（当前不调用模型）。", no_args_is_help=True
 )
 ConfigOption = Annotated[Path, typer.Option("--config", "-c", help="实验配置 JSON 文件")]
+
+
+def main() -> None:
+    """Use UTF-8 for Chinese CLI output, including pipes on English Windows hosts."""
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(encoding="utf-8")
+    app()
 
 
 class Split(StrEnum):

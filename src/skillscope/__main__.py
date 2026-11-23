@@ -1,3 +1,3 @@
-from skillscope.cli import app
+from skillscope.cli import main
 
-app()
+main()

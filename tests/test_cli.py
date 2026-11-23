@@ -1,5 +1,9 @@
 import json
+import os
+import subprocess
+import sys
 
+import pytest
 from typer.testing import CliRunner
 
 from skillscope.cli import app
@@ -40,3 +44,29 @@ def test_missing_file_and_unknown_condition_are_reported(config, tmp_path):
     result = runner.invoke(app, ["preview", "--config", str(config), "--condition", "typo"])
     assert result.exit_code == 1
     assert "unknown condition" in result.output
+
+
+@pytest.mark.parametrize("command", ["check", "missing", "help"])
+def test_real_cli_supports_chinese_output_with_western_default_encoding(config, command):
+    if command == "check":
+        arguments = ["check", "--config", str(config)]
+    elif command == "missing":
+        arguments = ["check", "--config", str(config.parent / "missing.json")]
+    else:
+        arguments = ["--help"]
+    result = subprocess.run(
+        [sys.executable, "-m", "skillscope", *arguments],
+        env={**os.environ, "PYTHONIOENCODING": "cp1252", "NO_COLOR": "1"},
+        capture_output=True,
+        timeout=20,
+    )
+    stdout = result.stdout.decode("utf-8")
+    stderr = result.stderr.decode("utf-8")
+    assert result.returncode == (1 if command == "missing" else 0), stderr
+    assert "UnicodeEncodeError" not in stderr
+    if command == "check":
+        assert "配置有效" in stdout
+    elif command == "missing":
+        assert "错误" in stderr
+    else:
+        assert "SkillScope" in stdout

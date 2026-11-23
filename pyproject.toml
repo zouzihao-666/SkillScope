@@ -14,7 +14,7 @@ dependencies = ["pydantic>=2.10,<3", "typer>=0.15,<1"]
 dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
 
 [project.scripts]
-skillscope = "skillscope.cli:app"
+skillscope = "skillscope.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

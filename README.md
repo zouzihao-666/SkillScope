@@ -27,6 +27,8 @@ Linux/macOS 将 `.\.venv\Scripts\python.exe` 换为 `.venv/bin/python`。命令�
 
 当前所有命令都不请求模型 API，也不需要密钥。`plan` 默认保存至 `results/plan.json`；如果文件已经存在，请通过 `--output results/plan-02.json` 指定新路径，保护旧计划。
 
+命令行文本输出统一为 UTF-8，支持英文 Windows 系统及输出重定向。
+
 ## 第一个实验长什么样
 
 示例只有 2 份技能指南、2 道小型代码修复任务，用于验证流程。它们不是已确认的冲突案例，也不足以支持统计结论。
