@@ -6,9 +6,9 @@
 
 可以把 Skill 理解为工作指南。SkillScope 希望通过相同任务、不同指南组合的重复实验，找到值得进一步验证的退化组合，并尝试按工作阶段加载指南。
 
-**当前为第 1 阶段：实验准备工具。已实现配置校验、对照分组、实验排期、输入内容指纹和阶段指令预览。尚未接入模型、执行代码、评分或发现真实冲突。**
+**当前 v0.2：已能运行单道真实任务。包括实验准备、DeepSeek 工具调用、LangGraph 三阶段流程、Docker 候选执行和容器外独立评分。尚未实现批量执行、自动组合缩减或策略学习。**
 
-[中文入门：一步步操作与作用](docs/step-by-step.md) · [开发路线](docs/roadmap.md) · [原始研究设计](docs/design.md)
+[中文入门](docs/step-by-step.md) · [跑通真实任务](docs/first-real-run.md) · [试运行记录](docs/smoke-results.md) · [开发路线](docs/roadmap.md) · [原始研究设计](docs/design.md)
 
 ## 快速开始
 
@@ -25,7 +25,7 @@ python -m venv .venv
 
 Linux/macOS 将 `.\.venv\Scripts\python.exe` 换为 `.venv/bin/python`。命令默认从当前目录的 `examples/experiment.json` 读取输入；其他位置请传 `--config /path/to/experiment.json`。
 
-当前所有命令都不请求模型 API，也不需要密钥。`plan` 默认保存至 `results/plan.json`；如果文件已经存在，请通过 `--output results/plan-02.json` 指定新路径，保护旧计划。
+以上准备命令都不请求模型 API，也不需要密钥。`plan` 默认保存至 `results/plan.json`；如果文件已经存在，请通过 `--output results/plan-02.json` 指定新路径，保护旧计划。
 
 命令行文本输出统一为 UTF-8，支持英文 Windows 系统及输出重定向。
 
@@ -56,7 +56,27 @@ Linux/macOS 将 `.\.venv\Scripts\python.exe` 换为 `.venv/bin/python`。命令�
 .\.venv\Scripts\python.exe -m skillscope preview --condition scoped --stage verify
 ```
 
-每次预览都新建一组消息，独立评分文件不加入消息。当前没有运行中的 Agent，因此还不能证明跨阶段隔离有效。后续阶段间需要传递代码和必要记录，并检验它们是否携带旧指南的影响。
+每个阶段都新建消息，独立评分文件不加入消息。真实运行时，修改阶段只额外接收调查摘要，检查阶段只额外接收候选代码；不追加完整聊天历史。摘要和代码仍可能携带旧指南的影响，隔离效果需要后续对照实验验证。
+
+## 跑一道真实任务
+
+需要可用的 DeepSeek API 密钥，以及已启动的 Docker Linux 容器引擎。
+
+```powershell
+Copy-Item .env.example .env
+# 在本机编辑 .env，填写 DEEPSEEK_API_KEY。
+# 如果 Docker 不在 PATH，在 .env 中填写 SKILLSCOPE_DOCKER 的完整路径。
+.\.venv\Scripts\python.exe -m skillscope sandbox-build
+.\.venv\Scripts\python.exe -m skillscope run --task clamp --condition baseline --output results/my-baseline-001
+```
+
+已有 `.env` 时跳过复制，保留原配置。模型名称由 `examples/experiment.json` 指定，不通过环境变量偷偷覆盖。仅 `run` 调用模型；默认 3 次请求、每次最多输出 1,024 tokens、无 SDK 自动重试，固定非思考模式。这个上限不包含输入 token。
+
+`run` 只运行指定的一道题和一个分组，不会自动执行 `plan` 的 15 次排期。数据保存在新建输出目录中，已有目录会被拒绝。`--allow-holdout` 才允许显式运行验收题。
+
+评分时，可信 pytest 测试留在宿主机，候选代码在无网络、只读挂载、非 root、限制资源的容器中执行；每次函数调用使用新容器。测试通过 JSON 代理调用候选函数。当前只支持示例中的 `clamp`、`deduplicate` 及其普通 JSON 参数，保留顶层列表/字典修改和返回值与参数的顶层身份关系；不支持任意 Python 对象、跨调用状态或通用代码仓库任务。评分测试是可信输入。
+
+基础镜像固定摘要，实际运行还记录本地镜像 ID。模型返回的别名不能证明服务端权重版本固定。日志中的费用保持未知，不根据 token 数编造账单。
 
 ## 目录
 
@@ -64,21 +84,21 @@ Linux/macOS 将 `.\.venv\Scripts\python.exe` 换为 `.venv/bin/python`。命令�
 src/skillscope/         核心代码：数据格式、读取、排期、阶段消息、命令入口
 examples/skills/       2 份教学技能指南
 examples/tasks/        任务说明与带缺陷的初始代码
-examples/graders/      独立评分测试，尚未由运行器执行
+examples/graders/      容器外执行的可信独立评分测试
 tests/                 检查 SkillScope 工具自身的测试
 docs/                  中文操作步骤、路线和原始方案
 requirements-dev.lock 本阶段验证过的依赖版本
 .github/workflows/     Windows/Linux 自动检查
-results/               本地生成计划；Git 忽略
+results/               本地计划、调用日志、候选代码、评分记录；Git 忽略
 ```
 
-配置引用的文件必须在配置文件所在目录内。评分文件与待修复文件分别存放；当前只记录评分文件指纹。真正防止 Agent 修改评分规则，需要后续隔离运行器，单靠目录分开无法保证。
+配置引用的文件必须在配置文件所在目录内。容器只挂载候选代码目录，不挂载项目、密钥、宿主机评分文件或 Docker socket。模型不能自行改变评分规则。
 
 ## 下一步
 
-第 2 阶段准备接入 DeepSeek `deepseek-flash`，固定非思考模式，并实现工具调用、阶段状态机、调用预算和隔离评分。模型选择参考 [DeepSeek 官方工具调用示例](https://api-docs.deepseek.com/guides/tool_calls/)，实际服务以运行时可用模型为准。
+已接入 DeepSeek `deepseek-flash`，固定非思考模式。工具格式参考 [DeepSeek 官方示例](https://api-docs.deepseek.com/guides/tool_calls/)。2026-11-23 的无技能和阶段加载两次管道试运行均通过 9 项测试，仅验证运行链路。
 
-`.env.example` 只是后续配置约定，当前程序不读取 `.env`。不要将模型密钥提交到仓库。
+`.env` 由本机读取并被 Git 忽略。不要将模型密钥提交到仓库。
 
 之后再做稳定退化案例搜集、顺序及长度对照、组合缩减，以及在新任务上的策略验证。完成这些真实实验前，不能宣称已经发现技能冲突或提升了完成率。
 
@@ -89,5 +109,14 @@ results/               本地生成计划；Git 忽略
 .\.venv\Scripts\python.exe -m ruff format --check .
 .\.venv\Scripts\python.exe -m pytest -q
 ```
+
+默认跳过真实 Docker 测试，不调用模型。构建镜像后可另行验证容器功能：
+
+```powershell
+$env:SKILLSCOPE_TEST_DOCKER = 'docker' # 或 docker.exe 的完整路径
+.\.venv\Scripts\python.exe -m pytest tests/test_sandbox_integration.py -q
+```
+
+CI 在 Windows/Linux 检查工具代码，并在 Linux 运行真实 Docker 测试；CI 不配置模型密钥，不产生模型 API 费用。
 
 MIT License。

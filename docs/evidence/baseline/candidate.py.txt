@@ -1,0 +1,4 @@
+def clamp(value, lower, upper):
+    if lower > upper:
+        raise ValueError("lower must not be greater than upper")
+    return min(upper, max(value, lower))

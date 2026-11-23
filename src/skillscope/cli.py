@@ -1,4 +1,4 @@
-"""Offline CLI. No command in this milestone makes a model API request."""
+"""Offline preparation commands and explicitly requested bounded model runs."""
 
 import io
 import json
@@ -14,9 +14,7 @@ from skillscope.models import Stage
 from skillscope.planner import build_plan, conditions_for
 from skillscope.prompts import build_messages
 
-app = typer.Typer(
-    help="SkillScope：实验准备与阶段指令预览（当前不调用模型）。", no_args_is_help=True
-)
+app = typer.Typer(help="SkillScope：技能实验准备、阶段运行与独立评分。", no_args_is_help=True)
 ConfigOption = Annotated[Path, typer.Option("--config", "-c", help="实验配置 JSON 文件")]
 
 
@@ -51,7 +49,7 @@ def check(config: ConfigOption = Path("examples/experiment.json")) -> None:
         typer.echo(
             f"  {split.value}: {sum(task.split == split.value for task in experiment.tasks)}"
         )
-    typer.echo(f"模型配置：{experiment.model}（尚未连接）")
+    typer.echo(f"模型配置：{experiment.model}（check 只检查本地材料，不连接模型）")
     typer.echo(f"输入指纹：{experiment.sha256}")
 
 
@@ -97,3 +95,52 @@ def preview(
     except (ValueError, OSError) as error:
         fail(error)
     typer.echo(json.dumps(messages, ensure_ascii=False, indent=2))
+
+
+@app.command("sandbox-build")
+def sandbox_build(docker: Annotated[str | None, typer.Option()] = None) -> None:
+    """构建评分镜像，不调用模型。首次需要下载基础镜像。"""
+    from skillscope.sandbox import SandboxError, build_image, preflight
+    from skillscope.settings import find_docker
+
+    try:
+        executable = find_docker(docker)
+        build_image(executable)
+        typer.echo(f"评分镜像已就绪：{preflight(executable)}")
+    except (ValueError, OSError, TimeoutError, SandboxError) as error:
+        fail(error)
+
+
+@app.command("run")
+def run(
+    config: ConfigOption = Path("examples/experiment.json"),
+    task: str = "clamp",
+    condition: str = "baseline",
+    output: Annotated[Path, typer.Option("--output", "-o")] = Path("results/first-run"),
+    env_file: Path = Path(".env"),
+    docker: Annotated[str | None, typer.Option()] = None,
+    max_calls: Annotated[int, typer.Option(min=1, max=3)] = 3,
+    max_tokens: Annotated[int, typer.Option(min=128, max=4096)] = 1024,
+    timeout: Annotated[float, typer.Option(min=1, max=120)] = 45,
+    allow_holdout: bool = False,
+) -> None:
+    """真实运行一道题：调查→修改→检查→独立评分；会消耗模型 API 额度。"""
+    from skillscope.runner import run_task
+    from skillscope.sandbox import SandboxError
+    from skillscope.settings import load_settings
+
+    try:
+        settings = load_settings(env_file, docker)
+        result = run_task(
+            config, task, condition, settings, output, max_calls, max_tokens, timeout, allow_holdout
+        )
+    except (ValueError, OSError, TimeoutError, SandboxError) as error:
+        fail(error)
+    typer.echo(f"运行状态：{result['status']}；记录：{output / 'run.json'}")
+    typer.echo(
+        f"实际尝试 {result['calls_attempted']} 次模型调用；token：{result['reported_tokens']}"
+    )
+    if result["grading"]:
+        typer.echo(f"独立评分：{result['grading']}")
+    if result["status"] != "passed":
+        raise typer.Exit(code=1)

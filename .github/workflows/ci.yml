@@ -24,3 +24,9 @@ jobs:
       - run: python -m pytest -q
       - run: python -m skillscope check
       - run: python -m skillscope plan --output results/ci-plan.json
+      - if: runner.os == 'Linux'
+        run: python -m skillscope sandbox-build --docker docker
+      - if: runner.os == 'Linux'
+        run: python -m pytest tests/test_sandbox_integration.py -q
+        env:
+          SKILLSCOPE_TEST_DOCKER: docker

@@ -1,0 +1,6 @@
+def clamp(value, lower, upper):
+    if lower > upper:
+        raise ValueError(
+            "lower bound %r is greater than upper bound %r" % (lower, upper)
+        )
+    return min(upper, max(value, lower))

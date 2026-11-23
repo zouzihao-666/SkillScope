@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-23T07:05:06.277119+00:00",
+  "task": "clamp",
+  "split": "discovery",
+  "condition": {
+    "id": "scoped",
+    "policy": "scoped",
+    "skill_ids": [
+      "root-cause",
+      "minimal-fix"
+    ]
+  },
+  "experiment_sha256": "0e5e5a6dc811c74cf967f9c2da7e3baaf5c37e793ed9f82b59f5cface0d71763",
+  "task_sha256": "f6e03e43b8a78cf24bd397a4f017df5bbeed1013ca453dc0c0a387c3c54edbac",
+  "grader_sha256": "82d148112437b249025e43475b6234e42ea942c9779fb09c9b5e7fe368d68c98",
+  "requested_model": "deepseek-flash",
+  "sandbox_image_id": "sha256:1d8cf3d0b6c25e562b276566057195d4f724915d6f55ac1025e5e70295ac22be",
+  "python": "3.12.10",
+  "packages": {
+    "skillscope": "0.2.0",
+    "openai": "2.54.0",
+    "langgraph": "1.2.24",
+    "pytest": "9.2.0"
+  },
+  "budget": {
+    "max_calls": 3,
+    "max_output_tokens_per_call": 1024,
+    "request_timeout_seconds": 45.0,
+    "max_retries": 0
+  },
+  "status": "passed",
+  "grading": {
+    "status": "passed",
+    "passed": true,
+    "tests": 9,
+    "failures": 0,
+    "container_calls": 9
+  },
+  "calls_attempted": 3,
+  "responses_received": 3,
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "usage_complete": true,
+  "reported_tokens": {
+    "prompt_tokens": 2052,
+    "completion_tokens": 792,
+    "total_tokens": 2844
+  },
+  "cost": null,
+  "elapsed_seconds": 11.39
+}
