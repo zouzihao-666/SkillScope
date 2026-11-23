@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "name": "skillscope-starter",
+  "model": "deepseek-flash",
+  "skills": [
+    {
+      "id": "root-cause",
+      "file": "skills/root-cause.md",
+      "stages": ["investigate"]
+    },
+    {
+      "id": "minimal-fix",
+      "file": "skills/minimal-fix.md",
+      "stages": ["implement"]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "clamp",
+      "split": "discovery",
+      "instruction_file": "tasks/clamp/instruction.md",
+      "starter_file": "tasks/clamp/starter.py",
+      "grader_file": "graders/test_clamp.py"
+    },
+    {
+      "id": "deduplicate",
+      "split": "holdout",
+      "instruction_file": "tasks/deduplicate/instruction.md",
+      "starter_file": "tasks/deduplicate/starter.py",
+      "grader_file": "graders/test_deduplicate.py"
+    }
+  ]
+}

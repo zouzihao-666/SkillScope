@@ -1,0 +1,19 @@
+# Tested development dependency versions. Use with pip install -c.
+annotated-doc==0.0.7
+annotated-types==0.8.0
+colorama==0.4.6
+iniconfig==2.3.1
+markdown-it-py==4.3.0
+mdurl==0.1.2
+packaging==26.3
+pluggy==1.7.0
+pydantic==2.14.4
+pydantic_core==2.50.5
+Pygments==2.21.0
+pytest==9.2.0
+rich==15.0.0
+ruff==0.17.6
+shellingham==1.5.4
+typer==0.29.2
+typing-inspection==0.4.5
+typing_extensions==4.16.0
