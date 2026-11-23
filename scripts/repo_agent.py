@@ -11,7 +11,7 @@ from openai import APIConnectionError, APIStatusError
 
 from scripts.repo_execution import grade_workspace
 from scripts.repo_tools import ToolSession
-from scripts.repo_workspace import Workspace
+from scripts.repo_workspace import MAX_FILES, Workspace
 from skillscope.backend import DeepSeekBackend, RunError
 from skillscope.batch import estimate_cost, source_fingerprint, write_json
 from skillscope.loader import digest
@@ -23,6 +23,7 @@ MODEL = "deepseek-flash"
 MAX_REQUESTS = 10
 PER_PHASE_REQUESTS = 4
 MAX_OUTPUT = 2048
+MAX_TOOL_CALLS = MAX_FILES + 2  # Inventory plus every visible file and the public grader.
 
 
 class State(TypedDict, total=False):
@@ -110,6 +111,7 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
             "max_input_json_bytes": 65536,
             "max_estimated_usd": 0.25,
             "max_sdk_retries": 0,
+            "max_tools_per_response": MAX_TOOL_CALLS,
         },
         "initial_public": None,
         "grading": None,
@@ -179,8 +181,8 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
             raise RunError("invalid_output", "Expected one response choice")
         choice = response.choices[0]
         tool_calls = choice.message.tool_calls or []
-        if choice.finish_reason != "tool_calls" or not 1 <= len(tool_calls) <= 4:
-            raise RunError("invalid_output", "Expected 1..4 completed tool calls")
+        if choice.finish_reason != "tool_calls" or not 1 <= len(tool_calls) <= MAX_TOOL_CALLS:
+            raise RunError("invalid_output", f"Expected 1..{MAX_TOOL_CALLS} completed tool calls")
         if any(call.type != "function" for call in tool_calls):
             raise RunError("invalid_output", "Unsupported tool-call kind")
         return choice.message
@@ -202,6 +204,7 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
                 "Only implementation may write files. Verification is read-only. "
                 "Call finish_phase alone with a concise summary to finish each phase. "
                 "Do not use plain-text final answers. Hidden tests are unavailable. "
+                f"At most {MAX_TOOL_CALLS} tool calls are allowed in one response. "
                 f"At most {PER_PHASE_REQUESTS} model requests are available in this phase."
             )
             user = json.dumps(

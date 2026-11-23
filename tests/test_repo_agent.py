@@ -148,3 +148,37 @@ def test_invalid_phase_finish_is_recorded_as_model_output_failure(tmp_path, fake
     assert result["status"] == "invalid_output"
     assert result["calls_attempted"] == 1 and result["usage_complete"]
     assert grades == [False]
+
+
+def test_legitimate_parallel_inventory_reads_do_not_trip_a_request_count_limit(
+    tmp_path, fake_agent
+):
+    requests, _, sequence = fake_agent
+    reads = [("list_files", {})] + [
+        ("read_file", {"path": path})
+        for path in (
+            "shop/cart.py",
+            "shop/money.py",
+            "public_tests.py",
+            "README.md",
+            "shop/__init__.py",
+        )
+    ]
+    assert len(reads) == 6
+    changes = {
+        path: (TASK.parent / "reference" / path).read_text(encoding="utf-8")
+        for path in ("shop/money.py", "shop/cart.py")
+    }
+    sequence.extend(
+        [
+            reads,
+            finish(),
+            [("write_files", {"files": changes})],
+            [("run_public_tests", {})],
+            finish(),
+            finish(),
+        ]
+    )
+    result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "run")
+    assert result["status"] == "passed" and len(requests) == 6
+    assert result["budget"]["max_tools_per_response"] == 18
