@@ -1,0 +1,68 @@
+{
+  "id": "dotenv-comment",
+  "split": "discovery",
+  "base": "49515afee2d50c33cad9419b3800b3a0dc93fc59",
+  "fix": "f5485a61eefa5e686d6d5bdc7aa9ad6b104b1e92",
+  "issue": 600,
+  "editable": [
+    "dotenv/parser.py"
+  ],
+  "repository": "https://github.com/theskumar/python-dotenv",
+  "issue_url": "https://github.com/theskumar/python-dotenv/issues/600",
+  "fix_url": "https://github.com/theskumar/python-dotenv/commit/f5485a61eefa5e686d6d5bdc7aa9ad6b104b1e92",
+  "license": "BSD-3-Clause; original LICENSE retained in each project",
+  "projection": "All src/dotenv files mapped to dotenv; LICENSE retained. No CLI dependencies installed.",
+  "grading": "SkillScope-authored regression checks, not the complete upstream suite",
+  "source_files": {
+    "dotenv/__init__.py": {
+      "upstream_path": "src/dotenv/__init__.py",
+      "git_blob": "dde24a0138999bd3876dfdfad02d5d93014e481c",
+      "sha256": "6e163e88aeb0c0765a996208e9e482b820165d435d9f64d016610eb97494ed23"
+    },
+    "dotenv/__main__.py": {
+      "upstream_path": "src/dotenv/__main__.py",
+      "git_blob": "3977f55a8b1e94e67bab364885e502e6c89e3bc5",
+      "sha256": "3744612c6ee71c8aad9491f0c1ea48a3ecdb24f371f6c7b0082446639dbc87fe"
+    },
+    "dotenv/cli.py": {
+      "upstream_path": "src/dotenv/cli.py",
+      "git_blob": "79613e2805205b25649e341c0f4fd4304a53fb96",
+      "sha256": "8c547ed95b551f492d85cc9c81c55e476aaebed00392c14a4ffdda3b8007cbbb"
+    },
+    "dotenv/ipython.py": {
+      "upstream_path": "src/dotenv/ipython.py",
+      "git_blob": "4e7edbbfe9d0d4c08659f12c469991a3fcb16b04",
+      "sha256": "74740177d3dc7425298466faed7c32dc6914a8c49d7fd5d4522358c53677b585"
+    },
+    "dotenv/main.py": {
+      "upstream_path": "src/dotenv/main.py",
+      "git_blob": "3123690a3e41442596a24793e87a5416beac8ee7",
+      "sha256": "697eb33eee75d78b73db61eaf96bf9a6547548c1811c93501b67e056e5470dea"
+    },
+    "dotenv/parser.py": {
+      "upstream_path": "src/dotenv/parser.py",
+      "git_blob": "02648ab03c977e38dca7987ed64196ee162b3907",
+      "sha256": "6052533a6cd4e0ad5052fe88e5936853059c28ed3fec0f098cd29a7cb376dca4"
+    },
+    "dotenv/py.typed": {
+      "upstream_path": "src/dotenv/py.typed",
+      "git_blob": "7632ecf77545c5e5501cb3fc5719df0761104ca2",
+      "sha256": "f0f8f2675695a10a5156fb7bd66bafbaae6a13e8d315990af862c792175e6e67"
+    },
+    "dotenv/variables.py": {
+      "upstream_path": "src/dotenv/variables.py",
+      "git_blob": "667f2f26ff2182ecdfc5b809ba97a6cf1d1be13a",
+      "sha256": "083d2a5cebefa41deae51a4140c0fda97eaf1d7ed2c96f92ba2c063054a5b74f"
+    },
+    "dotenv/version.py": {
+      "upstream_path": "src/dotenv/version.py",
+      "git_blob": "10aa336ce071b5ebf71e8545a55b72f3c5b661a3",
+      "sha256": "0be0ff596ad59010e64260292dc9b4b16361d82808af059f73cfec079bef53e4"
+    },
+    "LICENSE": {
+      "upstream_path": "LICENSE",
+      "git_blob": "3a97119010ac82e15e917a69b7b8f9f59b5a4601",
+      "sha256": "80619b7049f08c81683ad0e01f08f257a840652dd71ee83146d36658c7d2c2b9"
+    }
+  }
+}

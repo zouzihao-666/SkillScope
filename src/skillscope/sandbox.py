@@ -12,9 +12,9 @@ import tempfile
 import threading
 import uuid
 import xml.etree.ElementTree as ET
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
-IMAGE = "skillscope-sandbox:0.2.0"
+IMAGE = "skillscope-sandbox:0.4.0"
 FILES = Path(__file__).parent / "sandbox_files"
 
 
@@ -121,6 +121,9 @@ def invoke(function: str, args: tuple):
     if len(payload) > 65536:
         raise CandidateError("Input exceeds JSON RPC limit")
     name = f"skillscope-{uuid.uuid4().hex}"
+    directory = os.environ.get("SKILLSCOPE_RPC_MODE") == "directory"
+    source = Path(candidate_dir) if directory else Path(candidate_dir) / "candidate.py"
+    target = "/candidate" if directory else "/candidate/candidate.py"
     command = [
         docker,
         "run",
@@ -150,7 +153,7 @@ def invoke(function: str, args: tuple):
         "--tmpfs",
         "/tmp:rw,noexec,nosuid,size=16m",
         "--mount",
-        f"type=bind,source={Path(candidate_dir) / 'candidate.py'},target=/candidate/candidate.py,readonly",
+        f"type=bind,source={source},target={target},readonly",
         image,
     ]
     status = "ok"
@@ -208,11 +211,72 @@ def invoke(function: str, args: tuple):
             stream.write(json.dumps({"status": status}) + "\n")
 
 
-def grade(candidate: str, grader: str, docker: str, image: str, output: Path) -> dict:
+def validate_project_files(files: dict[str, str]) -> None:
+    """Validate a bounded portable text inventory before writing anything."""
+    if not isinstance(files, dict) or not 1 <= len(files) <= 16:
+        raise ValueError("Project inventory must contain 1..16 files")
+    if any(not isinstance(text, str) for text in files.values()):
+        raise ValueError("Project files must be text")
+    if sum(len(text.encode("utf-8")) for text in files.values()) > 65536:
+        raise ValueError("Project inventory exceeds 64 KiB")
+    names = set()
+    for name in files:
+        if (
+            not isinstance(name, str)
+            or not name
+            or any(c in name for c in '\\:<>"|?*')
+            or any(ord(c) < 32 for c in name)
+        ):
+            raise ValueError("Expected a relative POSIX project path")
+        parts = name.split("/")
+        if PurePosixPath(name).is_absolute() or any(
+            part in ("", ".", "..")
+            or part.endswith((".", " "))
+            or PureWindowsPath(part).is_reserved()
+            for part in parts
+        ):
+            raise ValueError("Unsafe project path")
+        folded = name.casefold()
+        if folded == "candidate.py" or folded in names:
+            raise ValueError("Reserved or case-colliding project path")
+        names.add(folded)
+    if any(
+        "/".join(name.split("/")[:index]) in names
+        for name in names
+        for index in range(1, len(name.split("/")))
+    ) or any(name.startswith("candidate.py/") for name in names):
+        raise ValueError("Project file/directory collision")
+
+
+def materialize_project(root: Path, files: dict[str, str]) -> None:
+    """Write only bounded text inventory into an owned temporary directory."""
+    validate_project_files(files)
+    # All validation precedes any write; candidate source is never imported here.
+    for name, text in files.items():
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(text.encode("utf-8"))
+    if os.name != "nt":
+        root.chmod(0o755)
+        for path in root.rglob("*"):
+            path.chmod(0o755 if path.is_dir() else 0o444)
+
+
+def grade(
+    candidate: str,
+    grader: str,
+    docker: str,
+    image: str,
+    output: Path,
+    *,
+    project_files: dict[str, str] | None = None,
+) -> dict:
     """Only trusted grader/proxy code runs on the host; the candidate never does."""
     with tempfile.TemporaryDirectory(prefix="skillscope-code-") as code_dir:
         with tempfile.TemporaryDirectory(prefix="skillscope-grader-") as test_dir:
             code_root, test_root = Path(code_dir), Path(test_dir)
+            if project_files is not None:
+                materialize_project(code_root, project_files)
             (code_root / "candidate.py").write_text(candidate, encoding="utf-8")
             if os.name != "nt":
                 (code_root / "candidate.py").chmod(0o444)
@@ -243,6 +307,7 @@ def grade(candidate: str, grader: str, docker: str, image: str, output: Path) ->
                 "SKILLSCOPE_RPC_CANDIDATE": str(code_root),
                 "SKILLSCOPE_RPC_EVENTS": str(events_file),
                 "SKILLSCOPE_RPC_GROUP": group,
+                "SKILLSCOPE_RPC_MODE": "directory" if project_files is not None else "single",
             }
             env.pop("PYTEST_ADDOPTS", None)
             command = [

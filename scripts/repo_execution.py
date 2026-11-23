@@ -1,8 +1,8 @@
-"""Import-only multi-module grading prototype using the existing external Docker grader.
+"""Allowlisted virtual-module and physical-directory Docker grading.
 
 The bootstrap below is a string. Candidate Python is compiled/executed only by
 the container worker; this module never imports candidate project modules.
-File-system assets, subprocess projects and namespace packages are not supported.
+Directory mode mounts only the declared text inventory, including resources.
 """
 
 import json
@@ -60,9 +60,13 @@ def grade_workspace(
                 "task": workspace.task_id,
                 "initial_fingerprint": workspace.initial_fingerprint,
                 "current_fingerprint": workspace.fingerprint(),
-                "files": workspace.snapshot(),
+                "files": workspace.execution_snapshot(),
                 "grading": "hidden" if hidden else "public",
-                "execution": "virtual Python modules inside Docker; no physical project filesystem",
+                "execution": (
+                    "read-only physical directory inside Docker; declared inventory only"
+                    if workspace.execution_mode == "directory"
+                    else "virtual Python modules inside Docker; no physical project filesystem"
+                ),
             },
             ensure_ascii=False,
             indent=2,
@@ -70,4 +74,13 @@ def grade_workspace(
         encoding="utf-8",
     )
     grader = workspace.hidden_grader if hidden else workspace.public_grader
+    if workspace.execution_mode == "directory":
+        return grade(
+            workspace.adapter,
+            grader,
+            docker,
+            image,
+            output,
+            project_files=workspace.execution_snapshot(),
+        )
     return grade(bundle(workspace), grader, docker, image, output)

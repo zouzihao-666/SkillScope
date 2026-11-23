@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "shipping-resource-fixture",
+  "execution_mode": "directory",
+  "project": "project",
+  "visible": ["delivery/quote.py", "delivery/rates.json", "README.md"],
+  "editable": ["delivery/quote.py"],
+  "instruction": "instruction.md",
+  "adapter": "adapter.py",
+  "public_grader": "public_tests.py",
+  "hidden_grader": "hidden_tests.py"
+}

@@ -21,6 +21,7 @@ class ToolSession:
             "read_file": {"path"},
             "write_files": {"files"},
             "write_file": {"path", "content"},
+            "replace_in_file": {"path", "old", "new"},
             "run_public_tests": set(),
         }
         if (
@@ -50,14 +51,21 @@ class ToolSession:
                     else self.workspace.read_file(path)
                 )
                 return {"ok": True, "content": content}
-            if name in ("write_files", "write_file"):
+            if name in ("write_files", "write_file", "replace_in_file"):
                 if self.stage != Stage.IMPLEMENT:
                     return {
                         "ok": False,
                         "error": "Writes are allowed only in the implementation phase",
                     }
-                if name == "write_file" and not isinstance(arguments["path"], str):
+                if name in ("write_file", "replace_in_file") and not isinstance(
+                    arguments["path"], str
+                ):
                     raise ValueError("File path must be text")
+                if name == "replace_in_file":
+                    self.workspace.replace_in_file(
+                        arguments["path"], arguments["old"], arguments["new"]
+                    )
+                    return {"ok": True, "fingerprint": self.workspace.fingerprint()}
                 changes = (
                     arguments["files"]
                     if name == "write_files"

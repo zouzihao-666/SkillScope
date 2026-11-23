@@ -10,6 +10,7 @@ from skillscope.sandbox import preflight
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "benchmarks/repo-prototype/cart"
+RESOURCE = ROOT / "benchmarks/repo-prototype/resources"
 
 
 def test_bundling_never_imports_candidate_code_on_the_host():
@@ -20,6 +21,30 @@ def test_bundling_never_imports_candidate_code_on_the_host():
     assert "container-only execution" in code
     assert "def checkout" in code
     assert workspace.hidden_grader not in code and workspace.public_grader not in code
+
+
+def test_directory_inventory_keeps_resources_and_resource_writes_are_forbidden():
+    workspace = Workspace(RESOURCE / "task.json")
+    assert workspace.execution_mode == "directory"
+    assert "delivery/rates.json" in workspace.execution_snapshot()
+    with pytest.raises(ValueError, match="editable"):
+        workspace.write_files({"delivery/rates.json": "{}"})
+
+
+@pytest.mark.skipif(not os.environ.get("SKILLSCOPE_TEST_DOCKER"), reason="Opt-in real Docker")
+def test_directory_resources_namespace_imports_and_boundary(tmp_path):
+    docker = os.environ["SKILLSCOPE_TEST_DOCKER"]
+    image = preflight(docker)
+    workspace = Workspace(RESOURCE / "task.json")
+    original = grade_workspace(workspace, docker, image, tmp_path / "original")
+    assert original["status"] == "failed" and original["failures"] == 2
+    workspace.write_files(
+        {"delivery/quote.py": (RESOURCE / "reference/delivery/quote.py").read_text()}
+    )
+    public = grade_workspace(workspace, docker, image, tmp_path / "public")
+    hidden = grade_workspace(workspace, docker, image, tmp_path / "hidden", hidden=True)
+    assert public["status"] == "passed" and public["tests"] == 2
+    assert hidden["status"] == "passed" and hidden["tests"] == 8
 
 
 @pytest.mark.skipif(not os.environ.get("SKILLSCOPE_TEST_DOCKER"), reason="Opt-in real Docker")

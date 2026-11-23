@@ -4,12 +4,15 @@ import contextlib
 import importlib.util
 import io
 import json
+import os
 import sys
 
 request = json.loads(sys.stdin.buffer.read(65537))
 try:
     # Candidate prints are not part of the RPC response.
     with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+        sys.path.insert(0, "/candidate")
+        os.chdir("/candidate")
         spec = importlib.util.spec_from_file_location("candidate", "/candidate/candidate.py")
         module = importlib.util.module_from_spec(spec)
         sys.modules["candidate"] = module

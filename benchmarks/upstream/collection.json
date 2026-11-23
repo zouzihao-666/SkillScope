@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "tasks": [
+    {
+      "id": "dotenv-backslash",
+      "split": "discovery",
+      "base": "751f8c148222e58aa173c83c4e5e6cfccb2cc124",
+      "fix": "f7b18d9c72d1abcc2ad4023424b84f5bee30d266",
+      "issue": 661,
+      "editable": [
+        "dotenv/main.py",
+        "dotenv/parser.py"
+      ]
+    },
+    {
+      "id": "dotenv-comment",
+      "split": "discovery",
+      "base": "49515afee2d50c33cad9419b3800b3a0dc93fc59",
+      "fix": "f5485a61eefa5e686d6d5bdc7aa9ad6b104b1e92",
+      "issue": 600,
+      "editable": [
+        "dotenv/parser.py"
+      ]
+    },
+    {
+      "id": "dotenv-bom",
+      "split": "holdout",
+      "base": "68ea2d10dd8e97e6dea67c32742085f27729e3fe",
+      "fix": "bca6644d9aedbe287b792b756b3ae3d650cd0d3a",
+      "issue": 637,
+      "editable": [
+        "dotenv/parser.py"
+      ]
+    }
+  ]
+}

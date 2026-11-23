@@ -1,4 +1,4 @@
-"""Bounded baseline agent for the manually authored import-only multi-file prototype."""
+"""Bounded baseline agent for allowlisted multi-file Python tasks."""
 
 import argparse
 import json
@@ -46,7 +46,7 @@ def tool_definitions(workspace: Workspace) -> list[dict]:
         ),
         (
             "run_public_tests",
-            "Run the two public tests in Docker; at most twice across all phases.",
+            "Run the public tests in Docker; at most twice across all phases.",
             {},
         ),
         (
@@ -55,6 +55,18 @@ def tool_definitions(workspace: Workspace) -> list[dict]:
             {"summary": {"type": "string"}},
         ),
     ]
+    if workspace.execution_mode == "directory":
+        definitions.append(
+            (
+                "replace_in_file",
+                "Replace exactly one literal occurrence in an editable file. Read it first. Prefer this for small fixes in large files.",
+                {
+                    "path": {"type": "string", "enum": sorted(workspace.editable)},
+                    "old": {"type": "string"},
+                    "new": {"type": "string"},
+                },
+            )
+        )
     return [
         {
             "type": "function",
@@ -94,7 +106,8 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
         "task": workspace.task_id,
         "model": MODEL,
         "condition": "baseline",
-        "scope": "manual import-only fixture; not a real repository benchmark",
+        "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+        "execution_mode": workspace.execution_mode,
         "repair_origin": "model_generated_via_allowlisted_tools",
         "initial_workspace_sha256": workspace.initial_fingerprint,
         "source_sha256": source_fingerprint(),
@@ -345,7 +358,7 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
         result["final_workspace_sha256"] = workspace.fingerprint()
         result["public_test_runs_by_model"] = session.public_runs
         result["elapsed_seconds"] = round(time.monotonic() - started, 3)
-        write_json(output / "workspace-final.json", workspace.snapshot())
+        write_json(output / "workspace-final.json", workspace.execution_snapshot())
         write_json(output / "run.json", backend.redact(result))
         backend.close()
     return result

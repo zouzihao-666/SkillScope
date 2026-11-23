@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "dotenv-backslash",
+  "execution_mode": "directory",
+  "project": "project",
+  "visible": [
+    "dotenv/__init__.py",
+    "dotenv/__main__.py",
+    "dotenv/cli.py",
+    "dotenv/ipython.py",
+    "dotenv/main.py",
+    "dotenv/parser.py",
+    "dotenv/py.typed",
+    "dotenv/variables.py",
+    "dotenv/version.py",
+    "LICENSE"
+  ],
+  "editable": [
+    "dotenv/main.py",
+    "dotenv/parser.py"
+  ],
+  "instruction": "instruction.md",
+  "adapter": "adapter.py",
+  "public_grader": "public_tests.py",
+  "hidden_grader": "hidden_tests.py"
+}

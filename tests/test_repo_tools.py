@@ -43,3 +43,20 @@ def test_public_test_budget_is_global_across_phases_and_results_are_filtered():
     session.enter_stage(Stage.VERIFY)
     assert not session.call("run_public_tests", {})["ok"]
     assert calls == [1]
+
+
+def test_exact_replacement_obeys_phase_permissions_and_rolls_back_invalid_patch():
+    workspace = Workspace(FIXTURE)
+    session = ToolSession(workspace, lambda *_: {})
+    path = "shop/money.py"
+    original = workspace.read_file(path)
+    patch = {"path": path, "old": original, "new": "def amount(text): return 0\n"}
+    assert not session.call("replace_in_file", patch)["ok"]
+    session.enter_stage(Stage.IMPLEMENT)
+    assert not session.call("replace_in_file", {**patch, "new": "def broken("})["ok"]
+    assert workspace.read_file(path) == original
+    assert not session.call("replace_in_file", {**patch, "old": "missing text"})["ok"]
+    assert not session.call("replace_in_file", {**patch, "old": ""})["ok"]
+    assert session.call("replace_in_file", patch)["ok"]
+    session.enter_stage(Stage.VERIFY)
+    assert not session.call("replace_in_file", patch)["ok"]

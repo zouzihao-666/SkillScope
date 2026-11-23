@@ -100,7 +100,7 @@ benchmarks/stage3/     六份人工技能、四道开发题、两道保留题与
 artifacts/             经检查后公开的实验摘要与压缩原始记录
 ```
 
-配置引用的文件必须在配置文件所在目录内。容器只挂载候选代码文件，不挂载项目、密钥、宿主机评分文件或 Docker socket。模型不能自行改变评分规则。
+配置引用的文件必须在配置文件所在目录内。单函数模式只挂载候选代码文件；目录模式只挂载清单指定的源码和资源，不挂载密钥、宿主机评分文件或 Docker socket。模型不能自行改变评分规则。目录能力与首批真实任务见[逐步说明](docs/directory-and-calibration.md)。
 
 ## 下一步
 
@@ -131,9 +131,9 @@ artifacts/             经检查后公开的实验摘要与压缩原始记录
 
 ```powershell
 $env:SKILLSCOPE_TEST_DOCKER = 'docker' # 或 docker.exe 的完整路径
-.\.venv\Scripts\python.exe -m pytest tests/test_sandbox_integration.py tests/test_stage3_corpus_integration.py -q
+.\.venv\Scripts\python.exe -m pytest tests/test_sandbox_integration.py tests/test_stage3_corpus_integration.py tests/test_repo_execution.py tests/test_upstream_tasks.py -q
 ```
 
 CI 在 Windows/Linux 检查工具代码，并在 Linux 运行真实 Docker 测试；CI 不配置模型密钥，不产生模型 API 费用。
 
-MIT License。
+SkillScope 自有代码采用 MIT License；`benchmarks/upstream` 中 python-dotenv 源码保留其 BSD-3-Clause 许可证。

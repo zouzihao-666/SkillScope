@@ -5,6 +5,8 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 
+from skillscope.sandbox import validate_project_files
+
 MAX_FILES = 16
 MAX_BYTES = 65536
 
@@ -45,8 +47,11 @@ class Workspace:
             "public_grader",
             "hidden_grader",
         }
-        if set(data) != expected or data["schema_version"] != 1:
+        if set(data) - {"execution_mode"} != expected or data["schema_version"] != 1:
             raise ValueError("Unsupported repository task manifest")
+        self.execution_mode = data.get("execution_mode", "virtual")
+        if self.execution_mode not in ("virtual", "directory"):
+            raise ValueError("Unsupported execution mode")
         root = manifest.resolve().parent
         project = root / relative_path(data["project"])
         if project.is_symlink() or not project.resolve().is_relative_to(root):
@@ -69,6 +74,8 @@ class Workspace:
         self.public_grader = trusted_file(root, data["public_grader"])
         self.hidden_grader = trusted_file(root, data["hidden_grader"])
         self._validate_size(self._files)
+        if self.execution_mode == "directory":
+            validate_project_files(self._files)
         self.initial_fingerprint = self.fingerprint()
 
     @staticmethod
@@ -110,6 +117,17 @@ class Workspace:
     def snapshot(self) -> dict[str, str]:
         return {path: text for path, text in self._files.items() if path.endswith(".py")}
 
+    def replace_in_file(self, path: str, old: str, new: str) -> None:
+        if not isinstance(old, str) or not old or not isinstance(new, str):
+            raise ValueError("Replacement requires nonempty old text and text replacement")
+        content = self.read_file(path)
+        if content.count(old) != 1:
+            raise ValueError("Old text must match exactly once; read the file before retrying")
+        self.write_files({path: content.replace(old, new, 1)})
+
+    def execution_snapshot(self) -> dict[str, str]:
+        return dict(self._files) if self.execution_mode == "directory" else self.snapshot()
+
     def fingerprint(self) -> str:
         value = {
             "task": self.task_id,
@@ -120,6 +138,9 @@ class Workspace:
             "public_grader": self.public_grader,
             "hidden_grader": self.hidden_grader,
         }
+        # Preserve published legacy task fingerprints exactly.
+        if self.execution_mode != "virtual":
+            value["execution_mode"] = self.execution_mode
         return hashlib.sha256(
             json.dumps(value, ensure_ascii=False, sort_keys=True).encode()
         ).hexdigest()
