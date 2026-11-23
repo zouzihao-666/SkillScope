@@ -9,6 +9,11 @@ from scripts import continue_skill_study as study
 
 def test_continuation_excludes_unknown_trials_and_reserves_their_entire_budget(monkeypatch):
     original = json.loads((study.PARENT / "manifest.json").read_text())["plan"]
+    runtime_names = study.RUNTIME
+    # Budget/schedule tests use the historical execution fingerprint; future
+    # product changes must not make immutable evidence fixtures untestable.
+    monkeypatch.setattr(study, "RUNTIME", ())
+    monkeypatch.setattr(study, "source_fingerprint", lambda: original["source_sha256"])
     monkeypatch.setattr(study, "preflight", lambda _: original["image_id"])
     plan = study.make_plan("unused")
     assert plan["runs"] == original["runs"][2:]
@@ -21,8 +26,15 @@ def test_continuation_excludes_unknown_trials_and_reserves_their_entire_budget(m
     assert plan["budget"]["max_estimated_usd"] + plan[
         "unknown_usage_reserved_usd_upper"
     ] == pytest.approx(3.0)
-    for name in study.RUNTIME:
+    for name in runtime_names:
         assert plan["scripts_sha256"][name] == original["scripts_sha256"][name]
+
+
+def test_stale_execution_source_is_rejected_before_continuation(monkeypatch):
+    monkeypatch.setattr(study, "RUNTIME", ())
+    monkeypatch.setattr(study, "source_fingerprint", lambda: "changed-source")
+    with pytest.raises(ValueError, match="Core execution source"):
+        study.make_plan("unused")
 
 
 def test_interrupted_evidence_contains_requests_without_invented_responses_or_grades():

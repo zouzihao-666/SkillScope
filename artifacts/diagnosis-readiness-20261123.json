@@ -1,0 +1,18 @@
+{
+  "status": "insufficient_evidence",
+  "evidence_report_sha256": "74813db667ec2591ce53b39d00cb3086c15cf4bd084c5df27a39bbebb5980fb7",
+  "candidates": [],
+  "groups_without_three_valid_grades": [
+    "baseline",
+    "single-root-cause",
+    "scoped"
+  ],
+  "single_skill_low_success": [
+    "single-edge-cases",
+    "single-input-validation"
+  ],
+  "scheduled_paid_runs": 0,
+  "automatic_policy_validated": false,
+  "holdout_opened": false,
+  "next_step": "Preregister independent confirmation and budget/format controls; do not infer a combination interaction from low-performing individual skills or missing grades."
+}

@@ -1,0 +1,258 @@
+{
+  "purpose": "exploratory skill comparison on a task selected from disclosed discovery calibration",
+  "status": "completed",
+  "planned": 36,
+  "unattempted": [],
+  "runs": 36,
+  "calls": 335,
+  "reported_tokens": 1780520,
+  "usage_complete": false,
+  "estimated_usd_upper": 0.441746928,
+  "tasks": {
+    "dotenv-backslash": {
+      "recorded": 36,
+      "passed": 20,
+      "statuses": [
+        "interrupted",
+        "interrupted",
+        "failed",
+        "passed",
+        "failed",
+        "passed",
+        "passed",
+        "failed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "failed",
+        "passed",
+        "passed",
+        "passed",
+        "failed",
+        "passed",
+        "passed",
+        "passed",
+        "failed",
+        "passed",
+        "failed",
+        "passed",
+        "passed",
+        "invalid_output",
+        "passed",
+        "passed",
+        "failed",
+        "failed",
+        "passed",
+        "failed",
+        "failed",
+        "passed",
+        "failed",
+        "failed"
+      ],
+      "hidden_graded": 33
+    }
+  },
+  "limitations": "One selected discovery issue, three repeats per condition. Character-matched neutral guide bodies do not match token counts or remove guide-name hints. Fresh histories per phase can retain indirect skill effects through summaries or patches. No population or causal claim; protocol failures separate from valid functional grades. Calibration not pooled with comparison.",
+  "unknown_usage_reserved_usd_upper": 0.448512,
+  "conservative_cost_bound_usd": 0.890258928,
+  "cost_note": "estimated_usd_upper sums recorded responses only; usage_complete=false means actual billing remains unknown. Unknown-run reservation is a conservative estimate, not an invoice.",
+  "conditions": {
+    "baseline": {
+      "recorded": 3,
+      "valid_final_grades": 2,
+      "passed": 2,
+      "functional_failures": 0,
+      "statuses": {
+        "interrupted": 1,
+        "passed": 2
+      },
+      "calls": 21,
+      "tokens": 110040,
+      "descriptive_wilson95_valid": [
+        0.34238022750665303,
+        1.0
+      ]
+    },
+    "single-root-cause": {
+      "recorded": 3,
+      "valid_final_grades": 2,
+      "passed": 1,
+      "functional_failures": 1,
+      "statuses": {
+        "interrupted": 1,
+        "passed": 1,
+        "failed": 1
+      },
+      "calls": 21,
+      "tokens": 100879,
+      "descriptive_wilson95_valid": [
+        0.09453120573423074,
+        0.9054687942657693
+      ]
+    },
+    "single-minimal-fix": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 3,
+      "functional_failures": 0,
+      "statuses": {
+        "passed": 3
+      },
+      "calls": 30,
+      "tokens": 154064,
+      "descriptive_wilson95_valid": [
+        0.4385029682449546,
+        1.0
+      ]
+    },
+    "single-edge-cases": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 0,
+      "functional_failures": 3,
+      "statuses": {
+        "failed": 3
+      },
+      "calls": 30,
+      "tokens": 159260,
+      "descriptive_wilson95_valid": [
+        5.551115123125783e-17,
+        0.5614970317550454
+      ]
+    },
+    "single-input-validation": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 1,
+      "functional_failures": 2,
+      "statuses": {
+        "passed": 1,
+        "failed": 2
+      },
+      "calls": 30,
+      "tokens": 156805,
+      "descriptive_wilson95_valid": [
+        0.06149194472039621,
+        0.7923403991979522
+      ]
+    },
+    "single-compatibility": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 2,
+      "functional_failures": 1,
+      "statuses": {
+        "passed": 2,
+        "failed": 1
+      },
+      "calls": 30,
+      "tokens": 165578,
+      "descriptive_wilson95_valid": [
+        0.2076596008020477,
+        0.9385080552796037
+      ]
+    },
+    "single-python-idioms": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 2,
+      "functional_failures": 1,
+      "statuses": {
+        "passed": 2,
+        "failed": 1
+      },
+      "calls": 30,
+      "tokens": 164467,
+      "descriptive_wilson95_valid": [
+        0.2076596008020477,
+        0.9385080552796037
+      ]
+    },
+    "all": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 1,
+      "functional_failures": 2,
+      "statuses": {
+        "failed": 2,
+        "passed": 1
+      },
+      "calls": 30,
+      "tokens": 165411,
+      "descriptive_wilson95_valid": [
+        0.06149194472039621,
+        0.7923403991979522
+      ]
+    },
+    "scoped": {
+      "recorded": 3,
+      "valid_final_grades": 2,
+      "passed": 2,
+      "functional_failures": 0,
+      "statuses": {
+        "passed": 2,
+        "invalid_output": 1
+      },
+      "calls": 23,
+      "tokens": 120571,
+      "descriptive_wilson95_valid": [
+        0.34238022750665303,
+        1.0
+      ]
+    },
+    "all-reversed": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 1,
+      "functional_failures": 2,
+      "statuses": {
+        "failed": 2,
+        "passed": 1
+      },
+      "calls": 30,
+      "tokens": 154732,
+      "descriptive_wilson95_valid": [
+        0.06149194472039621,
+        0.7923403991979522
+      ]
+    },
+    "length-a": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 3,
+      "functional_failures": 0,
+      "statuses": {
+        "passed": 3
+      },
+      "calls": 30,
+      "tokens": 163715,
+      "descriptive_wilson95_valid": [
+        0.4385029682449546,
+        1.0
+      ]
+    },
+    "length-b": {
+      "recorded": 3,
+      "valid_final_grades": 3,
+      "passed": 2,
+      "functional_failures": 1,
+      "statuses": {
+        "passed": 2,
+        "failed": 1
+      },
+      "calls": 30,
+      "tokens": 164998,
+      "descriptive_wilson95_valid": [
+        0.2076596008020477,
+        0.9385080552796037
+      ]
+    }
+  },
+  "candidate_screen": {
+    "candidates": [],
+    "rule": "All required groups have three valid final grades; baseline=3/3, every single>=2/3, both neutral controls>=2/3, scoped>=2/3, and all or all-reversed<=1/3. Exploratory candidate only; no semantic-conflict proof.",
+    "interpretation": "Exploratory screen; missing or unsuccessful controls do not demonstrate an absence of effects."
+  },
+  "execution_note": "All interrupted trials remain in denominators and uncertainty records; continuation does not replace them. No claim of complete billing."
+}

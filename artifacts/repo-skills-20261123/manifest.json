@@ -1,0 +1,870 @@
+{
+  "preregistered_commit": "5697a995569ba4c3b5bb1a82e91143a6f4bc5d71",
+  "plan": {
+    "schema_version": 1,
+    "purpose": "exploratory skill comparison on a task selected from disclosed discovery calibration",
+    "controller": "observed_phase_boundaries_v4",
+    "model": "deepseek-flash",
+    "runs": [
+      {
+        "id": "dotenv-backslash__single-root-cause__2",
+        "task": "dotenv-backslash",
+        "condition": "single-root-cause",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__baseline__2",
+        "task": "dotenv-backslash",
+        "condition": "baseline",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__all-reversed__1",
+        "task": "dotenv-backslash",
+        "condition": "all-reversed",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__single-input-validation__2",
+        "task": "dotenv-backslash",
+        "condition": "single-input-validation",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__single-input-validation__1",
+        "task": "dotenv-backslash",
+        "condition": "single-input-validation",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__single-minimal-fix__2",
+        "task": "dotenv-backslash",
+        "condition": "single-minimal-fix",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__length-b__2",
+        "task": "dotenv-backslash",
+        "condition": "length-b",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__length-b__1",
+        "task": "dotenv-backslash",
+        "condition": "length-b",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__length-a__3",
+        "task": "dotenv-backslash",
+        "condition": "length-a",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__length-b__3",
+        "task": "dotenv-backslash",
+        "condition": "length-b",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__single-root-cause__1",
+        "task": "dotenv-backslash",
+        "condition": "single-root-cause",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__single-compatibility__3",
+        "task": "dotenv-backslash",
+        "condition": "single-compatibility",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__single-root-cause__3",
+        "task": "dotenv-backslash",
+        "condition": "single-root-cause",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__length-a__1",
+        "task": "dotenv-backslash",
+        "condition": "length-a",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__scoped__3",
+        "task": "dotenv-backslash",
+        "condition": "scoped",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__single-python-idioms__2",
+        "task": "dotenv-backslash",
+        "condition": "single-python-idioms",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__single-edge-cases__1",
+        "task": "dotenv-backslash",
+        "condition": "single-edge-cases",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__single-minimal-fix__3",
+        "task": "dotenv-backslash",
+        "condition": "single-minimal-fix",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__single-minimal-fix__1",
+        "task": "dotenv-backslash",
+        "condition": "single-minimal-fix",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__single-python-idioms__1",
+        "task": "dotenv-backslash",
+        "condition": "single-python-idioms",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__all__1",
+        "task": "dotenv-backslash",
+        "condition": "all",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__baseline__3",
+        "task": "dotenv-backslash",
+        "condition": "baseline",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__single-edge-cases__3",
+        "task": "dotenv-backslash",
+        "condition": "single-edge-cases",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__all-reversed__3",
+        "task": "dotenv-backslash",
+        "condition": "all-reversed",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__all__2",
+        "task": "dotenv-backslash",
+        "condition": "all",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__scoped__1",
+        "task": "dotenv-backslash",
+        "condition": "scoped",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__baseline__1",
+        "task": "dotenv-backslash",
+        "condition": "baseline",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__scoped__2",
+        "task": "dotenv-backslash",
+        "condition": "scoped",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__single-python-idioms__3",
+        "task": "dotenv-backslash",
+        "condition": "single-python-idioms",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__all-reversed__2",
+        "task": "dotenv-backslash",
+        "condition": "all-reversed",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__single-compatibility__1",
+        "task": "dotenv-backslash",
+        "condition": "single-compatibility",
+        "repeat": 1
+      },
+      {
+        "id": "dotenv-backslash__single-input-validation__3",
+        "task": "dotenv-backslash",
+        "condition": "single-input-validation",
+        "repeat": 3
+      },
+      {
+        "id": "dotenv-backslash__single-compatibility__2",
+        "task": "dotenv-backslash",
+        "condition": "single-compatibility",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__length-a__2",
+        "task": "dotenv-backslash",
+        "condition": "length-a",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__single-edge-cases__2",
+        "task": "dotenv-backslash",
+        "condition": "single-edge-cases",
+        "repeat": 2
+      },
+      {
+        "id": "dotenv-backslash__all__3",
+        "task": "dotenv-backslash",
+        "condition": "all",
+        "repeat": 3
+      }
+    ],
+    "conditions": [
+      {
+        "id": "baseline",
+        "policy": "global",
+        "skill_ids": [],
+        "control": "none"
+      },
+      {
+        "id": "single-root-cause",
+        "policy": "global",
+        "skill_ids": [
+          "root-cause"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-minimal-fix",
+        "policy": "global",
+        "skill_ids": [
+          "minimal-fix"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-edge-cases",
+        "policy": "global",
+        "skill_ids": [
+          "edge-cases"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-input-validation",
+        "policy": "global",
+        "skill_ids": [
+          "input-validation"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-compatibility",
+        "policy": "global",
+        "skill_ids": [
+          "compatibility"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "single-python-idioms",
+        "policy": "global",
+        "skill_ids": [
+          "python-idioms"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "all",
+        "policy": "global",
+        "skill_ids": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "scoped",
+        "policy": "scoped",
+        "skill_ids": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "all-reversed",
+        "policy": "global",
+        "skill_ids": [
+          "python-idioms",
+          "compatibility",
+          "input-validation",
+          "edge-cases",
+          "minimal-fix",
+          "root-cause"
+        ],
+        "control": "none"
+      },
+      {
+        "id": "length-a",
+        "policy": "global",
+        "skill_ids": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "control": "neutral-a"
+      },
+      {
+        "id": "length-b",
+        "policy": "global",
+        "skill_ids": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "control": "neutral-b"
+      }
+    ],
+    "skills": [
+      {
+        "id": "root-cause",
+        "stages": [
+          "investigate"
+        ],
+        "text": "# root-cause\n\nTrace a failing example from the written contract to the current implementation. Explain the mechanism of the defect before proposing a repair. Consider whether several symptoms share one cause.\n",
+        "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+      },
+      {
+        "id": "minimal-fix",
+        "stages": [
+          "implement"
+        ],
+        "text": "# minimal-fix\n\nPreserve public names and signatures. Prefer a small, direct repair and avoid unrelated abstractions or new dependencies. Check that the small repair still satisfies the complete written contract.\n",
+        "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+      },
+      {
+        "id": "edge-cases",
+        "stages": [
+          "verify"
+        ],
+        "text": "# edge-cases\n\nReview empty inputs, single elements, repeated values, boundary values, and invalid inputs described by the contract. Try a counterexample to the proposed algorithm, rather than relying only on a happy-path example.\n",
+        "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+      },
+      {
+        "id": "input-validation",
+        "stages": [
+          "investigate",
+          "implement"
+        ],
+        "text": "# input-validation\n\nSeparate input validation from the main transformation. Validate the entire input when the contract requires invalid inputs to raise, even if an early lookup or a shortcut could otherwise return a result.\n",
+        "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+      },
+      {
+        "id": "compatibility",
+        "stages": [
+          "investigate",
+          "verify"
+        ],
+        "text": "# compatibility\n\nTreat the public interface and documented exception types as compatibility requirements. Avoid mutating caller-owned inputs unless requested. Preserve behavior that the task does not ask to change.\n",
+        "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+      },
+      {
+        "id": "python-idioms",
+        "stages": [
+          "implement"
+        ],
+        "text": "# python-idioms\n\nConsider standard-library and built-in tools before writing a broad custom framework. Sorting, sets, comprehensions, heapq, and regular expressions can simplify repairs. Check ordering, equality, escaping, and duplicate semantics before choosing an idiom.\n",
+        "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+      }
+    ],
+    "workspace_sha256": {
+      "dotenv-backslash": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f"
+    },
+    "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+    "scripts_sha256": {
+      "repo_calibration.py": "f68cf405ebdd576a99d3d039eff81a52d31efbd8539206f56f44bd01b80b86b2",
+      "repo_agent.py": "7108bc11b9cac605dbd373d75d5c961bec4c888db9d8a48bc9aa14a2e83a9cfc",
+      "repo_tools.py": "368c390b2ee26c193cf25729dfc5b7756dee80d7dce48c51285db1393e0c62c6",
+      "repo_workspace.py": "12599fa8de7bbecae1dcc8e4a81de3321720c1e237f6d21b7ac0f1c82c33d89a",
+      "repo_execution.py": "a14b126178b196c2db79dfa51c463ff341713c98f34969f3ae0630282bddd7df",
+      "repo_skills.py": "923557f7cb8142e5fb92908aa0cecd4d2d9cf5c753e43fe7be2b2db9d7a76326",
+      "continue_repo_study.py": "58e93eddf8d9b08bcdcc5f2620094db13b26ae5ff12cf298fc684b801ffb070d",
+      "repo_skill_study.py": "2a0208c46f72f805605a36f4d9bfccb2fd6df55af0ff51eefb15169a6ef71153"
+    },
+    "image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+    "order_seed": 4201,
+    "selection_report_sha256": "fe2339b6edf5cc802a3b52380b0a00cf9bed5fdf5e9d2120d1c2ba1fc23f5440",
+    "budget": {
+      "max_runs": 36,
+      "max_requests": 360,
+      "per_run_requests": 10,
+      "per_phase_requests": 4,
+      "max_output_tokens": 2048,
+      "workers": 2,
+      "max_estimated_usd": 3.0,
+      "max_sdk_retries": 0
+    },
+    "price_estimate": {
+      "currency": "USD",
+      "cache_hit_per_million": 0.006,
+      "cache_miss_per_million": 0.3,
+      "output_per_million": 1.2,
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "verified_date": "2026-11-23",
+      "kind": "peak_rate_upper_estimate_not_invoice"
+    },
+    "holdout": "No model calls or grading of dotenv-bom or any held-out task",
+    "limitations": "One selected discovery issue, three repeats per condition. Character-matched neutral guide bodies do not match token counts or remove guide-name hints. Fresh histories per phase can retain indirect skill effects through summaries or patches. No population or causal claim; protocol failures separate from valid functional grades. Calibration not pooled with comparison.",
+    "candidate_rule": "All required groups have three valid final grades; baseline=3/3, every single>=2/3, both neutral controls>=2/3, scoped>=2/3, and all or all-reversed<=1/3. Exploratory candidate only; no semantic-conflict proof."
+  },
+  "continuation": {
+    "preregistered_commit": "a4b4c667329f0f449805af2cfcf00732bb31c6d3",
+    "plan": {
+      "schema_version": 1,
+      "purpose": "Continue only unattempted scheduled trials after a documented process/daemon interruption; interrupted trials remain unknown and are never retried",
+      "controller": "observed_phase_boundaries_v4",
+      "model": "deepseek-flash",
+      "runs": [
+        {
+          "id": "dotenv-backslash__all-reversed__1",
+          "task": "dotenv-backslash",
+          "condition": "all-reversed",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__single-input-validation__2",
+          "task": "dotenv-backslash",
+          "condition": "single-input-validation",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__single-input-validation__1",
+          "task": "dotenv-backslash",
+          "condition": "single-input-validation",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__single-minimal-fix__2",
+          "task": "dotenv-backslash",
+          "condition": "single-minimal-fix",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__length-b__2",
+          "task": "dotenv-backslash",
+          "condition": "length-b",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__length-b__1",
+          "task": "dotenv-backslash",
+          "condition": "length-b",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__length-a__3",
+          "task": "dotenv-backslash",
+          "condition": "length-a",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__length-b__3",
+          "task": "dotenv-backslash",
+          "condition": "length-b",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__single-root-cause__1",
+          "task": "dotenv-backslash",
+          "condition": "single-root-cause",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__single-compatibility__3",
+          "task": "dotenv-backslash",
+          "condition": "single-compatibility",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__single-root-cause__3",
+          "task": "dotenv-backslash",
+          "condition": "single-root-cause",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__length-a__1",
+          "task": "dotenv-backslash",
+          "condition": "length-a",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__scoped__3",
+          "task": "dotenv-backslash",
+          "condition": "scoped",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__single-python-idioms__2",
+          "task": "dotenv-backslash",
+          "condition": "single-python-idioms",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__single-edge-cases__1",
+          "task": "dotenv-backslash",
+          "condition": "single-edge-cases",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__single-minimal-fix__3",
+          "task": "dotenv-backslash",
+          "condition": "single-minimal-fix",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__single-minimal-fix__1",
+          "task": "dotenv-backslash",
+          "condition": "single-minimal-fix",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__single-python-idioms__1",
+          "task": "dotenv-backslash",
+          "condition": "single-python-idioms",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__all__1",
+          "task": "dotenv-backslash",
+          "condition": "all",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__baseline__3",
+          "task": "dotenv-backslash",
+          "condition": "baseline",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__single-edge-cases__3",
+          "task": "dotenv-backslash",
+          "condition": "single-edge-cases",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__all-reversed__3",
+          "task": "dotenv-backslash",
+          "condition": "all-reversed",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__all__2",
+          "task": "dotenv-backslash",
+          "condition": "all",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__scoped__1",
+          "task": "dotenv-backslash",
+          "condition": "scoped",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__baseline__1",
+          "task": "dotenv-backslash",
+          "condition": "baseline",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__scoped__2",
+          "task": "dotenv-backslash",
+          "condition": "scoped",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__single-python-idioms__3",
+          "task": "dotenv-backslash",
+          "condition": "single-python-idioms",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__all-reversed__2",
+          "task": "dotenv-backslash",
+          "condition": "all-reversed",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__single-compatibility__1",
+          "task": "dotenv-backslash",
+          "condition": "single-compatibility",
+          "repeat": 1
+        },
+        {
+          "id": "dotenv-backslash__single-input-validation__3",
+          "task": "dotenv-backslash",
+          "condition": "single-input-validation",
+          "repeat": 3
+        },
+        {
+          "id": "dotenv-backslash__single-compatibility__2",
+          "task": "dotenv-backslash",
+          "condition": "single-compatibility",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__length-a__2",
+          "task": "dotenv-backslash",
+          "condition": "length-a",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__single-edge-cases__2",
+          "task": "dotenv-backslash",
+          "condition": "single-edge-cases",
+          "repeat": 2
+        },
+        {
+          "id": "dotenv-backslash__all__3",
+          "task": "dotenv-backslash",
+          "condition": "all",
+          "repeat": 3
+        }
+      ],
+      "conditions": [
+        {
+          "id": "baseline",
+          "policy": "global",
+          "skill_ids": [],
+          "control": "none"
+        },
+        {
+          "id": "single-root-cause",
+          "policy": "global",
+          "skill_ids": [
+            "root-cause"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "single-minimal-fix",
+          "policy": "global",
+          "skill_ids": [
+            "minimal-fix"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "single-edge-cases",
+          "policy": "global",
+          "skill_ids": [
+            "edge-cases"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "single-input-validation",
+          "policy": "global",
+          "skill_ids": [
+            "input-validation"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "single-compatibility",
+          "policy": "global",
+          "skill_ids": [
+            "compatibility"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "single-python-idioms",
+          "policy": "global",
+          "skill_ids": [
+            "python-idioms"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "all",
+          "policy": "global",
+          "skill_ids": [
+            "root-cause",
+            "minimal-fix",
+            "edge-cases",
+            "input-validation",
+            "compatibility",
+            "python-idioms"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "scoped",
+          "policy": "scoped",
+          "skill_ids": [
+            "root-cause",
+            "minimal-fix",
+            "edge-cases",
+            "input-validation",
+            "compatibility",
+            "python-idioms"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "all-reversed",
+          "policy": "global",
+          "skill_ids": [
+            "python-idioms",
+            "compatibility",
+            "input-validation",
+            "edge-cases",
+            "minimal-fix",
+            "root-cause"
+          ],
+          "control": "none"
+        },
+        {
+          "id": "length-a",
+          "policy": "global",
+          "skill_ids": [
+            "root-cause",
+            "minimal-fix",
+            "edge-cases",
+            "input-validation",
+            "compatibility",
+            "python-idioms"
+          ],
+          "control": "neutral-a"
+        },
+        {
+          "id": "length-b",
+          "policy": "global",
+          "skill_ids": [
+            "root-cause",
+            "minimal-fix",
+            "edge-cases",
+            "input-validation",
+            "compatibility",
+            "python-idioms"
+          ],
+          "control": "neutral-b"
+        }
+      ],
+      "skills": [
+        {
+          "id": "root-cause",
+          "stages": [
+            "investigate"
+          ],
+          "text": "# root-cause\n\nTrace a failing example from the written contract to the current implementation. Explain the mechanism of the defect before proposing a repair. Consider whether several symptoms share one cause.\n",
+          "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+        },
+        {
+          "id": "minimal-fix",
+          "stages": [
+            "implement"
+          ],
+          "text": "# minimal-fix\n\nPreserve public names and signatures. Prefer a small, direct repair and avoid unrelated abstractions or new dependencies. Check that the small repair still satisfies the complete written contract.\n",
+          "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+        },
+        {
+          "id": "edge-cases",
+          "stages": [
+            "verify"
+          ],
+          "text": "# edge-cases\n\nReview empty inputs, single elements, repeated values, boundary values, and invalid inputs described by the contract. Try a counterexample to the proposed algorithm, rather than relying only on a happy-path example.\n",
+          "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+        },
+        {
+          "id": "input-validation",
+          "stages": [
+            "investigate",
+            "implement"
+          ],
+          "text": "# input-validation\n\nSeparate input validation from the main transformation. Validate the entire input when the contract requires invalid inputs to raise, even if an early lookup or a shortcut could otherwise return a result.\n",
+          "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+        },
+        {
+          "id": "compatibility",
+          "stages": [
+            "investigate",
+            "verify"
+          ],
+          "text": "# compatibility\n\nTreat the public interface and documented exception types as compatibility requirements. Avoid mutating caller-owned inputs unless requested. Preserve behavior that the task does not ask to change.\n",
+          "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+        },
+        {
+          "id": "python-idioms",
+          "stages": [
+            "implement"
+          ],
+          "text": "# python-idioms\n\nConsider standard-library and built-in tools before writing a broad custom framework. Sorting, sets, comprehensions, heapq, and regular expressions can simplify repairs. Check ordering, equality, escaping, and duplicate semantics before choosing an idiom.\n",
+          "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+        }
+      ],
+      "workspace_sha256": {
+        "dotenv-backslash": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f"
+      },
+      "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+      "scripts_sha256": {
+        "repo_calibration.py": "73cea03425c1edcb4125f3e31fe516c039ebb4efb3ad67b4d64f9e1327971b67",
+        "repo_agent.py": "7108bc11b9cac605dbd373d75d5c961bec4c888db9d8a48bc9aa14a2e83a9cfc",
+        "repo_tools.py": "368c390b2ee26c193cf25729dfc5b7756dee80d7dce48c51285db1393e0c62c6",
+        "repo_workspace.py": "12599fa8de7bbecae1dcc8e4a81de3321720c1e237f6d21b7ac0f1c82c33d89a",
+        "repo_execution.py": "a14b126178b196c2db79dfa51c463ff341713c98f34969f3ae0630282bddd7df",
+        "repo_skills.py": "923557f7cb8142e5fb92908aa0cecd4d2d9cf5c753e43fe7be2b2db9d7a76326",
+        "continue_repo_study.py": "58e93eddf8d9b08bcdcc5f2620094db13b26ae5ff12cf298fc684b801ffb070d",
+        "repo_skill_study.py": "cdc9b82055b855d62c610c566eb5301b5c08f8435052f64ff0fc8b4b63add62c",
+        "continue_skill_study.py": "327a9d3729abef598f57a218056feb7b00381882393f2a6abcdf87d2ae89f327"
+      },
+      "image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+      "order_seed": 4201,
+      "selection_report_sha256": "fe2339b6edf5cc802a3b52380b0a00cf9bed5fdf5e9d2120d1c2ba1fc23f5440",
+      "budget": {
+        "max_runs": 34,
+        "max_requests": 340,
+        "per_run_requests": 10,
+        "per_phase_requests": 4,
+        "max_output_tokens": 2048,
+        "workers": 2,
+        "max_estimated_usd": 2.551488,
+        "max_sdk_retries": 0
+      },
+      "price_estimate": {
+        "currency": "USD",
+        "cache_hit_per_million": 0.006,
+        "cache_miss_per_million": 0.3,
+        "output_per_million": 1.2,
+        "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "verified_date": "2026-11-23",
+        "kind": "peak_rate_upper_estimate_not_invoice"
+      },
+      "holdout": "No model calls or grading of dotenv-bom or any held-out task",
+      "limitations": "One selected discovery issue, three repeats per condition. Character-matched neutral guide bodies do not match token counts or remove guide-name hints. Fresh histories per phase can retain indirect skill effects through summaries or patches. No population or causal claim; protocol failures separate from valid functional grades. Calibration not pooled with comparison.",
+      "candidate_rule": "All required groups have three valid final grades; baseline=3/3, every single>=2/3, both neutral controls>=2/3, scoped>=2/3, and all or all-reversed<=1/3. Exploratory candidate only; no semantic-conflict proof.",
+      "parent_checksums_sha256": "41055a40f9cd5235333286474413383a6239564a0978e05e17c43df81d317925",
+      "unknown_usage_reserved_usd_upper": 0.448512
+    }
+  },
+  "interruption_note": "Two original trials retained as interrupted/unknown. Only previously unattempted trials continued with unchanged model runner, guides, task, image and candidate rule. Unknown trials reserved their full original per-run ceiling."
+}
