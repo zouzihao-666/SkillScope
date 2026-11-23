@@ -1,0 +1,26 @@
+{
+  "runs": 4,
+  "calls": 24,
+  "reported_tokens": 104585,
+  "usage_complete": true,
+  "estimated_usd_upper": 0.021610248,
+  "tasks": {
+    "dotenv-backslash": {
+      "recorded": 2,
+      "passed": 0,
+      "statuses": [
+        "budget_exhausted",
+        "budget_exhausted"
+      ]
+    },
+    "dotenv-comment": {
+      "recorded": 2,
+      "passed": 0,
+      "statuses": [
+        "budget_exhausted",
+        "budget_exhausted"
+      ]
+    }
+  },
+  "limitations": "Two related historical library issues, two repeats each. Author-written regression tests, no complete upstream suite. No holdout calls or grades. Descriptive only; no skill comparison."
+}

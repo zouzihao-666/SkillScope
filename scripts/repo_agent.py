@@ -108,6 +108,7 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
         "condition": "baseline",
         "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
         "execution_mode": workspace.execution_mode,
+        "controller": "reserved_phase_finish_v2",
         "repair_origin": "model_generated_via_allowlisted_tools",
         "initial_workspace_sha256": workspace.initial_fingerprint,
         "source_sha256": source_fingerprint(),
@@ -143,12 +144,27 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
     tools = tool_definitions(workspace)
     declared_tools = {tool["function"]["name"] for tool in tools}
 
-    def request(stage, messages):
+    def request(stage, messages, force_finish=False):
         nonlocal calls
+        stage_tools = [
+            tool
+            for tool in tools
+            if stage == Stage.IMPLEMENT
+            or tool["function"]["name"] not in ("write_file", "replace_in_file")
+        ]
+        tool_choice = (
+            {"type": "function", "function": {"name": "finish_phase"}}
+            if force_finish
+            else "required"
+        )
         if calls >= MAX_REQUESTS:
             raise RunError("budget_exhausted", "Global request budget exhausted")
         if (
-            len(json.dumps({"messages": messages, "tools": tools}, ensure_ascii=False).encode())
+            len(
+                json.dumps(
+                    {"messages": messages, "tools": stage_tools}, ensure_ascii=False
+                ).encode()
+            )
             > 65536
         ):
             raise RunError("budget_exhausted", "Input JSON exceeds 64 KiB")
@@ -160,11 +176,11 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
                 "number": calls,
                 "model": MODEL,
                 "messages": messages,
-                "tools": tools,
+                "tools": stage_tools,
                 "max_tokens": MAX_OUTPUT,
                 "thinking": "disabled",
                 "temperature": 0,
-                "tool_choice": "required",
+                "tool_choice": tool_choice,
                 "max_retries": 0,
             }
         )
@@ -172,8 +188,8 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
             response = backend.client.chat.completions.create(
                 model=MODEL,
                 messages=messages,
-                tools=tools,
-                tool_choice="required",
+                tools=stage_tools,
+                tool_choice=tool_choice,
                 temperature=0,
                 max_tokens=MAX_OUTPUT,
                 extra_body={"thinking": {"type": "disabled"}},
@@ -195,11 +211,17 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
             raise RunError("invalid_output", f"Expected 1..{MAX_TOOL_CALLS} completed tool calls")
         if any(call.type != "function" for call in tool_calls):
             raise RunError("invalid_output", "Unsupported tool-call kind")
+        if force_finish and (len(tool_calls) != 1 or tool_calls[0].function.name != "finish_phase"):
+            raise RunError("invalid_output", "Model ignored required phase-finish tool")
         return choice.message
 
     def phase(stage):
         def execute(state):
             session.enter_stage(stage)
+            remaining_phases = len(Stage) - list(Stage).index(stage) - 1
+            phase_limit = min(PER_PHASE_REQUESTS, MAX_REQUESTS - calls - remaining_phases)
+            if phase_limit < 1:
+                raise RunError("budget_exhausted", "No reserved phase-finish request remains")
             handoff = (
                 state.get("analysis", "")
                 if stage == Stage.IMPLEMENT
@@ -215,7 +237,8 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
                 "Call finish_phase alone with a concise summary to finish each phase. "
                 "Do not use plain-text final answers. Hidden tests are unavailable. "
                 f"At most {MAX_TOOL_CALLS} tool calls are allowed in one response. "
-                f"At most {PER_PHASE_REQUESTS} model requests are available in this phase."
+                f"At most {phase_limit} model requests are available in this phase. "
+                "The final request is reserved for finish_phase; complete edits and tests earlier."
             )
             user = json.dumps(
                 {
@@ -227,13 +250,13 @@ def run_agent(task: Path, settings: Settings, output: Path) -> dict:
                 ensure_ascii=False,
             )
             messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-            for phase_index in range(PER_PHASE_REQUESTS):
+            for phase_index in range(phase_limit):
                 messages[0]["content"] = system + (
-                    f"\nThis is phase request {phase_index + 1}/{PER_PHASE_REQUESTS}; "
+                    f"\nThis is phase request {phase_index + 1}/{phase_limit}; "
                     f"{MAX_REQUESTS - calls} global requests remain including this one. "
                     "Use actual source newlines in write_file content. Finish within these limits."
                 )
-                message = request(stage, messages)
+                message = request(stage, messages, force_finish=phase_index == phase_limit - 1)
                 messages.append(
                     {
                         "role": "assistant",

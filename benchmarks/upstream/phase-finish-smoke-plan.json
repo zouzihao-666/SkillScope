@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "purpose": "one engineering check of reserved phase completion; not a replacement calibration sample",
+  "model": "deepseek-flash",
+  "condition": "baseline",
+  "seed": 2718,
+  "runs": [
+    {
+      "id": "dotenv-comment__controller-v2",
+      "task": "dotenv-comment",
+      "repeat": 1
+    }
+  ],
+  "workspace_sha256": {
+    "dotenv-comment": "5ff2e0cf4d0b29f86aba87b5097cdb51b543090f428eb3409fa2791188901444"
+  },
+  "collection_sha256": "4e86170f037ee3ac3dbe2bb11a746ccc90e9b7a79ab8ba59d89f02089aa9efd5",
+  "source_sha256": "3fe7d30a058dfe40d1e6b1e4f9a0efb6fb47391db49079d92720b51992d929d3",
+  "scripts_sha256": {
+    "repo_calibration.py": "1e889961563d9f6231731dbfb6214035da182a1289cc54194c04d8cd99567c0b",
+    "repo_agent.py": "4263f3b4d4d1d1a2ab222f8155cb60c714a4b44fe3337da4ebcd77142f50a4da",
+    "repo_tools.py": "368c390b2ee26c193cf25729dfc5b7756dee80d7dce48c51285db1393e0c62c6",
+    "repo_workspace.py": "12599fa8de7bbecae1dcc8e4a81de3321720c1e237f6d21b7ac0f1c82c33d89a",
+    "repo_execution.py": "a14b126178b196c2db79dfa51c463ff341713c98f34969f3ae0630282bddd7df",
+    "phase_finish_smoke.py": "b75906dbb9eb118d833f1a9539983fbd9b96f6f9ec4e068788b135fff5688aad"
+  },
+  "image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+  "budget": {
+    "max_runs": 1,
+    "max_requests": 10,
+    "per_run_requests": 10,
+    "max_output_tokens": 2048,
+    "max_estimated_usd": 1.0,
+    "max_sdk_retries": 0
+  },
+  "price_estimate": {
+    "currency": "USD",
+    "cache_hit_per_million": 0.006,
+    "cache_miss_per_million": 0.3,
+    "output_per_million": 1.2,
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verified_date": "2026-11-23",
+    "kind": "peak_rate_upper_estimate_not_invoice"
+  },
+  "holdout": "dotenv-bom: no model calls and no grading during calibration",
+  "limitations": "Selected to check the phase controller after four budget failures; different protocol, no pooled success rate. No holdout calls or grades. Not difficulty calibration or a skill experiment.",
+  "previous_report_sha256": "9587ae7c3656b6078d95add81fedf7a1fcd46737960b9c5c3f563b77ede25bf4"
+}

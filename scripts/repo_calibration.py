@@ -180,6 +180,7 @@ def export(study: Path, output: Path):
     ):
         raise ValueError("Credential-like content found; export aborted")
     report = {
+        "purpose": plan["purpose"],
         "runs": len(rows),
         "calls": sum(row["result"]["calls_attempted"] for row in rows),
         "reported_tokens": sum(row["result"]["reported_tokens"]["total_tokens"] for row in rows),
@@ -196,7 +197,10 @@ def export(study: Path, output: Path):
             }
             for task in plan["workspace_sha256"]
         },
-        "limitations": "Two related historical library issues, two repeats each. Author-written regression tests, no complete upstream suite. No holdout calls or grades. Descriptive only; no skill comparison.",
+        "limitations": plan.get(
+            "limitations",
+            "Two related historical library issues, two repeats each. Author-written regression tests, no complete upstream suite. No holdout calls or grades. Descriptive only; no skill comparison.",
+        ),
     }
     if (
         report["calls"] > plan["budget"]["max_requests"]

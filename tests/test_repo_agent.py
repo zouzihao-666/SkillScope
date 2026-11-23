@@ -135,13 +135,48 @@ def test_readonly_phase_rejects_writes_and_retains_failed_candidate(tmp_path, fa
     assert tool["result"]["ok"] is False
 
 
-def test_phase_request_budget_stops_without_hidden_grade_or_automatic_retry(tmp_path, fake_agent):
+def test_ignored_forced_phase_finish_stops_without_hidden_grade_or_automatic_retry(
+    tmp_path, fake_agent
+):
     requests, grades, sequence = fake_agent
     sequence.extend([[("list_files", {})]] * 4)
     result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "run")
-    assert result["status"] == "budget_exhausted"
+    assert result["status"] == "invalid_output"
+    assert result["error"] == "Model ignored required phase-finish tool"
     assert result["calls_attempted"] == len(requests) == 4
     assert grades == [False]
+
+
+def test_controller_reserves_finish_calls_and_verification_within_global_budget(
+    tmp_path, fake_agent
+):
+    requests, grades, sequence = fake_agent
+    changes = {
+        path: (TASK.parent / "reference" / path).read_text(encoding="utf-8")
+        for path in ("shop/money.py", "shop/cart.py")
+    }
+    sequence.extend(
+        [
+            *([[("list_files", {})]] * 3),
+            finish(),
+            [("read_file", {"path": "shop/money.py"})],
+            [("write_file", {"path": path, "content": text}) for path, text in changes.items()],
+            [("run_public_tests", {})],
+            finish(),
+            [("run_public_tests", {})],
+            finish(),
+        ]
+    )
+    result = repo_agent.run_agent(TASK, Settings(api_key="test-secret"), tmp_path / "run")
+    assert result["status"] == "passed" and result["calls_attempted"] == 10
+    assert grades == [False, False, False, True]
+    for index in (3, 7, 9):
+        assert requests[index]["tool_choice"] == {
+            "type": "function",
+            "function": {"name": "finish_phase"},
+        }
+    for request in (requests[0], requests[-1]):
+        assert "write_file" not in {tool["function"]["name"] for tool in request["tools"]}
 
 
 def test_invalid_phase_finish_is_recorded_as_model_output_failure(tmp_path, fake_agent):
