@@ -7,7 +7,8 @@ import subprocess
 from pathlib import Path
 
 from scripts.repo_agent import MAX_OUTPUT, MAX_REQUESTS, run_agent
-from scripts.repo_calibration import COLLECTION, ROOT, export, make_plan as baseline_plan, save
+from scripts.repo_calibration import COLLECTION, ROOT, export, save
+from scripts.repo_calibration import make_plan as baseline_plan
 from scripts.repo_workspace import Workspace
 from skillscope.batch import estimate_cost
 from skillscope.loader import digest

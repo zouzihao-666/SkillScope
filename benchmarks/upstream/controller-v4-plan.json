@@ -48,7 +48,7 @@
     "repo_tools.py": "368c390b2ee26c193cf25729dfc5b7756dee80d7dce48c51285db1393e0c62c6",
     "repo_workspace.py": "12599fa8de7bbecae1dcc8e4a81de3321720c1e237f6d21b7ac0f1c82c33d89a",
     "repo_execution.py": "a14b126178b196c2db79dfa51c463ff341713c98f34969f3ae0630282bddd7df",
-    "continue_repo_study.py": "6ecf647fa8723304b1211f3c780b3ca0b6d01fe3e937edab79c79c7c51b2cfcb"
+    "continue_repo_study.py": "acd36ce0253b9bc538f11dfa4a863eb64e19641c2a3970f75b6760e7fae79d37"
   },
   "image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
   "budget": {
