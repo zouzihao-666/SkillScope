@@ -62,6 +62,8 @@
 
 从[统一入口](one-command-guide.md)运行。本轮真实验收采用[事先约定](one-command-protocol.md)，新结果将单独发布，不填补或替换旧失败。
 
+完整工具的实际验收现已结束：自动选择阶段方案、冻结后验证保留题、再直接应用到另一道题均已完成。新基线不可靠，程序明确拒绝技能归因，仍完成方案比较与交付。详见[真实结果与可直接使用的命令](complete-tool-results.md)。dotenv-bom 已在冻结方案后使用，以后不能继续作为未见保留题。
+
 详见[本轮结果与全部失败记录](continuation-results.md)。
 
 目录支持、任务来源和新校准方案见[逐步说明](directory-and-calibration.md)。

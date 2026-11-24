@@ -1,4 +1,5 @@
 * text=auto eol=lf
 *.gz -text
-artifacts/v06-initial-acceptance/*.json -text
-artifacts/v06-complete-diagnosis/*.json -text
+artifacts/v06-initial-acceptance/*.json -text whitespace=cr-at-eol
+artifacts/v06-complete-diagnosis/*.json -text whitespace=cr-at-eol
+artifacts/v06-policy-application/*.json -text whitespace=cr-at-eol

@@ -20,6 +20,14 @@
 
 打开输出目录的 `report.html` 查看结果，`policy.json` 保存阶段映射。可先加 `--plan-only` 查看冻结输入，再用 `--resume` 执行；不会覆盖旧目录或重发未知用量的中断请求。[完整使用步骤](docs/one-command-guide.md) · [本轮执行前约定](docs/one-command-protocol.md)。
 
+**完整工具已完成真实验收**：[结果与可用产物](docs/complete-tool-results.md)。开发题全部加载 2/3、阶段方案 3/3；冻结后保留题三种配置均为 3/3。直接把保存方案用于另一道题也通过隐藏测试 9/9，并生成可检查的源码与补丁。本例基线不可靠，未强判技能冲突；自动缩减模块由已知答案测试覆盖，真实定位仍依赖合适的任务证据。
+
+已有方案可直接使用，无需重跑诊断：
+
+```powershell
+.\.venv\Scripts\python.exe -m skillscope run-policy --study artifacts/v06-complete-diagnosis --task-manifest benchmarks/upstream/dotenv-comment/task.json --output results/my-policy-run
+```
+
 [中文入门](docs/step-by-step.md) · [跑通真实任务](docs/first-real-run.md) · [试运行记录](docs/smoke-results.md) · [开发路线](docs/roadmap.md) · [原始研究设计](docs/design.md)
 
 第三阶段已完成：[逐步操作与作用](docs/stage3-guide.md) · [执行前固定的方案](docs/stage3-protocol.md) · [结论与异常解释](docs/stage3-findings.md) · [原始数据及报告](artifacts/stage3-20261123/report.md)。

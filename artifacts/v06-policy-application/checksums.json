@@ -1,0 +1,10 @@
+{
+  "applied-policy.json": "38229231a42ed6fc93702727e5726eaf4c5bf73bd160c3a5191517c691dd5348",
+  "changes.patch": "efcb3ab2baa9cfbe90dcde57b13ff0e36690b68cbd60b7c148279242f402c744",
+  "provenance.json": "e68fc6c3bb3618c11013478b5a0af2f7843e7dd6be942c387560e0b5699381a0",
+  "report.html": "06366336ef889d52931d7ba94ccbd75133abab5553f828c33febfec29e70e9bb",
+  "report.md": "2adaec7f61def2690b83511a5454e936d4f193b36c48568059afabda81bd46d5",
+  "run.json": "e3eee64f8d1578966ccae8d78a182e11caafda55967e8f76703a725a0434419c",
+  "trace.jsonl.gz": "c157e34dbc5c9dd5505e93f161e103b0a4a0ebbee1d02e2cfbd9e6191e2a6d7f",
+  "workspace-final.json": "2e751ed7c610193cf2ea5cb39eae53d36078521df4f8bc185d05212d66aed036"
+}

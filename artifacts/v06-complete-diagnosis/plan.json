@@ -1,0 +1,345 @@
+{
+  "spec": {
+    "schema_version": 1,
+    "name": "skillscope-complete-diagnosis",
+    "model": "deepseek-flash",
+    "skills": [
+      {
+        "id": "root-cause",
+        "file": "benchmarks/stage3/skills/root-cause.md",
+        "stages": [
+          "investigate"
+        ]
+      },
+      {
+        "id": "minimal-fix",
+        "file": "benchmarks/stage3/skills/minimal-fix.md",
+        "stages": [
+          "implement"
+        ]
+      },
+      {
+        "id": "edge-cases",
+        "file": "benchmarks/stage3/skills/edge-cases.md",
+        "stages": [
+          "verify"
+        ]
+      },
+      {
+        "id": "input-validation",
+        "file": "benchmarks/stage3/skills/input-validation.md",
+        "stages": [
+          "investigate",
+          "implement"
+        ]
+      },
+      {
+        "id": "compatibility",
+        "file": "benchmarks/stage3/skills/compatibility.md",
+        "stages": [
+          "investigate",
+          "verify"
+        ]
+      },
+      {
+        "id": "python-idioms",
+        "file": "benchmarks/stage3/skills/python-idioms.md",
+        "stages": [
+          "implement"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "id": "dotenv-backslash",
+        "manifest": "benchmarks/upstream/dotenv-backslash/task.json",
+        "split": "discovery"
+      },
+      {
+        "id": "dotenv-bom",
+        "manifest": "benchmarks/upstream/dotenv-bom/task.json",
+        "split": "holdout"
+      }
+    ],
+    "repeats": 3,
+    "limits": {
+      "max_calls": 300,
+      "max_runs": 30,
+      "max_usd": 1.4,
+      "per_run_calls": 10,
+      "per_phase_calls": 4,
+      "max_subset_evaluations": 6
+    },
+    "prior_evidence": "artifacts/repo-skills-20261123",
+    "validate_holdout": true
+  },
+  "skills": [
+    {
+      "id": "root-cause",
+      "stages": [
+        "investigate"
+      ],
+      "text": "# root-cause\n\nTrace a failing example from the written contract to the current implementation. Explain the mechanism of the defect before proposing a repair. Consider whether several symptoms share one cause.\n",
+      "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+    },
+    {
+      "id": "minimal-fix",
+      "stages": [
+        "implement"
+      ],
+      "text": "# minimal-fix\n\nPreserve public names and signatures. Prefer a small, direct repair and avoid unrelated abstractions or new dependencies. Check that the small repair still satisfies the complete written contract.\n",
+      "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+    },
+    {
+      "id": "edge-cases",
+      "stages": [
+        "verify"
+      ],
+      "text": "# edge-cases\n\nReview empty inputs, single elements, repeated values, boundary values, and invalid inputs described by the contract. Try a counterexample to the proposed algorithm, rather than relying only on a happy-path example.\n",
+      "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+    },
+    {
+      "id": "input-validation",
+      "stages": [
+        "investigate",
+        "implement"
+      ],
+      "text": "# input-validation\n\nSeparate input validation from the main transformation. Validate the entire input when the contract requires invalid inputs to raise, even if an early lookup or a shortcut could otherwise return a result.\n",
+      "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+    },
+    {
+      "id": "compatibility",
+      "stages": [
+        "investigate",
+        "verify"
+      ],
+      "text": "# compatibility\n\nTreat the public interface and documented exception types as compatibility requirements. Avoid mutating caller-owned inputs unless requested. Preserve behavior that the task does not ask to change.\n",
+      "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+    },
+    {
+      "id": "python-idioms",
+      "stages": [
+        "implement"
+      ],
+      "text": "# python-idioms\n\nConsider standard-library and built-in tools before writing a broad custom framework. Sorting, sets, comprehensions, heapq, and regular expressions can simplify repairs. Check ordering, equality, escaping, and duplicate semantics before choosing an idiom.\n",
+      "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "dotenv-backslash",
+      "split": "discovery",
+      "fingerprint": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f",
+      "instruction": "Fix a python-dotenv value round-trip bug. Values containing backslashes, such as\nWindows paths or regular expressions, must survive set_key followed by get_key\nwith quote_mode=\"always\" or \"auto\". A quoted value ending in a backslash must not\nconsume subsequent bindings. Handle both single- and double-quoted input parsing.\nPreserve ordinary quoting, multiline values, interpolation and unquoted behavior.\nOnly dotenv/main.py and dotenv/parser.py may change. Inspect the current code and\npublic tests; this is a library task, with no CLI dependencies or network access.\n"
+    },
+    {
+      "id": "dotenv-bom",
+      "split": "holdout",
+      "fingerprint": "c40d7c0323382e180e3240c4a4a0d515bbba8ea50abb4f36f04d462f25ae635a",
+      "instruction": "Fix a python-dotenv parser bug where an initial UTF-8 BOM becomes part of the\nfirst variable name. Ignore exactly one BOM at the beginning of the stream.\nPreserve BOM characters inside values or later variable names and keep streams\nwithout a BOM working normally. Only dotenv/parser.py may change.\n"
+    }
+  ],
+  "prior": {
+    "sha256": "74813db667ec2591ce53b39d00cb3086c15cf4bd084c5df27a39bbebb5980fb7",
+    "tasks": {
+      "dotenv-backslash": "4a9e8b1f0cc8c642587d5a47f5621b57e88b8fffc93d31d19007b76cd0fa2f5f"
+    },
+    "conditions": {
+      "baseline": {
+        "recorded": 3,
+        "valid_final_grades": 2,
+        "passed": 2,
+        "functional_failures": 0,
+        "statuses": {
+          "interrupted": 1,
+          "passed": 2
+        },
+        "calls": 21,
+        "tokens": 110040,
+        "descriptive_wilson95_valid": [
+          0.34238022750665303,
+          1.0
+        ]
+      },
+      "single-root-cause": {
+        "recorded": 3,
+        "valid_final_grades": 2,
+        "passed": 1,
+        "functional_failures": 1,
+        "statuses": {
+          "interrupted": 1,
+          "passed": 1,
+          "failed": 1
+        },
+        "calls": 21,
+        "tokens": 100879,
+        "descriptive_wilson95_valid": [
+          0.09453120573423074,
+          0.9054687942657693
+        ]
+      },
+      "single-minimal-fix": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 3,
+        "functional_failures": 0,
+        "statuses": {
+          "passed": 3
+        },
+        "calls": 30,
+        "tokens": 154064,
+        "descriptive_wilson95_valid": [
+          0.4385029682449546,
+          1.0
+        ]
+      },
+      "single-edge-cases": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 0,
+        "functional_failures": 3,
+        "statuses": {
+          "failed": 3
+        },
+        "calls": 30,
+        "tokens": 159260,
+        "descriptive_wilson95_valid": [
+          5.551115123125783e-17,
+          0.5614970317550454
+        ]
+      },
+      "single-input-validation": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 1,
+        "functional_failures": 2,
+        "statuses": {
+          "passed": 1,
+          "failed": 2
+        },
+        "calls": 30,
+        "tokens": 156805,
+        "descriptive_wilson95_valid": [
+          0.06149194472039621,
+          0.7923403991979522
+        ]
+      },
+      "single-compatibility": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 2,
+        "functional_failures": 1,
+        "statuses": {
+          "passed": 2,
+          "failed": 1
+        },
+        "calls": 30,
+        "tokens": 165578,
+        "descriptive_wilson95_valid": [
+          0.2076596008020477,
+          0.9385080552796037
+        ]
+      },
+      "single-python-idioms": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 2,
+        "functional_failures": 1,
+        "statuses": {
+          "passed": 2,
+          "failed": 1
+        },
+        "calls": 30,
+        "tokens": 164467,
+        "descriptive_wilson95_valid": [
+          0.2076596008020477,
+          0.9385080552796037
+        ]
+      },
+      "all": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 1,
+        "functional_failures": 2,
+        "statuses": {
+          "failed": 2,
+          "passed": 1
+        },
+        "calls": 30,
+        "tokens": 165411,
+        "descriptive_wilson95_valid": [
+          0.06149194472039621,
+          0.7923403991979522
+        ]
+      },
+      "scoped": {
+        "recorded": 3,
+        "valid_final_grades": 2,
+        "passed": 2,
+        "functional_failures": 0,
+        "statuses": {
+          "passed": 2,
+          "invalid_output": 1
+        },
+        "calls": 23,
+        "tokens": 120571,
+        "descriptive_wilson95_valid": [
+          0.34238022750665303,
+          1.0
+        ]
+      },
+      "all-reversed": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 1,
+        "functional_failures": 2,
+        "statuses": {
+          "failed": 2,
+          "passed": 1
+        },
+        "calls": 30,
+        "tokens": 154732,
+        "descriptive_wilson95_valid": [
+          0.06149194472039621,
+          0.7923403991979522
+        ]
+      },
+      "length-a": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 3,
+        "functional_failures": 0,
+        "statuses": {
+          "passed": 3
+        },
+        "calls": 30,
+        "tokens": 163715,
+        "descriptive_wilson95_valid": [
+          0.4385029682449546,
+          1.0
+        ]
+      },
+      "length-b": {
+        "recorded": 3,
+        "valid_final_grades": 3,
+        "passed": 2,
+        "functional_failures": 1,
+        "statuses": {
+          "passed": 2,
+          "failed": 1
+        },
+        "calls": 30,
+        "tokens": 164998,
+        "descriptive_wilson95_valid": [
+          0.2076596008020477,
+          0.9385080552796037
+        ]
+      }
+    }
+  },
+  "source_sha256": "aa6652413b594161c572723664f94ab4a2049a93d8c0b47f9dec681ebcd13130",
+  "algorithm": "repeated_regression_reduction_and_declared_scope_repair_v1",
+  "evidence_note": "Single-skill harm and combination interaction are separate labels. Small repeated samples are exploratory, not significance or causality proof.",
+  "input_sha256": "87fb6a2d3dadfdb6c5fd580d50a8d321bbd9bd77c3a3cb718092cbda1939620c",
+  "image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8"
+}

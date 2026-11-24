@@ -1,0 +1,25 @@
+{
+  "source_policy_sha256": "c24c772f36c116ffb590c4055c99a136dddaa5a55b465f61759a2d8dd439f9cf",
+  "phases": {
+    "investigate": [
+      "root-cause",
+      "input-validation",
+      "compatibility"
+    ],
+    "implement": [
+      "minimal-fix",
+      "input-validation",
+      "python-idioms"
+    ],
+    "verify": [
+      "edge-cases",
+      "compatibility"
+    ]
+  },
+  "source_task": "dotenv-backslash",
+  "current_task": "dotenv-comment",
+  "task_fingerprint": "5ff2e0cf4d0b29f86aba87b5097cdb51b543090f428eb3409fa2791188901444",
+  "note": "A new task evaluation using a fixed policy; no diagnosis or policy retuning performed.",
+  "candidate_directory": "candidate",
+  "patch_file": "changes.patch"
+}

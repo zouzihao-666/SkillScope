@@ -1,0 +1,11 @@
+{
+  "preregistered_commit": "6d1fe385ddb5542547fc0ccf634b46df2b09d75c",
+  "source_sha256": "e76cdd4e567e185dd0e87194125b4f4944f199a592705e7a7c5788848683ef20",
+  "policy_sha256": "c24c772f36c116ffb590c4055c99a136dddaa5a55b465f61759a2d8dd439f9cf",
+  "task": "dotenv-comment",
+  "max_calls": 10,
+  "aggregate_max_calls": 360,
+  "aggregate_max_estimated_usd": 1.5,
+  "recorded_before_api_calls_utc": "2026-11-23T13:41:27.798136+00:00",
+  "note": "One engineering application of the already selected policy; no new search, tuning or holdout claim."
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "selected_on_discovery",
+  "source_task": "dotenv-backslash",
+  "method": "generated",
+  "phases": {
+    "investigate": [
+      "root-cause",
+      "input-validation",
+      "compatibility"
+    ],
+    "implement": [
+      "minimal-fix",
+      "input-validation",
+      "python-idioms"
+    ],
+    "verify": [
+      "edge-cases",
+      "compatibility"
+    ]
+  },
+  "basis": "baseline_unreliable",
+  "validation_scope": "discovery only; small samples; not an optimal or generally validated policy"
+}

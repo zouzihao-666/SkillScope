@@ -1,0 +1,110 @@
+{
+  "policy_sha256": "c24c772f36c116ffb590c4055c99a136dddaa5a55b465f61759a2d8dd439f9cf",
+  "task_results": [
+    {
+      "key": "c88d06bf02b08f21926d",
+      "task": "dotenv-bom",
+      "split": "holdout",
+      "policy": {
+        "investigate": [],
+        "implement": [],
+        "verify": []
+      },
+      "roles": [
+        "holdout_baseline"
+      ],
+      "measurement": {
+        "passed": 3,
+        "failed": 0,
+        "unresolved": 0,
+        "run_ids": [
+          "c88d06bf02b08f21926d-01",
+          "c88d06bf02b08f21926d-02",
+          "c88d06bf02b08f21926d-03"
+        ]
+      },
+      "complete": true
+    },
+    {
+      "key": "f0f8435c5dc708dfe295",
+      "task": "dotenv-bom",
+      "split": "holdout",
+      "policy": {
+        "investigate": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "implement": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ],
+        "verify": [
+          "root-cause",
+          "minimal-fix",
+          "edge-cases",
+          "input-validation",
+          "compatibility",
+          "python-idioms"
+        ]
+      },
+      "roles": [
+        "holdout_all"
+      ],
+      "measurement": {
+        "passed": 3,
+        "failed": 0,
+        "unresolved": 0,
+        "run_ids": [
+          "f0f8435c5dc708dfe295-01",
+          "f0f8435c5dc708dfe295-02",
+          "f0f8435c5dc708dfe295-03"
+        ]
+      },
+      "complete": true
+    },
+    {
+      "key": "4b6abdee6f280dab39a3",
+      "task": "dotenv-bom",
+      "split": "holdout",
+      "policy": {
+        "investigate": [
+          "root-cause",
+          "input-validation",
+          "compatibility"
+        ],
+        "implement": [
+          "minimal-fix",
+          "input-validation",
+          "python-idioms"
+        ],
+        "verify": [
+          "edge-cases",
+          "compatibility"
+        ]
+      },
+      "roles": [
+        "holdout_selected"
+      ],
+      "measurement": {
+        "passed": 3,
+        "failed": 0,
+        "unresolved": 0,
+        "run_ids": [
+          "4b6abdee6f280dab39a3-01",
+          "4b6abdee6f280dab39a3-02",
+          "4b6abdee6f280dab39a3-03"
+        ]
+      },
+      "complete": true
+    }
+  ],
+  "note": "Policy remained fixed throughout holdout; these scores never tune the policy."
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task": "dotenv-bom",
+  "first_model_validation": "artifacts/v06-complete-diagnosis",
+  "policy_frozen_sha256": "c24c772f36c116ffb590c4055c99a136dddaa5a55b465f61759a2d8dd439f9cf",
+  "first_validation_date": "2026-11-23",
+  "roles": [
+    "baseline",
+    "all",
+    "selected-policy"
+  ],
+  "repeats_per_role": 3,
+  "status": "used; do not call this an unseen holdout in later research"
+}

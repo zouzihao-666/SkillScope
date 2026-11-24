@@ -1,0 +1,111 @@
+{
+  "task": "dotenv-comment",
+  "model": "deepseek-flash",
+  "condition": "saved-policy",
+  "skill_configuration": {
+    "condition": {
+      "id": "saved-policy",
+      "policy": "scoped",
+      "skill_ids": [
+        "root-cause",
+        "minimal-fix",
+        "edge-cases",
+        "input-validation",
+        "compatibility",
+        "python-idioms"
+      ],
+      "control": "none"
+    },
+    "skills": [
+      {
+        "id": "root-cause",
+        "stages": [
+          "investigate"
+        ],
+        "sha256": "d7e39a3d95ef179714494c10c5c6d83860d5a9795ec4b4aad06051c943ebe565"
+      },
+      {
+        "id": "minimal-fix",
+        "stages": [
+          "implement"
+        ],
+        "sha256": "4ab3951990949b940f5e90ba3d9f96f6f76778d781ce66f4877948c27d2b7dc2"
+      },
+      {
+        "id": "edge-cases",
+        "stages": [
+          "verify"
+        ],
+        "sha256": "43664d90652f9b08f3ec7bce22df12b8da711c5d8b94f5415aefdb950931be88"
+      },
+      {
+        "id": "input-validation",
+        "stages": [
+          "investigate",
+          "implement"
+        ],
+        "sha256": "6923963fae4c90e128e5d453b32170fca331695672421f2818877415b7b327d3"
+      },
+      {
+        "id": "compatibility",
+        "stages": [
+          "investigate",
+          "verify"
+        ],
+        "sha256": "58735c6e0466aea6510bd07310b6469a5dce0e64ee944b7c70a745ca32423ef7"
+      },
+      {
+        "id": "python-idioms",
+        "stages": [
+          "implement"
+        ],
+        "sha256": "6b61cebde3032224359a77c66128a96c0f61f0c58e3e15b7cd7cb1ed6e74594b"
+      }
+    ]
+  },
+  "scope": "allowlisted Python task; provenance and benchmark scope are task-specific",
+  "execution_mode": "directory",
+  "controller": "bounded_source_context_v6",
+  "repair_origin": "model_generated_via_allowlisted_tools",
+  "initial_workspace_sha256": "5ff2e0cf4d0b29f86aba87b5097cdb51b543090f428eb3409fa2791188901444",
+  "source_sha256": "e76cdd4e567e185dd0e87194125b4f4944f199a592705e7a7c5788848683ef20",
+  "sandbox_image_id": "sha256:d1eeef942d48055334f83370f57d2581a970a399db9a31e55040686fb33401f8",
+  "runner_sha256": "4666ecf0da5d9cd20de937b448d6161fb63597822b997a2adf0efe1229636b6d",
+  "budget": {
+    "max_requests": 10,
+    "per_phase_requests": 4,
+    "max_output_tokens": 2048,
+    "max_input_json_bytes": 65536,
+    "max_estimated_usd": 0.25,
+    "max_sdk_retries": 0,
+    "max_tools_per_response": 18,
+    "phase_end_policy": "model_finish_or_controller_request_limit"
+  },
+  "initial_public": {
+    "status": "failed",
+    "passed": false,
+    "tests": 2,
+    "failures": 1,
+    "container_calls": 2
+  },
+  "grading": {
+    "status": "passed",
+    "passed": true,
+    "tests": 9,
+    "failures": 0,
+    "container_calls": 9
+  },
+  "status": "passed",
+  "calls_attempted": 8,
+  "responses_received": 8,
+  "usage_complete": true,
+  "reported_tokens": {
+    "prompt_tokens": 32635,
+    "completion_tokens": 910,
+    "total_tokens": 33545
+  },
+  "estimated_usd_upper": 0.009377219999999999,
+  "final_workspace_sha256": "80dfd065283790dbdd47888fdd8200bcf93ef698ff2d18dc6989eacf2472eaef",
+  "public_test_runs_by_model": 2,
+  "elapsed_seconds": 24.953
+}
